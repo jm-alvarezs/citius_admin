@@ -6,7 +6,7 @@ const LatestVideo = ({ video }) => {
   return (
     <div
       className="card no-scale px-0 py-0 latest-card shadow-sm"
-      onClick={() => navigate(`/mytbm/video/${video.video_id}`)}
+      onClick={() => navigate(`/mycitius/video/${video.video_id}`)}
     >
       <div className="row h-100">
         <div className="col col-md-6">
@@ -26,7 +26,7 @@ const LatestVideo = ({ video }) => {
             <p>{video.description}</p>
             <Link
               className="btn btn-primary"
-              to={`/mytbm/video/${video.video_id}`}
+              to={`/mycitius/video/${video.video_id}`}
             >
               Comenzar
             </Link>

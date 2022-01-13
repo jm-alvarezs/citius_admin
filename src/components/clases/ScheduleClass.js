@@ -42,11 +42,14 @@ const ScheduleClass = ({ singleClass }) => {
   const renderButtons = () => {
     return (
       <div>
-        <button className="btn btn-dark btn-sm mx-2" onClick={handleEdit}>
-          Editar
+        <button className="btn btn-dark btn-sm my-1 mx-2" onClick={handleEdit}>
+          <i className="fa fa-edit"></i>
         </button>
-        <button className="btn btn-danger btn-sm mx-2" onClick={handleDelete}>
-          Eliminar
+        <button
+          className="btn btn-danger btn-sm my-1 mx-2"
+          onClick={handleDelete}
+        >
+          <i className="fa fa-trash"></i>
         </button>
       </div>
     );
@@ -62,7 +65,7 @@ const ScheduleClass = ({ singleClass }) => {
   };
 
   return (
-    <div className="schedule-class p-3 my-2 bg-accent text-dark">
+    <div className="schedule-class small p-2 my-2 bg-accent text-dark">
       <p className="mb-1 bold">
         <i className={singleClass.icon} /> {singleClass.class_type.name}
       </p>

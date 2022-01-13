@@ -1,6 +1,6 @@
 import { Link } from "@reach/router";
 import React from "react";
-import logo_recortado from "../../assets/images/logo_recortado.png";
+import logo_recortado from "../../assets/images/logo_blanco.png";
 
 const Navbar = () => {
   return (

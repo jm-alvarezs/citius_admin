@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "@reach/router";
 import MobileMenuItem from "./MobileMenuItem";
 import { menuitems, cuenta } from "../../utils";
-import logo_vibe from "../../assets/images/logo_recortado.png";
+import logo_vibe from "../../assets/images/logo_blanco.png";
 
 const MobileMenu = ({ signOut, user }) => {
   const [display, setDisplay] = useState(false);

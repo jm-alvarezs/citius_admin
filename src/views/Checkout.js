@@ -8,7 +8,7 @@ import amex from "../assets/images/payment-method-amex.png";
 import { Link } from "@reach/router";
 import { UserContext } from "../context/UserContext";
 import StripeCheckout from "../components/common/StripeCheckout";
-import logo_recortado from "../assets/images/logo_recortado.png";
+import logo_recortado from "../assets/images/logo_blanco.png";
 
 const Checkout = ({ class_package_id }) => {
   //Singup and Login

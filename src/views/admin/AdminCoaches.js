@@ -48,8 +48,8 @@ const AdminCoaches = () => {
       if (query !== "") {
         coachesRender = coachesRender.filter(
           (coach) =>
-            coach.name.toLowerCase().includes(query) ||
-            coach.last_name.toLowerCase().includes(query)
+            String(coach.name).toLowerCase().includes(query) ||
+            String(coach.last_name).toLowerCase().includes(query)
         );
       }
       if (coachesRender.length === 0) return <p>No hay coaches registrados.</p>;

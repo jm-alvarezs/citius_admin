@@ -195,10 +195,8 @@ h6 {
 
 .schedule-class {
   border-radius: 10px;
-  width: 200px;
   text-align: center;
-  border: 1px solid #000;
-  float: left;
+  border: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 .schedule-classes-container {
@@ -206,12 +204,12 @@ h6 {
   max-width: 300%;
 }
 
+.schedule-col {
+  width: calc(100% / 8);
+}
+
 .time-container {
   min-height: 150px;
-  text-align: center;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 .text-auto {
@@ -228,7 +226,6 @@ h6 {
 
 .schedule-class {
   cursor: pointer;
-  margin-right: 12px;
 }
 
 .schedule-class:hover {
@@ -967,30 +964,14 @@ body {
 }
 
 .loading-logo {
-  max-width: 200px;
-}
-
-.online-bg {
-  background-image: url("/src/assets/images/bg-tbm-online.jpeg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 500px;
-}
-
-.presencial-bg {
-  background-image: url("/src/assets/images/bg-tbm-presencial.jpeg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 500px;
+  max-width: 500px;
 }
 
 #loading {
   height: 100vh;
   z-index: 0;
   position: absolute;
-  background-image: url("/src/assets/images/bg-tbm-online.jpeg");
+  background-image: url("/src/assets/images/fondo_negro.png");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

@@ -20,9 +20,6 @@ const Loading = () => {
   return (
     <div className="container-fluid vh-100">
       <div id="loading"></div>
-      <div className="row">
-        <div className="overlay vh-100"></div>
-      </div>
       <div className="row align-items-center pb-5 vh-100 text-white btn-container">
         <div className="container-fluid loading-text text-center">
           <img src={logo} className="loading-logo mb-5" />

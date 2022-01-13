@@ -21,7 +21,7 @@ export const CoachesContext = createContext(initialState);
 export const CoachesProvider = ({ children }) => {
   const [state, dispatch] = useReducer(CoachesReducer, initialState);
 
-  const { success } = useContext(ModalContext);
+  const { success, clearModal } = useContext(ModalContext);
 
   const getCoaches = () => {
     CoachesService.getCoaches().then((res) => {
@@ -50,6 +50,14 @@ export const CoachesProvider = ({ children }) => {
   };
 
   const postCoach = (coach) => {
+    const handleSuccess = () => {
+      clearModal();
+      getCoaches();
+      hideModal();
+      dispatch({ type: SET_COACH, payload: null });
+      success("¡Coach guardado!");
+    };
+
     if (isNaN(coach.instructor_id)) {
       if (coach.file && coach.file !== null) {
         const formData = new FormData();
@@ -60,21 +68,13 @@ export const CoachesProvider = ({ children }) => {
           if (coach.customer) {
             coach.user_id = coach.customer.customer_id;
           }
-          CoachesService.postCoach(coach).then(() => {
-            getCoaches();
-            hideModal();
-            success("¡Coach guardado!");
-          });
+          CoachesService.postCoach(coach).then(handleSuccess);
         });
       } else {
         if (coach.customer) {
           coach.user_id = coach.customer.customer_id;
         }
-        CoachesService.postCoach(coach).then(() => {
-          getCoaches();
-          hideModal();
-          success("¡Coach guardado!");
-        });
+        CoachesService.postCoach(coach).then(handleSuccess);
       }
     } else {
       if (coach.file && coach.file !== null) {
@@ -86,21 +86,13 @@ export const CoachesProvider = ({ children }) => {
           if (coach.customer) {
             coach.user_id = coach.customer.customer_id;
           }
-          CoachesService.putCoach(coach).then(() => {
-            getCoaches();
-            hideModal();
-            success("¡Coach guardado!");
-          });
+          CoachesService.putCoach(coach).then(handleSuccess);
         });
       } else {
         if (coach.customer) {
           coach.user_id = coach.customer.customer_id;
         }
-        CoachesService.putCoach(coach).then(() => {
-          getCoaches();
-          hideModal();
-          success("¡Coach guardado!");
-        });
+        CoachesService.putCoach(coach).then(handleSuccess);
       }
     }
   };

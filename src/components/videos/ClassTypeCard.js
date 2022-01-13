@@ -10,7 +10,7 @@ const ClassTypeCard = ({ classType, disabled, length }) => {
       } text-center my-2`}
     >
       <Link
-        to={disabled ? `/mytbm/paquetes` : `./videos/${classType.handle}`}
+        to={disabled ? `/mycitius/paquetes` : `./videos/${classType.handle}`}
         className="d-block card class-type px-0 py-0"
       >
         <img
