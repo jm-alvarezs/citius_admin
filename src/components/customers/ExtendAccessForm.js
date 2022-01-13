@@ -6,13 +6,13 @@ const ExtendAccessForm = ({ customer, paquetes, extenderAcceso }) => {
   const [dias, setDias] = useState(0);
   const [gift, setGift] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
-  const [bill, setBill] = useState(0);
   const [paquete, setPaquete] = useState(null);
   const [packageID, setpackageID] = useState(null);
 
   useEffect(() => {
     if (paquetes && paquetes !== null && paquete === null) {
       setPaquete(paquetes[0]);
+      setpackageID(paquetes[0].class_package_id);
       setDias(paquetes[0].expiration_days);
     }
   }, [paquetes]);
@@ -30,31 +30,6 @@ const ExtendAccessForm = ({ customer, paquetes, extenderAcceso }) => {
           {paquete.title}
         </option>
       ));
-    }
-  };
-  const renderCambio = () => {
-    if (paymentMethod === 2 && paquete !== null && !gift) {
-      return (
-        <div className="row mb-3">
-          <div className="col-6">
-            <label>Pagó con</label>
-            <input
-              type="number"
-              className="form-control"
-              value={bill}
-              onChange={(e) => setBill(e.target.value)}
-            />
-          </div>
-          <div className="col-6">
-            <label>Cambio</label>
-            <input
-              type="number"
-              className="form-control"
-              value={bill - paquete.price}
-            />
-          </div>
-        </div>
-      );
     }
   };
 

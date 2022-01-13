@@ -22,68 +22,35 @@ const ScheduleWeek = ({ week, location, isHome, filtered }) => {
     return sorted;
   };
 
-  const getDayIndex = () => {
-    const date = moment(day.date);
-    const current = date.startOf("week");
-    let index = 1;
-    for (let i = 0; i < 7; i++) {
-      if (current.isAfter(date)) {
-        index = i + 1;
-        break;
-      }
-      current.add(1, "day");
-    }
-    index += 1;
-    return index;
-  };
-
-  const renderSingleClasses = () => {
-    if (day !== null) {
-      return (
-        <div className="bg-light border shadow-sm p-3 mw-100 ">
-          <div className="schedule-classes-container">
-            {getDetails(day).map((clase) => (
-              <ScheduleClass key={clase.single_class_id} singleClass={clase} />
-            ))}
-          </div>
-        </div>
-      );
-    }
-  };
-  const renderArrow = () => {
-    if (day !== null) {
-      return (
-        <div
-          className="col-7 top-arrow"
-          style={{ paddingLeft: `${getDayIndex() * 105}px` }}
-        ></div>
-      );
-    }
-  };
-
   return (
     <div className="row">
-      {week.map((currentDay, index) => (
-        <ScheduleDay
-          key={index}
-          day={currentDay}
-          clases={getDetails(currentDay).length}
-          location={location}
-          isHome={isHome}
-          filtered={filtered}
-          setDay={() => {
-            if (day !== null) {
-              if (day.date === currentDay.date) {
-                return setDay(null);
-              }
-            }
-            setDay(currentDay);
-          }}
-        />
-      ))}
-      {renderArrow()}
-      <div className="col-7 px-0 position-relative">
-        {renderSingleClasses()}
+      <div className="col-1 col-xl-1 pt-4">
+        <div className="py-4 text-center bg-dark text-white py-4">Horario</div>
+        {new Array(14).fill(1).map((one, index) => (
+          <div className="time-container bg-light py-4">{index + 6} : 00</div>
+        ))}
+      </div>
+      <div className="col-11 col-xl-11">
+        <div className="row h-100">
+          {week.map((currentDay, index) => (
+            <ScheduleDay
+              key={index}
+              day={currentDay}
+              clases={getDetails(currentDay).length}
+              location={location}
+              isHome={isHome}
+              filtered={filtered}
+              setDay={() => {
+                if (day !== null) {
+                  if (day.date === currentDay.date) {
+                    return setDay(null);
+                  }
+                }
+                setDay(currentDay);
+              }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

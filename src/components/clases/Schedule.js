@@ -4,8 +4,8 @@ import moment from "moment";
 import ColorLegend from "../global/ColorLegend";
 
 const Schedule = ({ days, locations, isHome }) => {
+  const [selected, setSelected] = useState(0);
   const [ubicacion, setUbicacion] = useState("");
-
   const [filtered, setFiltered] = useState(true);
 
   const renderdays = () => {
@@ -17,17 +17,14 @@ const Schedule = ({ days, locations, isHome }) => {
           </div>
         );
       }
-      const weeks = Math.ceil(days.length / 7);
-      return new Array(weeks).fill(1).map((one, index) => (
-        <div key={index}>
-          <ScheduleWeek
-            week={days.slice(index * 7, index * 7 + 7)}
-            location={ubicacion}
-            isHome={isHome}
-            filtered={filtered}
-          />
-        </div>
-      ));
+      return (
+        <ScheduleWeek
+          week={days.slice(selected * 7, selected * 7 + 7)}
+          location={ubicacion}
+          isHome={isHome}
+          filtered={filtered}
+        />
+      );
     }
   };
 
@@ -83,21 +80,33 @@ const Schedule = ({ days, locations, isHome }) => {
   return (
     <div className="container-fluid px-0" style={{ overflowX: "hidden" }}>
       <div>
+        <div className="col-12 col-md-6 col-lg-4 col-xl-2 my-2">
+          {renderLocations()}
+          <ColorLegend />
+        </div>
         <div className="row">
-          <div className="col-12 col-md-4 my-2">
-            <h2 className="border-bottom pb-2 mb-3">{renderMonth()}</h2>
-            {renderLocations()}
-            <ColorLegend />
-          </div>
-          <div className="col-12 col-md-8 my-2">
-            <div className="container-fluid schedule-container">
+          <div className="col-12 my-2">
+            <div className="row align-items-center">
+              <div className="col-12 col-md-6">
+                <h2>{renderMonth()}</h2>
+              </div>
+              <div className="col-12 col-md-6">
+                <select
+                  className="form-control mb-3"
+                  value={selected}
+                  onChange={(e) => setSelected(e.target.value)}
+                >
+                  <option value={0}>Semana 1</option>
+                  <option value={1}>Semana 2</option>
+                  <option value={2}>Semana 3</option>
+                  <option value={3}>Semana 4</option>
+                </select>
+              </div>
+            </div>
+            <div className="container-fluid px-1 schedule-container">
               {renderdays()}
             </div>
           </div>
-        </div>
-        <div className="container-fluid px-0 mt-4">
-          <div className="col col-md-6"></div>
-          <div className="col col-md-6 text-end"></div>
         </div>
       </div>
     </div>
