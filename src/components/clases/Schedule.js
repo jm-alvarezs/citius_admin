@@ -79,32 +79,24 @@ const Schedule = ({ days, locations, isHome }) => {
 
   return (
     <div className="container-fluid px-0" style={{ overflowX: "hidden" }}>
-      <div className="row">
-        <div className="col-12 col-xl-2 my-2">
-          {renderLocations()}
-          <ColorLegend />
+      <div className="row align-items-center">
+        <div className="col-8">
+          <h2>{renderMonth()}</h2>
         </div>
-        <div className="col-12 col-xl-10 my-2">
-          <div className="row align-items-center">
-            <div className="col-8">
-              <h2>{renderMonth()}</h2>
-            </div>
-            <div className="col-4">
-              <select
-                className="form-control mb-3"
-                value={selected}
-                onChange={(e) => setSelected(e.target.value)}
-              >
-                <option value={0}>Semana 1</option>
-                <option value={1}>Semana 2</option>
-                <option value={2}>Semana 3</option>
-                <option value={3}>Semana 4</option>
-              </select>
-            </div>
-          </div>
-          <div className="container-fluid px-0">{renderDays()}</div>
+        <div className="col-4">
+          <select
+            className="form-control mb-3"
+            value={selected}
+            onChange={(e) => setSelected(e.target.value)}
+          >
+            <option value={0}>Semana 1</option>
+            <option value={1}>Semana 2</option>
+            <option value={2}>Semana 3</option>
+            <option value={3}>Semana 4</option>
+          </select>
         </div>
       </div>
+      <div className="container-fluid px-0">{renderDays()}</div>
     </div>
   );
 };
