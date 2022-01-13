@@ -64,7 +64,7 @@ const CustomerForm = ({ customer_id }) => {
             value={customer.instagram}
             onChange={(e) => setPropiedadCustomer("instagram", e.target.value)}
           />
-          <label>¿Cómo te enteraste de TBM?</label>
+          <label>¿Cómo te enteraste de Citius?</label>
           <input
             type="text"
             className="form-control mb-3"
