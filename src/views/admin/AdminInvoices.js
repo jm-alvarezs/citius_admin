@@ -1,27 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
 import PanelTitleDate from "../../components/global/PanelTitleDate";
-import { PurchasesContext } from "../../context/PurchasesContext";
 import HeaderRow from "../../components/global/HeaderRow";
-import PurchaseRow from "../../components/purchases/PurchaseRow";
 import Pagination from "../../components/global/Pagination";
+import InvoiceRow from "../../components/invoices/InvoiceRow";
+import { InvoicesContext } from "../../context/InvoicesContext";
 
-const AdminOrdenes = () => {
+const AdminInvoices = () => {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("");
   const [endDate, setEndDate] = useState("");
   const [startDate, setStartDate] = useState("");
 
-  const { spinner, purchases, getPurchases } = useContext(PurchasesContext);
+  const { spinner, invoices, getInvoices } = useContext(InvoicesContext);
 
   useEffect(() => {
     if (startDate !== "" && endDate !== "" && !spinner) {
-      fetchPurchases();
+      fetchInvoices();
     }
   }, [startDate, endDate, page, status, query]);
 
-  const fetchPurchases = () => {
-    getPurchases(startDate, endDate, { page, status, query });
+  const fetchInvoices = () => {
+    getInvoices(startDate, endDate, { page, status, query });
   };
 
   const setDates = (start, end) => {
@@ -29,15 +29,13 @@ const AdminOrdenes = () => {
     setEndDate(end);
   };
 
-  const renderPurchases = () => {
-    if (Array.isArray(purchases)) {
-      if (purchases.length === 0) {
-        return (
-          <p className="mb-0 mx-2 mt-2">No hay pedidos en estas fechas.</p>
-        );
+  const renderInvoices = () => {
+    if (Array.isArray(invoices)) {
+      if (invoices.length === 0) {
+        return <p className="mb-0 mx-2 mt-2">No hay cargos en estas fechas.</p>;
       }
-      return purchases.map((purchase) => (
-        <PurchaseRow key={purchase.purchase_id} purchase={purchase} />
+      return invoices.map((invoice) => (
+        <InvoiceRow key={invoice.invoice_id} invoice={invoice} />
       ));
     }
     return <div className="spinner-border mt-3"></div>;
@@ -45,7 +43,7 @@ const AdminOrdenes = () => {
 
   return (
     <div className="container-fluid">
-      <PanelTitleDate title="Pedidos" callback={setDates} />
+      <PanelTitleDate title="Pagos" callback={setDates} />
       <div className="container-fluid px-0">
         <input
           type="text"
@@ -67,19 +65,19 @@ const AdminOrdenes = () => {
           </button>
           <button
             className={`btn btn-${
-              status === "active" ? "primary" : "light"
+              status === "completed" ? "primary" : "light"
             } border br-0`}
-            onClick={() => setStatus("active")}
+            onClick={() => setStatus("completed")}
           >
-            Activos
+            Completados
           </button>
           <button
             className={`btn btn-${
-              status === "cancelled" ? "primary" : "light"
+              status === "failed" ? "primary" : "light"
             } border br-0`}
-            onClick={() => setStatus("cancelled")}
+            onClick={() => setStatus("failed")}
           >
-            Cancelados
+            Fallidos
           </button>
           <button
             className={`btn btn-${
@@ -92,20 +90,21 @@ const AdminOrdenes = () => {
         </div>
         <HeaderRow
           headers={[
-            "#",
+            "# Cargo",
+            "# Membresía",
             "Paquete",
             "Cliente",
-            "Precio",
+            "Total",
             "Estado",
             "Fecha",
             "Forma de Pago",
           ]}
         />
-        {renderPurchases()}
+        {renderInvoices()}
         <Pagination modifier={setPage} />
       </div>
     </div>
   );
 };
 
-export default AdminOrdenes;
+export default AdminInvoices;

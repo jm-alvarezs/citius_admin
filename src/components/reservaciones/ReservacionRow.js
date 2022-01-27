@@ -39,13 +39,17 @@ const ReservacionRow = ({ reservation }) => {
 
   return (
     <div className="row my-2">
-      <div className="col col-md-3">{reservation.class_type.name}</div>
+      <div className="col col-md-3">
+        {reservation.single_class.class_type.name}
+      </div>
       <div className="col col-md-2">{renderInstructors()}</div>
       <div className="col col-md-2">
-        {moment(reservation.class_date).utc().format("DD MMM HH:mm")}
+        {moment(reservation.single_class.class_date)
+          .utc()
+          .format("DD MMM HH:mm")}
       </div>
       <div className="col col-md-3">
-        {moment(reservation.created_at).format("DD MMM YYYY HH:mm:ss")}
+        {moment(reservation.createdAt).format("DD MMM YYYY HH:mm:ss")}
       </div>
       <div className="col col-md-2">
         {getPaymentMethod(reservation)} {getStatusReservacion(reservation)}

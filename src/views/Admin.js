@@ -19,6 +19,7 @@ import AdminAsistentesEspeciales from "./admin/AdminAsistentesEspeciales";
 import AdminCustomerForm from "./admin/AdminCustomerForm";
 import AdminOrdenes from "./admin/AdminOrdenes";
 import AdminUsuarios from "./admin/AdminUsuarios";
+import AdminCircuitos from "./admin/AdminCircuitos";
 
 const Admin = () => {
   return (
@@ -42,6 +43,7 @@ const Admin = () => {
       <AdminAsistentesEspeciales path="/especiales/:package_id" />
       <AdminOrdenes path="/orders" />
       <AdminUsuarios path="/users" />
+      <AdminCircuitos path="/circuitos" />
     </Router>
   );
 };

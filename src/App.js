@@ -20,6 +20,7 @@ import { VideosProvider } from "./context/VideosContext";
 import { VideoTypeProvider } from "./context/VideoTypeContext";
 import { ProgramsProvider } from "./context/ProgramsContext";
 import { UsersProvider } from "./context/UsersContext";
+import { CircuitProvider } from "./context/CircuitContext";
 
 function App() {
   return (
@@ -44,7 +45,9 @@ function App() {
                                         <VideoTypeProvider>
                                           <ProgramsProvider>
                                             <UsersProvider>
-                                              <Main />
+                                              <CircuitProvider>
+                                                <Main />
+                                              </CircuitProvider>
                                             </UsersProvider>
                                           </ProgramsProvider>
                                         </VideoTypeProvider>

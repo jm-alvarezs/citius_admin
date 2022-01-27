@@ -63,14 +63,14 @@ const AdminClassTypeForm = ({ class_type_id }) => {
             value={color}
             onChange={(e) => setPropiedadClassType("color", e.target.value)}
           />
-          {/*<label>Lugares</label>
+          <label>Lugares</label>
           <input
             type="text"
             className="form-control mb-3"
             placeholder="Número de columnas por fila, separado por comas"
             value={mapa}
             onChange={(e) => setPropiedadClassType("mapa", e.target.value)}
-          />*/}
+          />
           {lugares.length > 0 && <MapaLugares rows={lugares} icon={icon} />}
           <button type="submit" className="btn btn-dark w-100 mt-3">
             Guardar

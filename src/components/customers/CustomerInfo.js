@@ -27,7 +27,13 @@ const CustomerInfo = ({ customer }) => {
     }
   };
 
-  const { name, last_name, birthday, email, phone, instagram_account } =
+  const renderCircuits = () => {
+    if (Array.isArray(customer.available_circuits)) {
+      return customer.available_circuits.length;
+    }
+  };
+
+  const { name, last_name, birthdate, email, phone, instagram_account } =
     customer;
 
   return (
@@ -45,7 +51,7 @@ const CustomerInfo = ({ customer }) => {
               <i className="fa fa-birthday-cake"></i>
             </div>
             <div className="col-11">
-              {moment(birthday).add(1, "day").format("DD MMM YYYY")}
+              {moment(birthdate).utc().format("DD MMM YYYY")}
             </div>
           </div>
           <div className="row">
@@ -74,9 +80,15 @@ const CustomerInfo = ({ customer }) => {
             <div className="col-12 col-md-6">
               <div className="row">
                 <div className="col-6">
-                  <span className="bold">Disponibles: </span>
+                  <span className="bold">Clases Disponibles: </span>
                 </div>
-                <div className="col-6">{renderCustomerClasses}</div>
+                <div className="col-6">{renderCustomerClasses()}</div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <span className="bold">Circuitos Disponibles: </span>
+                </div>
+                <div className="col-6">{renderCircuits()}</div>
               </div>
             </div>
           </div>
