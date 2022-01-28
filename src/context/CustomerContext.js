@@ -120,6 +120,25 @@ export const CustomerProvider = ({ children }) => {
     }
   };
 
+  const redeemCircuit = (
+    customer_id,
+    available_circuit_id,
+    date,
+    circuit_id,
+    instructor_id
+  ) => {
+    CustomerService.redeemCircuit({
+      available_circuit_id,
+      circuit_id,
+      date,
+      instructor_id,
+    }).then(() => {
+      hideModal();
+      getCustomer(customer_id);
+      success("Circuito agendado con éxito");
+    });
+  };
+
   return (
     <CustomerContext.Provider
       value={{
@@ -134,6 +153,7 @@ export const CustomerProvider = ({ children }) => {
         createCustomer,
         postCustomer,
         setPropiedadCustomer,
+        redeemCircuit,
       }}
     >
       {children}

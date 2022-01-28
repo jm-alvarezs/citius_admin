@@ -12,6 +12,8 @@ import InvoiceRow from "../../components/invoices/InvoiceRow";
 import { PurchasesContext } from "../../context/PurchasesContext";
 import RevokeForm from "../../components/purchases/RevokeForm";
 import { hideModal } from "../../utils";
+import CircuitoRow from "../../components/circuitos/CircuitoRow";
+import BookCircuit from "../../components/circuitos/BookCircuit";
 
 const AdminSingleUsuario = ({ customer_id }) => {
   const {
@@ -85,27 +87,22 @@ const AdminSingleUsuario = ({ customer_id }) => {
     );
   };
 
+  const handleBook = (available_circuit) => {
+    modalComponent(
+      "Agendar Circuito",
+      <BookCircuit available_circuit={available_circuit} />
+    );
+  };
+
   const renderCircuitos = () => {
     if (customer && customer !== null) {
       if (Array.isArray(customer.available_circuits)) {
         return customer.available_circuits.map((circuit) => (
-          <div className="row p-2 border-bottom">
-            <div className="col">{circuit.available_circuit_id}</div>
-            <div className="col">
-              {circuit.usedAt !== null ? (
-                <span className="badge bg-success">Reservado</span>
-              ) : (
-                <span className="badge bg-secondary">Disponible</span>
-              )}
-            </div>
-            <div className="col">
-              {circuit.circuit !== null ? circuit.circuit.name : ""}
-            </div>
-            <div className="col">{circuit.class_date}</div>
-            <div className="col">
-              {circuit.instructor !== null ? circuit.instructor.name : ""}
-            </div>
-          </div>
+          <CircuitoRow
+            key={circuit.available_circuit_id}
+            circuit={circuit}
+            handleBook={handleBook}
+          />
         ));
       }
     }
@@ -212,14 +209,23 @@ const AdminSingleUsuario = ({ customer_id }) => {
         {renderInvoices()}
       </div>
       <div className="card no-scale my-3">
-        <h3>Circuitos</h3>
+        <div className="row border-bottom pb-2 mb-2">
+          <div className="col-12 col-md-6">
+            <h3>Circuitos</h3>
+          </div>
+          <div className="col-12 col-md-6 text-right">
+            <button className="btn btn-accent">+ Circuito</button>
+          </div>
+        </div>
         <HeaderRow
           headers={[
             "# Circuito",
             "Estado",
-            "Fecha",
+            "Fecha de Expiración",
+            "Fecha Agendada",
             "Tipo de Circuito",
             "Instructor",
+            "Acciones",
           ]}
         />
         {renderCircuitos()}

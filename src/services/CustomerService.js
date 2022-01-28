@@ -29,6 +29,8 @@ const CustomerService = {
     api.put(`${route}/revokeAccess`, { purchase_id }),
   removeClasses: (customer_id, amount) =>
     api.put(`${route}/removeClasses`, { customer_id, amount }),
+  addCircuit: (circuit) => api.post(`${route}/circuit`, { ...circuit }),
+  redeemCircuit: (circuit) => api.post(`${route}/redeem`, { ...circuit }),
   recoverPassword: (email) => api.post(`${route}/recover`, { email }),
 };
 
