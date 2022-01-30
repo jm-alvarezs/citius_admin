@@ -223,8 +223,6 @@ const AdminSingleUsuario = ({ customer_id }) => {
             "Estado",
             "Fecha de Expiración",
             "Fecha Agendada",
-            "Tipo de Circuito",
-            "Instructor",
             "Acciones",
           ]}
         />
