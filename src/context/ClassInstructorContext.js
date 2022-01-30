@@ -47,8 +47,8 @@ export const ClassInstructorProvider = ({ children }) => {
     });
   };
 
-  const getSchedule = () => {
-    ClassInstructorService.getWeeks().then((res) => {
+  const getSchedule = (start_date, end_date) => {
+    ClassInstructorService.getWeeks(start_date, end_date).then((res) => {
       const { classes } = res.data;
       dispatch({ type: SEMANAS_RECIBIDAS, payload: classes });
     });

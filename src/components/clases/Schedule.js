@@ -1,25 +1,63 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ScheduleWeek from "./ScheduleWeek";
 import moment from "moment";
 import ColorLegend from "../global/ColorLegend";
+import { ClassInstructorContext } from "../../context/ClassInstructorContext";
 
-const Schedule = ({ days, locations, isHome }) => {
+const Schedule = ({ locations, isHome }) => {
   const [selected, setSelected] = useState(0);
   const [ubicacion, setUbicacion] = useState("");
   const [filtered, setFiltered] = useState(true);
+  const [currentWeek, setCurrentWeek] = useState(0);
+  const [weeks, setWeeks] = useState("");
+  const [month, setMonth] = useState(moment().month());
+
+  const { days, getSchedule } = useContext(ClassInstructorContext);
+
+  useEffect(() => {
+    const start_date = moment(month + 1, "M")
+      .startOf("month")
+      .format("YYYY-MM-DD");
+    const end_date = moment(month + 1, "M")
+      .endOf("month")
+      .format("YYYY-MM-DD");
+    getSchedule(start_date, end_date);
+  }, [month]);
+
+  useEffect(() => {
+    if (Array.isArray(days)) {
+      setWeeks(Math.ceil(days.length / 7));
+      if (month === moment().month()) {
+        const startCurrentWeek = moment().startOf("week");
+        const currentDays = days.filter((day) =>
+          moment(day.date).isAfter(startCurrentWeek)
+        );
+        const currentWeekIndex = Math.abs(
+          parseInt((days.length - currentDays.length) / 7) - weeks
+        );
+        setCurrentWeek(currentWeekIndex);
+        if (currentWeekIndex > 0) {
+          setSelected(currentWeekIndex);
+        }
+      } else {
+        setSelected(0);
+      }
+    }
+  }, [days]);
 
   const renderDays = () => {
-    if (days && days !== null) {
-      if (!hasClases()) {
+    if (days && days !== null && weeks !== "") {
+      const week = days.slice(selected * 7, selected * 7 + 7);
+      if (!hasClases(week)) {
         return (
           <div className="row">
-            <p className="px-0 mb-0">No hay clases presenciales programadas.</p>
+            <p className="px-0 mb-0 text-center">No hay clases programadas.</p>
           </div>
         );
       }
       return (
         <ScheduleWeek
-          week={days.slice(selected * 7, selected * 7 + 7)}
+          week={week}
           location={ubicacion}
           isHome={isHome}
           filtered={filtered}
@@ -61,7 +99,7 @@ const Schedule = ({ days, locations, isHome }) => {
     }
   };
 
-  const hasClases = () => {
+  const hasClases = (days) => {
     if (days && days !== null) {
       let total = 0;
       days.forEach((day) => {
@@ -71,32 +109,78 @@ const Schedule = ({ days, locations, isHome }) => {
     }
   };
 
-  const renderMonth = () => {
-    if (days && days !== null) {
-      return moment(days[0].date).format("MMM");
-    }
-  };
-
   return (
-    <div className="container-fluid px-0" style={{ overflowX: "hidden" }}>
-      <div className="row align-items-center">
-        <div className="col-8">
-          <h2>{renderMonth()}</h2>
+    <div
+      className="container-fluid px-0 hide-mobile"
+      style={{ overflowX: "hidden" }}
+    >
+      <div className="row">
+        <div className="col-12 col-xl-2 my-2">
+          <div className="row align-items-center mb-4">
+            <div className="col-4">
+              <button
+                className="btn btn-light border"
+                disabled={month === 0}
+                onClick={() => {
+                  if (month > 0) {
+                    setMonth(month - 1);
+                  }
+                }}
+              >
+                <i className="fa fa-chevron-left"></i>
+              </button>
+            </div>
+            <div className="col-4">
+              <h2 className="mb-0">{moment(month + 1, "M").format("MMM")}</h2>
+            </div>
+            <div className="col-4 text-right">
+              <button
+                className="btn btn-light border"
+                disabled={month === 11}
+                onClick={() => setMonth(month + 1)}
+              >
+                <i className="fa fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+          {renderLocations()}
+          <ColorLegend />
         </div>
-        <div className="col-4">
-          <select
-            className="form-control mb-3"
-            value={selected}
-            onChange={(e) => setSelected(e.target.value)}
-          >
-            <option value={0}>Semana 1</option>
-            <option value={1}>Semana 2</option>
-            <option value={2}>Semana 3</option>
-            <option value={3}>Semana 4</option>
-          </select>
+        <div className="col-12 col-xl-10 my-2">
+          <div className="row mb-4 align-items-center">
+            <div className="col-4 text-center">
+              <button
+                className="btn btn-light btn-lg shadow-sm border"
+                disabled={selected === currentWeek}
+                onClick={() => {
+                  if (selected > currentWeek) {
+                    setSelected(selected - 1);
+                  }
+                }}
+              >
+                <i className="fa fa-chevron-left"></i>
+              </button>
+            </div>
+            <div className="col-4 text-center">
+              <h4 className="mb-0">Semana {selected + 1}</h4>
+            </div>
+            <div className="col-4 text-center">
+              <button
+                className="btn btn-light btn-lg shadow-sm border"
+                disabled={selected === weeks - 1}
+                onClick={() => {
+                  if (selected < weeks - 1) {
+                    setSelected(selected + 1);
+                  }
+                }}
+              >
+                <i className="fa fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+          <div className="container-fluid ps-0">{renderDays()}</div>
         </div>
       </div>
-      <div className="container-fluid px-0">{renderDays()}</div>
     </div>
   );
 };

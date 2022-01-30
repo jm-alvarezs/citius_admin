@@ -16,7 +16,7 @@ const AdminClases = () => {
   const { modalComponent } = useContext(ModalContext);
 
   useEffect(() => {
-    getSchedule();
+    //getSchedule();
     getLocations();
   }, []);
 

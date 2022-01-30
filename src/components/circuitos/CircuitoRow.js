@@ -18,12 +18,9 @@ const CircuitoRow = ({ circuit, handleBook, handleCancel, handleEdit }) => {
           <i className="fa fa-edit"></i>
         </button>
       </div>
-      <div className="col">{moment(circuit.usedAt).format("DD MMM YYYY")}</div>
       <div className="col">
-        {circuit.circuit !== null ? circuit.circuit.name : ""}
-      </div>
-      <div className="col">
-        {circuit.instructor !== null ? circuit.instructor.name : ""}
+        {circuit.usedAt !== null &&
+          moment(circuit.usedAt).format("DD MMM YYYY")}
       </div>
       <div className="col">
         {circuit.usedAt === null ? (

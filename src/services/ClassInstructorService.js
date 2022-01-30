@@ -3,7 +3,8 @@ import api from "./api";
 const route = "/single_class";
 
 const ClassInstructorService = {
-  getWeeks: () => api.get(route),
+  getWeeks: (start_date, end_date) =>
+    api.get(`${route}?start_date=${start_date}&end_date=${end_date}`),
   getClase: (single_class_id) => api.get(`${route}/single/${single_class_id}`),
   getClases: (startDate, endDate) =>
     api.get(`${route}/admin?start_date=${startDate}&end_date=${endDate}`),
