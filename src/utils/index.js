@@ -32,9 +32,9 @@ export const displayError = (dispatch, error) => {
 export const BASE_URL =
   (process.env.NODE_ENV === "development"
     ? "http://localhost:4000"
-    : "https://thebodymethod.mx") + "/api";
+    : "https://citiusmx.com") + "/api";
 
-export const S3_ENDPOINT = "https://thebodymethod.sfo3.digitaloceanspaces.com";
+export const S3_ENDPOINT = "https://citius.sfo3.digitaloceanspaces.com";
 
 export const durations = [
   "10 a 19 minutos",
