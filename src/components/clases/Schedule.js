@@ -27,7 +27,7 @@ const Schedule = ({ locations, isHome }) => {
   useEffect(() => {
     if (Array.isArray(days)) {
       setWeeks(Math.ceil(days.length / 7));
-      if (month === moment().month()) {
+      /*if (month === moment().month()) {
         const startCurrentWeek = moment().startOf("week");
         const currentDays = days.filter((day) =>
           moment(day.date).isAfter(startCurrentWeek)
@@ -41,7 +41,7 @@ const Schedule = ({ locations, isHome }) => {
         }
       } else {
         setSelected(0);
-      }
+      }*/
     }
   }, [days]);
 
