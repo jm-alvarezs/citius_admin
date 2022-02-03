@@ -119,6 +119,8 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
     modifier("class_date", `${date}T${hourString}:${minutes}`);
   };
 
+  //New input
+
   const handleChangeMinutes = (minutes) => {
     let minuteString = String(minutes);
     if (minuteString.length === 1) {
