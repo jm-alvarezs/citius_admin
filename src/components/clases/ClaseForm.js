@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import DateTimePicker from "react-datetime-picker";
 import { ClassInstructorContext } from "../../context/ClassInstructorContext";
 import { CoachesContext } from "../../context/CoachesContext";
 import { LocationsContext } from "../../context/LocationsContext";
-import moment, { utc } from "moment";
+import moment from "moment";
 import { PackagesContext } from "../../context/PackageContext";
 import { ClassTypeContext } from "../../context/ClassTypesContext";
 
@@ -15,6 +14,7 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
   const [location, setLocation] = useState("");
   const [coach, setCoach] = useState("");
   const [current_id, setCurrent_id] = useState(null);
+  const [first, setFirst] = useState(false);
 
   const { clase, clearClase, getClase, postClase, createClase } = useContext(
     ClassInstructorContext
@@ -34,7 +34,26 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
     getClassTypes();
     getLocations();
     getCoaches();
+    return () => {
+      setFirst(false);
+    };
   }, []);
+
+  useEffect(() => {
+    if (!first && clase !== null) {
+      if (Array.isArray(clase.class_instructors)) {
+        if (clase.class_instructors.length > 0) {
+          modifier("instructor_id", clase.class_instructors[0].instructor_id);
+        }
+      }
+      setFirst(true);
+
+      modifier(
+        "class_date",
+        moment(clase.class_date).utc().format("YYYY-MM-DDTHH:mm")
+      );
+    }
+  }, [clase]);
 
   const getCurrenClase = () => {
     if (isNaN(single_class_id)) {
@@ -80,6 +99,42 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
       ...clase,
       class_date: moment(clase.class_date).format("YYYY-MM-DD HH:mm:ss"),
     });
+  };
+
+  const handleChangeHour = (hour) => {
+    let hourString = String(hour);
+    if (hourString.length === 1) {
+      hourString = `0${hourString}`;
+    } else if (hourString.length > 2) {
+      if (hourString[0] === "0") {
+        hourString = hourString.substr(1);
+      } else {
+        hourString = hourString.substr(0, 2);
+      }
+    }
+    if (parseInt(hourString) > 23) hourString = "23";
+    if (parseInt(hourString) < 0) hourString = "0";
+    const date = clase.class_date.split("T")[0];
+    const minutes = clase.class_date.split("T")[1].split(":")[1];
+    modifier("class_date", `${date}T${hourString}:${minutes}`);
+  };
+
+  const handleChangeMinutes = (minutes) => {
+    let minuteString = String(minutes);
+    if (minuteString.length === 1) {
+      minuteString = `0${minuteString}`;
+    } else if (minuteString.length > 2) {
+      if (minuteString[0] === "0") {
+        minuteString = minuteString.substr(1);
+      } else {
+        minuteString = minuteString.substr(0, 2);
+      }
+    }
+    if (parseInt(minuteString) > 59) minuteString = "23";
+    if (parseInt(minuteString) < 0) minuteString = "0";
+    const date = clase.class_date.split("T")[0];
+    const hours = clase.class_date.split("T")[1].split(":")[0];
+    modifier("class_date", `${date}T${hours}:${minuteString}`);
   };
 
   const renderCoaches = () => {
@@ -132,7 +187,7 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
       return [{ title: "No es evento especial" }]
         .concat(paquetes)
         .map((paquete) => (
-          <option value={paquete.package_id}>{paquete.title}</option>
+          <option value={paquete.class_package_id}>{paquete.title}</option>
         ));
     }
   };
@@ -191,14 +246,47 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
             value={description}
             onChange={(e) => modifier("description", e.target.value)}
           />
-          <label>Fecha y Hora</label>
-          <DateTimePicker
-            onChange={(date) => modifier("class_date", date)}
-            value={
-              class_date === "" ? class_date : moment(class_date).utc().toDate()
-            }
-            className="form-control mb-3"
-          />
+          <div className="row mb-3">
+            <div className="col-6">
+              <label className="mb-1">Fecha</label>
+              <input
+                type="date"
+                className="form-control"
+                value={class_date.split("T")[0]}
+                onChange={(e) =>
+                  modifier(
+                    "class_date",
+                    `${e.target.value}T${class_date.split("T")[1]}`
+                  )
+                }
+              />
+            </div>
+            <div className="col-6">
+              <label className="mb-1">Hora (0h - 23h)</label>
+              <div className="row">
+                <div className="col-6">
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={class_date.split("T")[1].split(":")[0]}
+                    onChange={(e) => handleChangeHour(e.target.value)}
+                    max={23}
+                    min={0}
+                  />
+                </div>
+                <div className="col-6">
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={class_date.split("T")[1].split(":")[1]}
+                    max={59}
+                    min={0}
+                    onChange={(e) => handleChangeMinutes(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
           <label>Coach</label>
           <div className="row">
             <div className="col col-md-6">
