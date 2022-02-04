@@ -64,7 +64,7 @@ const PaqueteForm = ({ spinner, paquete, modifier, postPaquete }) => {
               checked={paquete.is_subscription}
               onChange={(checked) => {
                 modifier("is_subscription", checked);
-                if (checkeds) addDefaultPeriod();
+                if (checked) addDefaultPeriod();
               }}
             />
           </div>
