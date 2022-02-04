@@ -8,6 +8,17 @@ const PaqueteForm = ({ spinner, paquete, modifier, postPaquete }) => {
     postPaquete(paquete);
   };
 
+  const addDefaultPeriod = () => {
+    if (
+      paquete.is_subscription &&
+      (paquete.subscription_period === null ||
+        !paquete.subscription_period ||
+        paquete.subscription_period === "")
+    ) {
+      modifier("subscription_period", "month");
+    }
+  };
+
   const {
     title,
     short_description,
@@ -51,7 +62,10 @@ const PaqueteForm = ({ spinner, paquete, modifier, postPaquete }) => {
           <div className="col-6">
             <Switch
               checked={paquete.is_subscription}
-              onChange={(checked) => modifier("is_subscription", checked)}
+              onChange={(checked) => {
+                modifier("is_subscription", checked);
+                if (checkeds) addDefaultPeriod();
+              }}
             />
           </div>
         </div>
