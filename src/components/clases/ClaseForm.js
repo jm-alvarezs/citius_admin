@@ -36,6 +36,7 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
     getCoaches();
     return () => {
       setFirst(false);
+      clearClase();
     };
   }, []);
 
@@ -47,7 +48,6 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
         }
       }
       setFirst(true);
-
       modifier(
         "class_date",
         moment(clase.class_date).utc().format("YYYY-MM-DDTHH:mm")
@@ -95,9 +95,11 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
         name: location,
       };
     }
+    let class_date = moment(clase.class_date).format("YYYY-MM-DD HH:mm:ss");
+    console.log(class_date);
     postClase({
       ...clase,
-      class_date: moment(clase.class_date).format("YYYY-MM-DD HH:mm:ss"),
+      class_date,
     });
   };
 

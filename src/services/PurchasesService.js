@@ -11,6 +11,8 @@ const PurchasesService = {
       )}`
     ),
   getPurchase: (purchase_id) => api.get(`${route}/${purchase_id}`),
+  cancelPurchase: (purchase_id, reason) =>
+    api.post(`${route}/cancel/${purchase_id}`, { reason }),
 };
 
 export default PurchasesService;
