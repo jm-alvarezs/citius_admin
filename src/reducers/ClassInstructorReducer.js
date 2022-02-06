@@ -1,3 +1,4 @@
+import moment from "moment";
 import {
   CLASES_RECIBIDAS,
   CLASS_TYPES_RECIBIDOS,
@@ -37,7 +38,13 @@ const ClassInstructorReducer = (state, { type, payload }) => {
       clase[key] = value;
       return { ...state, clase };
     case CREATE_CLASE:
-      return { ...state, clase: schema };
+      return {
+        ...state,
+        clase: {
+          ...schema,
+          class_date: moment().format("YYYY-MM-DDTHH:mm:ss"),
+        },
+      };
     case CLASS_TYPES_RECIBIDOS:
       return { ...state, class_types: payload };
     case CLASES_RECIBIDAS:
