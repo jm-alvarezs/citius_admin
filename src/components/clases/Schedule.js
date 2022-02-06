@@ -28,14 +28,15 @@ const Schedule = ({ locations, isHome }) => {
 
   useEffect(() => {
     if (Array.isArray(days)) {
-      setWeeks(Math.ceil(days.length / 7));
+      const weeksNumber = Math.ceil(days.length / 7);
+      setWeeks(weeksNumber);
       if (month === moment().month()) {
         const startCurrentWeek = moment().startOf("week");
         const currentDays = days.filter((day) =>
           moment(day.date).isAfter(startCurrentWeek)
         );
         const currentWeekIndex = Math.abs(
-          parseInt((days.length - currentDays.length) / 7) - weeks
+          parseInt((days.length - currentDays.length) / 7)
         );
         setCurrentWeek(currentWeekIndex);
         if (currentWeekIndex > 0) {
