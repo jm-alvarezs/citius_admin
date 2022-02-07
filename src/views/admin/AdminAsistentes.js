@@ -9,6 +9,7 @@ import ClaseForm from "../../components/clases/ClaseForm";
 import HeaderRow from "../../components/global/HeaderRow";
 import moment from "moment";
 import { ReservationsContext } from "../../context/ReservationsContext";
+import MapaLugares from "../../components/clases/MapaLugares";
 
 const AdminAsistentes = ({ single_class_id }) => {
   const {
@@ -139,7 +140,16 @@ const AdminAsistentes = ({ single_class_id }) => {
               </button>
             </div>
           </div>
-          <div className="col col-md-6"></div>
+          <div className="col col-md-6">
+            {clase.class_type.spot_map !== null && (
+              <MapaLugares
+                rows={clase.class_type.spot_map
+                  .split(",")
+                  .map((number) => parseInt(number))}
+                taken_spots={clase.asistentes.map(({ spot }) => spot)}
+              />
+            )}
+          </div>
         </div>
       );
     }
@@ -150,7 +160,9 @@ const AdminAsistentes = ({ single_class_id }) => {
     <div className="contiainer-fluid">
       <PanelTitle title="Clase Presencial" onClick={addAsistente} />
       <div className="card p-3 shadow-sm no-scale">{renderClase()}</div>
-      <HeaderRow headers={["Nombre", "Instagram", "Teléfono", "Acciones"]} />
+      <HeaderRow
+        headers={["Nombre", "Instagram", "Teléfono", "Lugar", "Acciones"]}
+      />
       {renderAsistentes()}
     </div>
   );

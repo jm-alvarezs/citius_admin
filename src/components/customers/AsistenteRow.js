@@ -16,9 +16,9 @@ const AsistenteRow = ({
   };
 
   return (
-    <div className="card p-3 my-2 no-scale">
-      <div className="row">
-        <div className="col-md-3 my-2">
+    <div className="card p-2 no-scale">
+      <div className="row align-items-center">
+        <div className="col my-2">
           {asistente.birthday &&
             asistente.birthday !== null &&
             moment(asistente.birthday).format("YYYY-MM-DD") ===
@@ -27,12 +27,12 @@ const AsistenteRow = ({
             )}
           {asistente.customer.name} {asistente.customer.last_name}
         </div>
-        <div className="col-md-3 my-2">
+        <div className="col my-2">
           <i className="fab fa-instagram me-2"></i>
           {"@"}
           {asistente.instagram}
         </div>
-        <div className="col-md-3 my-2">
+        <div className="col my-2">
           <button
             className="me-2  btn btn-success"
             onClick={() => sendWhatsApp(asistente.phone)}
@@ -41,8 +41,9 @@ const AsistenteRow = ({
           </button>
           {asistente.phone}
         </div>
+        <div className="col my-2">{asistente.spot}</div>
         {!is_special_event && (
-          <div className="col-md-3 my-2">
+          <div className="col my-2">
             <button
               className={`btn btn-${
                 !asistente.attend ? "outline-secondary" : "link text-dark"

@@ -470,7 +470,7 @@ body {
 }
 
 .text-accent {
-  color: var(--primary);
+  color: var(--accent);
 }
 
 .text-left {
