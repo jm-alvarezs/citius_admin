@@ -4,6 +4,7 @@ import {
   PAQUETES_RECIBIDOS,
   RESERVATIONS_RECIBIDAS,
   COACHES_RECIBIDAS,
+  MENSUALES_RECIBIDOS,
 } from "../types";
 
 const AnaliticasReducer = (state, { type, payload }) => {
@@ -18,6 +19,8 @@ const AnaliticasReducer = (state, { type, payload }) => {
       return { ...state, ...payload };
     case COACHES_RECIBIDAS:
       return { ...state, instructores: payload };
+    case MENSUALES_RECIBIDOS:
+      return { ...state, ...payload };
     default:
       return { ...state };
   }

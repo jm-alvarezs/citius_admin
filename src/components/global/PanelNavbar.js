@@ -74,62 +74,57 @@ const PanelNavbar = ({ user, signOut }) => {
                 Órdenes
               </Link>
             </li>
-            <li className="nav-item text-item">
-              <Link to="/myadmin/analytics" className="nav-link">
+
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#analiticasDropdown"
+                role="button"
+                data-bs-toggle="collapse"
+                aria-expanded="false"
+                aria-controls="analiticasDropdown"
+              >
                 Analíticas
-              </Link>
+              </a>
+              <ul className="collapse collapse-menu" id="analiticasDropdown">
+                <li className="nav-item text-item">
+                  <Link to="/myadmin/analytics/inscritos" className="nav-link">
+                    Inscritos
+                  </Link>
+                </li>
+                <li className="nav-item text-item">
+                  <Link to="/myadmin/analytics/ingresos" className="nav-link">
+                    Ingresos
+                  </Link>
+                </li>
+                <li className="nav-item text-item">
+                  <Link
+                    to="/myadmin/analytics/instructores"
+                    className="nav-link"
+                  >
+                    Instructores
+                  </Link>
+                </li>
+                <li className="nav-item text-item">
+                  <Link to="/myadmin/analytics/paquetes" className="nav-link">
+                    Paquetes
+                  </Link>
+                </li>
+                <li className="nav-item text-item">
+                  <Link
+                    to="/myadmin/analytics/reservaciones"
+                    className="nav-link"
+                  >
+                    Reservaciones
+                  </Link>
+                </li>
+                <li className="nav-item text-item">
+                  <Link to="/myadmin/analytics/mensuales" className="nav-link">
+                    Mensuales
+                  </Link>
+                </li>
+              </ul>
             </li>
-            {user !== null && user.isAdmin && (
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  id="navbarAnaliticas"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Analiticas
-                </a>
-                <ul
-                  className="dropdown-menu"
-                  aria-labelledby="navbarAnaliticas"
-                >
-                  <li>
-                    <Link to="./analiticas/inscritos" className="dropdown-item">
-                      Inscritos
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="./analiticas/ingresos" className="dropdown-item">
-                      Ventas
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="./analiticas/reservaciones"
-                      className="dropdown-item"
-                    >
-                      Reservaciones
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="./analiticas/inscritos" className="dropdown-item">
-                      Coaches
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="./analiticas/inscritos" className="dropdown-item">
-                      Clases
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="./analiticas/inscritos" className="dropdown-item">
-                      Paquetes
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-            )}
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"

@@ -5,9 +5,9 @@ import { BASE_URL } from "../../utils";
 
 const AnaliticasInstructores = () => {
   const [inicio, setInicio] = useState(
-    moment().subtract(30, "days").format("YYYY-MM-DD")
+    moment().startOf("month").format("YYYY-MM-DD")
   );
-  const [fin, setFin] = useState(moment().format("YYYY-MM-DD"));
+  const [fin, setFin] = useState(moment().endOf("month").format("YYYY-MM-DD"));
   const { instructores, getInstructores, clearInstructores } =
     useContext(AnaliticasContext);
 
@@ -22,13 +22,15 @@ const AnaliticasInstructores = () => {
 
   const renderInstructores = () => {
     if (instructores && instructores !== null) {
-      return instructores.map((instructores) => (
-        <div className="row my-2">
-          <div className="col-12 col-md-4 bold">{instructores.first_name}</div>
-          <div className="col-12 col-md-4">{instructores.reservados}</div>
-          <div className="col-12 col-md-4">{instructores.asistentes}</div>
-        </div>
-      ));
+      return instructores
+        .filter((instructor) => instructor.name !== null)
+        .map((instructores) => (
+          <div className="row my-2">
+            <div className="col-12 col-md-4 bold">{instructores.name}</div>
+            <div className="col-12 col-md-4">{instructores.booked}</div>
+            <div className="col-12 col-md-4">{instructores.attended}</div>
+          </div>
+        ));
     }
   };
 

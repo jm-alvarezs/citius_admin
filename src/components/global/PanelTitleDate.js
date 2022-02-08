@@ -3,10 +3,10 @@ import moment from "moment";
 
 const PanelTitleDate = ({ title, callback }) => {
   const [startDate, setStartDate] = useState(
-    moment().startOf("week").format("YYYY-MM-DD")
+    moment().startOf("month").format("YYYY-MM-DD")
   );
   const [endDate, setEndDate] = useState(
-    moment().startOf("week").add(2, "weeks").format("YYYY-MM-DD")
+    moment().endOf("month").format("YYYY-MM-DD")
   );
 
   useEffect(() => {
@@ -17,10 +17,10 @@ const PanelTitleDate = ({ title, callback }) => {
 
   return (
     <div className="row mx-0 align-items-center mb-3 pb-3 border-bottom">
-      <div className="col col-md-6 px-0">
+      <div className="col col-md-6">
         <h1 className="h2 bold mb-0">{title}</h1>
       </div>
-      <div className="col col-md-6 px-0 text-end">
+      <div className="col col-md-6text-end">
         <div className="row">
           <div className="col-12 col-md-6">
             <input

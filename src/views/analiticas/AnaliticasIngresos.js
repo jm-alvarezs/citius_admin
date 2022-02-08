@@ -1,103 +1,77 @@
-import moment from "moment";
 import React, { useContext, useEffect } from "react";
 import { AnaliticasContext } from "../../context/AnaliticasContext";
-import Chart from "react-apexcharts";
+import PanelTitleDate from "../../components/global/PanelTitleDate";
 import { formatMonto } from "../../utils";
+import HeaderRow from "../../components/global/HeaderRow";
+import Chart from "react-apexcharts";
 
 const AnaliticasIngresos = () => {
-  const { ingresosMensuales, proyeccionMes, metodosPago, getIngresos } =
+  const { income, payment_methods, getIngresos } =
     useContext(AnaliticasContext);
 
   useEffect(() => {
     getIngresos();
   }, []);
 
-  const renderProyeccion = () => {
-    if (proyeccionMes && proyeccionMes !== null) {
-      return (
-        <>
-          <div className="row">
-            <div className="col-12 col-md-6">
-              <p>Compras:</p>
-            </div>
-            <div className="col-12 col-md-6">{proyeccionMes.compras}</div>
-          </div>
-
-          <div className="row">
-            <div className="col-12 col-md-6">
-              <p>Ingresos:</p>
-            </div>
-            <div className="col-12 col-md-6">
-              {"$"}
-              {formatMonto(proyeccionMes.ingresosTotales)}
-            </div>
-          </div>
-        </>
-      );
-    }
+  const datesCallback = (start_date, end_date) => {
+    getIngresos(start_date, end_date);
   };
 
-  const renderIngresosMensuales = () => {
-    if (ingresosMensuales && ingresosMensuales !== null) {
-      const data = new Array(12).fill(1);
-      data.forEach((one, index) => {
-        const month = ingresosMensuales.find((mes) => mes.idMes === index + 1);
-        if (month) {
-          data[index] = {
-            total: month.total,
-            mes: moment(index + 1, "MM").format("MMM"),
-          };
-        } else {
-          data[index] = {
-            total: 0,
-            mes: moment(index + 1, "MM").format("MMM"),
-          };
-        }
+  const renderChart = () => {
+    if (Array.isArray(payment_methods)) {
+      let total = 0;
+      payment_methods.forEach((payment_method) => {
+        total += parseFloat(payment_method.total);
       });
+      const data = payment_methods.map((payment_method) => ({
+        ...payment_method,
+        porcentaje: parseFloat(payment_method.total) / parseFloat(total),
+      }));
       return (
         <Chart
-          type="area"
+          type="donut"
+          height="415"
+          width="100%"
           options={{
-            colors: ["#dec1a1"],
-            dataLabels: {
-              formatter: (val, opts) => {
-                return `$${formatMonto(val)}`;
-              },
-            },
-            xaxis: {
-              categories: [
-                "Ene",
-                "Feb",
-                "Mar",
-                "Abr",
-                "May",
-                "Jun",
-                "Jul",
-                "Ago",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dic",
-              ],
-            },
+            labels: data.map(({ name }) => name),
           }}
-          series={[
-            { name: "Ingresos por Mes", data: data.map(({ total }) => total) },
-          ]}
+          series={data.map(({ porcentaje }) => porcentaje)}
         />
       );
     }
   };
 
+  const renderIngresos = () => {
+    if (income && income !== null) {
+      return (
+        <h4 className="h1 normal">
+          {"$"}
+          {formatMonto(income.total)}
+        </h4>
+      );
+    }
+    return <div className="spinner-border"></div>;
+  };
+
+  const renderPayments = () => {
+    if (income && income !== null) {
+      return <h4 className="h1 normal">{income.payments}</h4>;
+    }
+    return <div className="spinner-border"></div>;
+  };
+
   const renderMetodos = () => {
-    if (metodosPago && metodosPago !== null) {
-      return metodosPago.map((metodo) => (
-        <div key={metodo.name} className="row">
-          <div className="col-6 col-md-6">
-            <p>{metodo.name}</p>
-          </div>
-          <div className="col-6 col-md-6">
-            <p>{metodo.count}</p>
+    if (payment_methods && payment_methods !== null) {
+      return payment_methods.map((metodo) => (
+        <div
+          key={metodo.name}
+          className="row p-2 mx-0 align-items-center border-bottom"
+        >
+          <div className="col-4">{metodo.name}</div>
+          <div className="col-4">{metodo.payments}</div>
+          <div className="col-4">
+            {"$"}
+            {formatMonto(metodo.total)}
           </div>
         </div>
       ));
@@ -106,18 +80,37 @@ const AnaliticasIngresos = () => {
 
   return (
     <div className="container-fluid px-0">
-      <h2 className="border-bottom pb-3 mb-3">Ingresos</h2>
+      <PanelTitleDate title="Ingresos" callback={datesCallback} />
       <div className="row">
         <div className="col-12 col-md-6">
-          <div className="card p-3 no-scale">
-            <h3>Ingresos Mensuales</h3>
-            {renderIngresosMensuales()}
+          <div className="row">
+            <div className="col-12 col-md-6">
+              <div className="card shadow-sm p-3 no-scale">
+                <h3>Ingresos Totales</h3>
+                {renderIngresos()}
+              </div>
+            </div>
+            <div className="col-12 col-md-6">
+              <div className="card shadow-sm p-3 no-scale">
+                <h3>Pagos Totales</h3>
+                {renderPayments()}
+              </div>
+            </div>
+          </div>
+          <div className="row mt-3">
+            <div className="container-fluid">
+              <div className="card shadow-sm p-3 no-scale pb-4">
+                <h3>Métodos de Pago</h3>
+                <HeaderRow headers={["Nombre", "Pagos", "Total"]} />
+                {renderMetodos()}
+              </div>
+            </div>
           </div>
         </div>
         <div className="col-12 col-md-6">
-          <div className="card p-3 no-scale my-2">
-            <h3>Métodos de Pago {moment().add(1, "month").format("MMM")}</h3>
-            {renderMetodos()}
+          <div className="card shadow-sm p-3 no-scale">
+            <h3>Ingresos por Métodos de Pago</h3>
+            {renderChart()}
           </div>
         </div>
       </div>

@@ -1,17 +1,18 @@
 import api from "./api";
 
-const route = "/analiticas";
+const route = "/analytics";
 
 const AnaliticasService = {
-  getInscritos: () => api.get(`${route}/inscritos`),
-  getPaquetes: () => api.get(`${route}/paquetes`),
-  getIngresos: () => api.get(`${route}/ingresos`),
+  getInscritos: () => api.get(`${route}/customers`),
+  getPaquetes: () => api.get(`${route}/purchases`),
+  getIngresos: () => api.get(`${route}/income`),
   getInstructores: (fecha_inicio, fecha_fin) =>
     api.get(
-      `${route}/instructores?fecha_inicio=${fecha_inicio}&fecha_fin=${fecha_fin}`
+      `${route}/instructors?start_date=${fecha_inicio}&end_date=${fecha_fin}`
     ),
   getVideos: () => api.get(`${route}/videos`),
-  getReservaciones: () => api.get(`${route}/reservaciones`),
+  getMensuales: () => api.get(`${route}/monthly`),
+  getReservaciones: () => api.get(`${route}/reservations`),
 };
 
 export default AnaliticasService;
