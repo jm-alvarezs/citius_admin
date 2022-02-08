@@ -25,7 +25,7 @@ const ScheduleWeek = ({ week, location, isHome, filtered }) => {
   };
 
   const renderRows = () => {
-    return new Array(36)
+    return new Array(48)
       .fill(1)
       .map((one, index) => {
         const time = renderTime(index);
