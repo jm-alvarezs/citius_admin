@@ -18,7 +18,7 @@ const ScheduleWeek = ({ week, location, isHome, filtered }) => {
   };
 
   const renderTime = (index) => {
-    const initial = moment().startOf("day").add(6, "hours");
+    const initial = moment().startOf("day");
     const minutes = index * 30;
     initial.add(minutes, "minutes");
     return initial.format("HH : mm");
