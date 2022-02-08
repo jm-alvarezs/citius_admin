@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { DiscountsContext } from "../../context/DiscountsContext";
 import Switch from "react-switch";
 import { hideModal } from "../../utils";
+import moment from "moment";
 
 const DescuentoForm = ({ discount_id }) => {
   const [type, setType] = useState(1);
@@ -29,7 +30,6 @@ const DescuentoForm = ({ discount_id }) => {
   const renderForm = () => {
     if (descuento && descuento !== null) {
       const {
-        title,
         code,
         description,
         start_date,
@@ -92,7 +92,7 @@ const DescuentoForm = ({ discount_id }) => {
           <input
             type="date"
             className="form-control mb-3"
-            value={start_date}
+            value={moment(start_date).utc().format("YYYY-MM-DD")}
             onChange={(e) =>
               setPropiedadDescuento("start_date", e.target.value)
             }
@@ -101,7 +101,7 @@ const DescuentoForm = ({ discount_id }) => {
           <input
             type="date"
             className="form-control mb-3"
-            value={expiration_date}
+            value={moment(expiration_date).utc().format("YYYY-MM-DD")}
             onChange={(e) =>
               setPropiedadDescuento("expiration_date", e.target.value)
             }
