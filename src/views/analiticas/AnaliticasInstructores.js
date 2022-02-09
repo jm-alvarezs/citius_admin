@@ -26,9 +26,10 @@ const AnaliticasInstructores = () => {
         .filter((instructor) => instructor.name !== null)
         .map((instructores) => (
           <div className="row my-2">
-            <div className="col-12 col-md-4 bold">{instructores.name}</div>
-            <div className="col-12 col-md-4">{instructores.booked}</div>
-            <div className="col-12 col-md-4">{instructores.attended}</div>
+            <div className="col">{instructores.name}</div>
+            <div className="col">{instructores.single_classes}</div>
+            <div className="col">{instructores.booked}</div>
+            <div className="col">{instructores.attended}</div>
           </div>
         ));
     }
@@ -78,9 +79,10 @@ const AnaliticasInstructores = () => {
               </div>
             </div>
             <div className="row bold bg-light border py-2 mb-2">
-              <div className="col-4">Nombre</div>
-              <div className="col-4">Reservados</div>
-              <div className="col-4">Asistentes</div>
+              <div className="col">Nombre</div>
+              <div className="col">Clases</div>
+              <div className="col">Reservados</div>
+              <div className="col">Asistentes</div>
             </div>
             {renderInstructores()}
           </div>
