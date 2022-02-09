@@ -52,6 +52,7 @@ export const CustomerProvider = ({ children }) => {
     class_package_id,
     expiration_days,
     is_gift,
+    total,
     payment_method_id
   ) => {
     CustomerService.extenderAcceso(
@@ -59,6 +60,7 @@ export const CustomerProvider = ({ children }) => {
       class_package_id,
       expiration_days,
       is_gift,
+      total,
       payment_method_id
     ).then(() => {
       success("¡Acceso agregado!");

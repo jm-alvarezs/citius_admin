@@ -5,15 +5,18 @@ import { paymentMethods } from "../../utils";
 const ExtendAccessForm = ({ customer, paquetes, extenderAcceso }) => {
   const [dias, setDias] = useState(0);
   const [gift, setGift] = useState(false);
+  const [total, setTotal] = useState("");
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [paquete, setPaquete] = useState(null);
   const [packageID, setpackageID] = useState(null);
 
   useEffect(() => {
     if (paquetes && paquetes !== null && paquete === null) {
-      setPaquete(paquetes[0]);
-      setpackageID(paquetes[0].class_package_id);
-      setDias(paquetes[0].expiration_days);
+      const current = paquetes[0];
+      setPaquete(current);
+      setpackageID(current.class_package_id);
+      setDias(current.expiration_days);
+      setTotal(current.price);
     }
   }, [paquetes]);
 
@@ -22,6 +25,16 @@ const ExtendAccessForm = ({ customer, paquetes, extenderAcceso }) => {
       setPaymentMethod(2);
     }
   }, [paquete]);
+
+  useEffect(() => {
+    const current = paquetes.find(
+      (paquete) => paquete.class_package_id === parseInt(packageID)
+    );
+    if (current) {
+      setPaquete(current);
+      setDias(current.expiration_days);
+    }
+  }, [packageID]);
 
   const renderPaquetes = () => {
     if (paquetes && paquetes !== null) {
@@ -35,7 +48,14 @@ const ExtendAccessForm = ({ customer, paquetes, extenderAcceso }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    extenderAcceso(customer.customer_id, packageID, dias, gift, paymentMethod);
+    extenderAcceso(
+      customer.customer_id,
+      packageID,
+      dias,
+      gift,
+      total,
+      paymentMethod
+    );
   };
 
   return (
@@ -54,6 +74,13 @@ const ExtendAccessForm = ({ customer, paquetes, extenderAcceso }) => {
           className="form-control mb-3"
           value={dias}
           onChange={(e) => setDias(e.target.value)}
+        />
+        <label>Total Pagado</label>
+        <input
+          type="number"
+          className="form-control mb-3"
+          value={total}
+          onChange={(e) => setTotal(e.target.value)}
         />
         <label className="d-block">¿Es Regalo?</label>
         <Switch

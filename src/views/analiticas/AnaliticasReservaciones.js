@@ -14,7 +14,7 @@ const AnaliticasReservaciones = () => {
   const renderChart = () => {
     if (horas && horas !== null) {
       let data = [...horas];
-      console.log(data);
+      data = data.sort((a, b) => (a.class_hour > b.class_hour ? 1 : -1));
       return (
         <Chart
           type="bar"
@@ -60,6 +60,7 @@ const AnaliticasReservaciones = () => {
   const renderChartCapacity = () => {
     if (horas && horas !== null) {
       let data = [...horas];
+      data = data.sort((a, b) => (a.class_hour > b.class_hour ? 1 : -1));
       return (
         <Chart
           type="bar"

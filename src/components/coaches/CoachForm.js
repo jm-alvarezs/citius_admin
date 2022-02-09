@@ -3,6 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { CoachesContext } from "../../context/CoachesContext";
 import { CustomerContext } from "../../context/CustomerContext";
 import { BASE_URL } from "../../utils";
+import BirthdateInput from "../common/BirthdateInput";
 
 const CoachForm = ({ idCoach }) => {
   const { customers, getCustomersByQuery } = useContext(CustomerContext);
@@ -94,7 +95,7 @@ const CoachForm = ({ idCoach }) => {
 
   const renderForm = () => {
     if (coach && coach !== null) {
-      const { name, last_name, nick_name, birthdate } = coach;
+      const { name, last_name, nick_name, birthdate, short_bio } = coach;
       return (
         <form onSubmit={handleSubmit}>
           <label>Nombre</label>
@@ -123,11 +124,9 @@ const CoachForm = ({ idCoach }) => {
             </div>
           </div>
           <label>Fecha de Nacimiento</label>
-          <input
-            type="date"
-            className="form-control mb-3"
-            value={moment(birthdate).utc().format("YYYY-MM-DD")}
-            onChange={(e) => setPropiedadCoach("birthdate", e.target.value)}
+          <BirthdateInput
+            value={birthdate}
+            modifier={(value) => setPropiedadCoach("birthdate", value)}
           />
           <label>Apodo</label>
           <input
@@ -136,9 +135,16 @@ const CoachForm = ({ idCoach }) => {
             value={nick_name}
             onChange={(e) => setPropiedadCoach("nick_name", e.target.value)}
           />
+          <label>Bio</label>
+          <textarea
+            rows="5"
+            className="form-control mb-3"
+            value={short_bio}
+            onChange={(e) => setPropiedadCoach("short_bio", e.target.value)}
+          />
           {!isNaN(idCoach) && (
-            <>
-              <p>Asignar Usuario a Coach</p>
+            <div>
+              <label>Asignar Usuario a Coach</label>
               <input
                 type="text"
                 className="form-control mb-3"
@@ -147,7 +153,7 @@ const CoachForm = ({ idCoach }) => {
                 onChange={(e) => setQuery(e.target.value)}
               />
               {renderCustomers()}
-            </>
+            </div>
           )}
           <button type="submit" className="btn btn-dark">
             Guardar

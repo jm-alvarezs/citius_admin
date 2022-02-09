@@ -46,6 +46,7 @@ export const CoachesProvider = ({ children }) => {
   };
 
   const setPropiedadCoach = (key, value) => {
+    console.log(value);
     dispatch({ type: SET_PROPIEDAD_COACH, payload: { key, value } });
   };
 
