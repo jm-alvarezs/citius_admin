@@ -23,7 +23,7 @@ const BirthdateInput = ({ value, modifier }) => {
   }, [day, month, year]);
 
   useEffect(() => {
-    let date = moment(value);
+    let date = moment(value).utc();
     if (date.isValid()) {
       setDay(date.format("DD"));
       setMonth(date.format("MM"));
