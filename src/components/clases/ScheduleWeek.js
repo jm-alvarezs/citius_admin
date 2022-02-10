@@ -19,13 +19,13 @@ const ScheduleWeek = ({ week, location, isHome, filtered }) => {
 
   const renderTime = (index) => {
     const initial = moment().startOf("day");
-    const minutes = index * 30;
+    const minutes = index * 15;
     initial.add(minutes, "minutes");
     return initial.format("HH : mm");
   };
 
   const renderRows = () => {
-    return new Array(48)
+    return new Array(96)
       .fill(1)
       .map((one, index) => {
         const time = renderTime(index);
