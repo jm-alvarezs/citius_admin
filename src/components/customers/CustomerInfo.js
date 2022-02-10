@@ -4,7 +4,7 @@ import { UserContext } from "../../context/UserContext";
 import { S3_ENDPOINT, formatMonto } from "../../utils";
 
 const CustomerInfo = ({ customer }) => {
-  const { user } = useContext(UserContext);
+  const { user, recoverPassword } = useContext(UserContext);
 
   const getTotalCompras = () => {
     let total = 0;
@@ -72,6 +72,16 @@ const CustomerInfo = ({ customer }) => {
           <div className="row">
             <div className="col-1">@</div>
             <div className="col-11">{instagram_account}</div>
+          </div>
+          <div className="row">
+            <div className="container-fluid">
+              <button
+                className="btn btn-outline-dark"
+                onClick={() => recoverPassword(user.email)}
+              >
+                Enviar Correo para Reestablecer Contraseña
+              </button>
+            </div>
           </div>
           <div className="row mt-4">
             {user.role === "admin" && (
