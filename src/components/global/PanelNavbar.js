@@ -34,97 +34,110 @@ const PanelNavbar = ({ user, signOut }) => {
                 Asistentes
               </Link>
             </li>
-            <li className="nav-item text-item">
-              <Link to="/myadmin/clientes" className="nav-link">
-                Clientes
-              </Link>
-            </li>
-            <li className="nav-item text-item">
-              <Link to="/myadmin/paquetes" className="nav-link">
-                Paquetes
-              </Link>
-            </li>
-            <li className="nav-item text-item">
-              <Link to="/myadmin/coaches" className="nav-link">
-                Coaches
-              </Link>
-            </li>
-            <li className="nav-item text-item">
-              <Link to="/myadmin/especiales" className="nav-link">
-                Especiales
-              </Link>
-            </li>
-            <li className="nav-item text-item">
-              <Link to="/myadmin/descuentos" className="nav-link">
-                Descuentos
-              </Link>
-            </li>
-            <li className="nav-item text-item">
-              <Link to="/myadmin/tipos" className="nav-link">
-                Tipos de Clase
-              </Link>
-            </li>
-            <li className="nav-item text-item">
-              <Link to="/myadmin/users" className="nav-link">
-                Usuarios
-              </Link>
-            </li>
-            <li className="nav-item text-item">
-              <Link to="/myadmin/orders" className="nav-link">
-                Órdenes
-              </Link>
-            </li>
-
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#analiticasDropdown"
-                role="button"
-                data-bs-toggle="collapse"
-                aria-expanded="false"
-                aria-controls="analiticasDropdown"
-              >
-                Analíticas
-              </a>
-              <ul className="collapse collapse-menu" id="analiticasDropdown">
+            {["admin", "manager"].includes(user.role) && (
+              <>
                 <li className="nav-item text-item">
-                  <Link to="/myadmin/analytics/inscritos" className="nav-link">
-                    Inscritos
+                  <Link to="/myadmin/clientes" className="nav-link">
+                    Clientes
                   </Link>
                 </li>
                 <li className="nav-item text-item">
-                  <Link to="/myadmin/analytics/ingresos" className="nav-link">
-                    Ingresos
-                  </Link>
-                </li>
-                <li className="nav-item text-item">
-                  <Link
-                    to="/myadmin/analytics/instructores"
-                    className="nav-link"
-                  >
-                    Instructores
-                  </Link>
-                </li>
-                <li className="nav-item text-item">
-                  <Link to="/myadmin/analytics/paquetes" className="nav-link">
+                  <Link to="/myadmin/paquetes" className="nav-link">
                     Paquetes
                   </Link>
                 </li>
                 <li className="nav-item text-item">
-                  <Link
-                    to="/myadmin/analytics/reservaciones"
-                    className="nav-link"
-                  >
-                    Reservaciones
+                  <Link to="/myadmin/coaches" className="nav-link">
+                    Coaches
                   </Link>
                 </li>
                 <li className="nav-item text-item">
-                  <Link to="/myadmin/analytics/mensuales" className="nav-link">
-                    Mensuales
+                  <Link to="/myadmin/especiales" className="nav-link">
+                    Especiales
                   </Link>
                 </li>
-              </ul>
-            </li>
+                <li className="nav-item text-item">
+                  <Link to="/myadmin/descuentos" className="nav-link">
+                    Descuentos
+                  </Link>
+                </li>
+                <li className="nav-item text-item">
+                  <Link to="/myadmin/tipos" className="nav-link">
+                    Tipos de Clase
+                  </Link>
+                </li>
+                <li className="nav-item text-item">
+                  <Link to="/myadmin/orders" className="nav-link">
+                    Órdenes
+                  </Link>
+                </li>
+              </>
+            )}
+            {user.role === "admin" && (
+              <li className="nav-item text-item">
+                <Link to="/myadmin/users" className="nav-link">
+                  Usuarios
+                </Link>
+              </li>
+            )}
+            {user.role === "admin" && (
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#analiticasDropdown"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  aria-expanded="false"
+                  aria-controls="analiticasDropdown"
+                >
+                  Analíticas
+                </a>
+                <ul className="collapse collapse-menu" id="analiticasDropdown">
+                  <li className="nav-item text-item">
+                    <Link
+                      to="/myadmin/analytics/inscritos"
+                      className="nav-link"
+                    >
+                      Inscritos
+                    </Link>
+                  </li>
+                  <li className="nav-item text-item">
+                    <Link to="/myadmin/analytics/ingresos" className="nav-link">
+                      Ingresos
+                    </Link>
+                  </li>
+                  <li className="nav-item text-item">
+                    <Link
+                      to="/myadmin/analytics/instructores"
+                      className="nav-link"
+                    >
+                      Instructores
+                    </Link>
+                  </li>
+                  <li className="nav-item text-item">
+                    <Link to="/myadmin/analytics/paquetes" className="nav-link">
+                      Paquetes
+                    </Link>
+                  </li>
+                  <li className="nav-item text-item">
+                    <Link
+                      to="/myadmin/analytics/reservaciones"
+                      className="nav-link"
+                    >
+                      Reservaciones
+                    </Link>
+                  </li>
+                  <li className="nav-item text-item">
+                    <Link
+                      to="/myadmin/analytics/mensuales"
+                      className="nav-link"
+                    >
+                      Mensuales
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+            )}
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"

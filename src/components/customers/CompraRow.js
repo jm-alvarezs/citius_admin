@@ -1,8 +1,11 @@
 import moment from "moment";
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 import { formatMonto } from "../../utils";
 
 const CompraRow = ({ paquete, canRevoke, confirmRevoke }) => {
+  const { user } = useContext(UserContext);
+
   return (
     <div className="row p-2 small border-bottom align-items-center mx-0">
       <div className="col">{paquete.purchase_id}</div>
@@ -12,8 +15,12 @@ const CompraRow = ({ paquete, canRevoke, confirmRevoke }) => {
       </div>
       <div className="col">
         {paquete.is_gift && <i className="fas fa-gift me-1"></i>}
-        {"$"}
-        {formatMonto(paquete.total_payment)} MXN
+        {user.role === "admin" && (
+          <span>
+            {"$"}
+            {formatMonto(paquete.total_payment)} MXN
+          </span>
+        )}
       </div>
       <div className="col">
         {paquete.subscription_period !== null

@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "@reach/router";
 import { formatMonto } from "../../utils";
 import moment from "moment";
+import { UserContext } from "../../context/UserContext";
 
 const PurchaseRow = ({ purchase }) => {
+  const { user } = useContext(UserContext);
+
   const renderPaymentMethod = () => {
     if (purchase.payment_method && purchase.payment_method !== null) {
       return purchase.payment_method.name;
@@ -25,8 +28,12 @@ const PurchaseRow = ({ purchase }) => {
         </Link>
       </div>
       <div className="col">
-        {"$"}
-        {formatMonto(purchase.total_payment)}
+        {user.role === "admin" && (
+          <span>
+            {"$"}
+            {formatMonto(purchase.total_payment)}
+          </span>
+        )}
       </div>
       <div className="col">
         {purchase.status === "active" ? (

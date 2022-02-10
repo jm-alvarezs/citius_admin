@@ -1,8 +1,11 @@
 import moment from "moment";
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 import { S3_ENDPOINT, formatMonto } from "../../utils";
 
 const CustomerInfo = ({ customer }) => {
+  const { user } = useContext(UserContext);
+
   const getTotalCompras = () => {
     let total = 0;
     if (customer.purchases) {
@@ -71,10 +74,12 @@ const CustomerInfo = ({ customer }) => {
             <div className="col-11">{instagram_account}</div>
           </div>
           <div className="row mt-4">
-            <h4>
-              Compras Totales: {"$"}
-              {formatMonto(getTotalCompras())} MXN
-            </h4>
+            {user.role === "admin" && (
+              <h4>
+                Compras Totales: {"$"}
+                {formatMonto(getTotalCompras())} MXN
+              </h4>
+            )}
           </div>
           <div className="row mb-3">
             <div className="col-12 col-md-6">

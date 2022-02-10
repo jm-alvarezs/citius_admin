@@ -1,9 +1,12 @@
 import moment from "moment";
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "@reach/router";
 import { formatMonto } from "../../utils";
+import { UserContext } from "../../context/UserContext";
 
 const CustomerRow = ({ customer }) => {
+  const { user } = useContext(UserContext);
+
   return (
     <div className="row p-2 border-bottom small bg-white mx-0 align-items-center hover-light">
       <div className="col">
@@ -40,8 +43,12 @@ const CustomerRow = ({ customer }) => {
           moment(customer.birthdate).utc().format("DD MMM YYYY")}
       </div>
       <div className="col">
-        {"$"}
-        {formatMonto(customer.value)}
+        {user.role === "admin" && (
+          <span>
+            {"$"}
+            {formatMonto(customer.value)}
+          </span>
+        )}
       </div>
     </div>
   );

@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "@reach/router";
 import { formatMonto } from "../../utils";
 import moment from "moment";
+import { UserContext } from "../../context/UserContext";
 
 const InvoiceRow = ({ invoice, customer_id }) => {
+  const { user } = useContext(UserContext);
+
   const renderPaymentMethod = () => {
     if (invoice.purchase && invoice.purchase !== null) {
       if (
@@ -28,8 +31,12 @@ const InvoiceRow = ({ invoice, customer_id }) => {
         </div>
       )}
       <div className="col">
-        {"$"}
-        {formatMonto(invoice.total_payment)}
+        {user.role === "admin" && (
+          <span>
+            {"$"}
+            {formatMonto(invoice.total_payment)}
+          </span>
+        )}
       </div>
       <div className="col">
         {invoice.status === "completed" ? (
