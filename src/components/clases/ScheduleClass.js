@@ -3,12 +3,15 @@ import moment from "moment";
 import { ModalContext } from "../../context/ModalContext";
 import ClaseForm from "./ClaseForm";
 import { ClassInstructorContext } from "../../context/ClassInstructorContext";
+import { UserContext } from "../../context/UserContext";
 
 const ScheduleClass = ({ singleClass }) => {
   const { modalComponent } = useContext(ModalContext);
   const { setPropiedadClase, eliminarClase } = useContext(
     ClassInstructorContext
   );
+
+  const { user } = useContext(UserContext);
 
   const handleEdit = () => {
     modalComponent(
@@ -40,19 +43,24 @@ const ScheduleClass = ({ singleClass }) => {
   };
 
   const renderButtons = () => {
-    return (
-      <div>
-        <button className="btn btn-dark btn-sm my-1 mx-2" onClick={handleEdit}>
-          <i className="fa fa-edit"></i>
-        </button>
-        <button
-          className="btn btn-danger btn-sm my-1 mx-2"
-          onClick={handleDelete}
-        >
-          <i className="fa fa-trash"></i>
-        </button>
-      </div>
-    );
+    if (user.role !== "coach") {
+      return (
+        <div>
+          <button
+            className="btn btn-dark btn-sm my-1 mx-2"
+            onClick={handleEdit}
+          >
+            <i className="fa fa-edit"></i>
+          </button>
+          <button
+            className="btn btn-danger btn-sm my-1 mx-2"
+            onClick={handleDelete}
+          >
+            <i className="fa fa-trash"></i>
+          </button>
+        </div>
+      );
+    }
   };
 
   const renderInstructors = () => {

@@ -125,20 +125,22 @@ const AdminAsistentes = ({ single_class_id }) => {
             <p>{moment(clase.class_date).utc().format("DD MMM YYYY HH:mm")}</p>
             <p>{clase.class_type.name}</p>
             <p>{clase.location.name}</p>
-            <div>
-              <button
-                className="btn btn-outline-secondary"
-                onClick={handleEdit}
-              >
-                <i className="fa fa-edit me-2"></i> Editar
-              </button>
-              <button
-                className="btn btn-outline-danger mx-3"
-                onClick={confirmDeleteClass}
-              >
-                <i className="fa fa-trash"></i> Eliminar
-              </button>
-            </div>
+            {["admin", "manager"].includes(user.role) && (
+              <div>
+                <button
+                  className="btn btn-outline-secondary"
+                  onClick={handleEdit}
+                >
+                  <i className="fa fa-edit me-2"></i> Editar
+                </button>
+                <button
+                  className="btn btn-outline-danger mx-3"
+                  onClick={confirmDeleteClass}
+                >
+                  <i className="fa fa-trash"></i> Eliminar
+                </button>
+              </div>
+            )}
           </div>
           <div className="col col-md-6">
             {clase.class_type.spot_map !== null && (

@@ -1,24 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import Schedule from "../../components/clases/Schedule";
 import { ClassInstructorContext } from "../../context/ClassInstructorContext";
-import { LocationsContext } from "../../context/LocationsContext";
 import ClaseForm from "../../components/clases/ClaseForm";
 import { ModalContext } from "../../context/ModalContext";
 import PanelTitle from "../../components/global/PanelTitle";
+import { UserContext } from "../../context/UserContext";
 
 const AdminClases = () => {
-  const { days, getSchedule, setPropiedadClase } = useContext(
-    ClassInstructorContext
-  );
-
-  const { locations, getLocations } = useContext(LocationsContext);
+  const { setPropiedadClase } = useContext(ClassInstructorContext);
 
   const { modalComponent } = useContext(ModalContext);
 
-  useEffect(() => {
-    //getSchedule();
-    getLocations();
-  }, []);
+  const { user } = useContext(UserContext);
 
   const addClase = () => {
     modalComponent(
@@ -29,8 +22,12 @@ const AdminClases = () => {
 
   return (
     <div className="container-fluid">
-      <PanelTitle title="Clases" onClick={addClase} />
-      <Schedule days={days} locations={locations} />
+      <PanelTitle
+        title="Clases"
+        onClick={addClase}
+        hideButton={user.role === "coach"}
+      />
+      <Schedule />
     </div>
   );
 };
