@@ -1,18 +1,23 @@
 import React from "react";
+import moment from "moment";
 
 const DescuentoCard = ({ descuento, editarDescuento, confirmDelete }) => {
-  const { discount_id, title, code, amount, is_percent } = descuento;
+  const { discount_id, title, code, amount, expiration_date, is_percent } =
+    descuento;
   return (
     <div className="row">
-      <div className="card no-scale shadow-sm p-3 small">
+      <div className="card no-scale shadow-sm p-3">
         <div className="row align-items-center">
-          <div className="col-4">{code}</div>
-          <div className="col-4">
+          <div className="col">{code}</div>
+          <div className="col">
             {!is_percent && "$"}
             {amount}
             {is_percent && "%"}
           </div>
-          <div className="col-4">
+          <div className="col">
+            {moment(expiration_date).format("DD MMM YYYY")}
+          </div>
+          <div className="col">
             <button
               className="btn btn-outline-secondary btn-sm"
               onClick={() => editarDescuento(discount_id)}

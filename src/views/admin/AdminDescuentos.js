@@ -71,9 +71,10 @@ const AdminDescuentos = () => {
       </div>
       <div className="container-fluid">
         <div className="row bold py-2 bg-light border">
-          <div className="col-4">Código</div>
-          <div className="col-4">Cantidad</div>
-          <div className="col-4">Acciones</div>
+          <div className="col">Código</div>
+          <div className="col">Cantidad</div>
+          <div className="col">Fecha de Expiración</div>
+          <div className="col">Acciones</div>
         </div>
         {renderDescuentos()}
       </div>
