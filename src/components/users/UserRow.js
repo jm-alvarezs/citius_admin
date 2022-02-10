@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserRow = ({ user }) => {
+const UserRow = ({ user, deleteUser, editUser }) => {
   return (
     <div className="row py-2 small hover-light border-bottom align-items-center">
       <div className="col">
@@ -9,11 +9,16 @@ const UserRow = ({ user }) => {
       <div className="col">{user.customer.email}</div>
       <div className="col text-capitalize">{user.role}</div>
       <div className="col">
-        <button className="btn btn-outline-secondary btn-sm">
+        <button
+          className="btn btn-outline-secondary btn-sm"
+          onClick={() => editUser(user)}
+        >
           <i className="fa fa-edit"></i> Editar
         </button>
-
-        <button className="btn btn-outline-danger mx-3 btn-sm">
+        <button
+          className="btn btn-outline-danger mx-3 btn-sm"
+          onClick={() => deleteUser(user)}
+        >
           <i className="fa fa-trash"></i> Eliminar
         </button>
       </div>
