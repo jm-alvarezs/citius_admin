@@ -370,8 +370,8 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
           <label>Evento Especial</label>
           <select
             className="form-control mb-3"
-            value={clase.package_id}
-            onChange={(e) => modifier("package_id", e.target.value)}
+            value={clase.class_package_id}
+            onChange={(e) => modifier("class_package_id", e.target.value)}
           >
             {renderPaquetes()}
           </select>

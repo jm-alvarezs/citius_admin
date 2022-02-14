@@ -8,7 +8,6 @@ const AsistenteRow = ({
   postPayment,
   postAttend,
   single_class_id,
-  is_special_event,
 }) => {
   const sendWhatsApp = (telefono) => {
     telefono = String(telefono).replace("+52", "");
@@ -42,48 +41,46 @@ const AsistenteRow = ({
           {asistente.phone}
         </div>
         <div className="col my-2">{asistente.spot}</div>
-        {!is_special_event && (
-          <div className="col my-2">
+        <div className="col my-2">
+          <button
+            className={`btn btn-${
+              !asistente.attend ? "outline-secondary" : "link text-dark"
+            } me-2`}
+            onClick={() =>
+              postAttend(
+                asistente.class_reservation_id,
+                !asistente.attend,
+                single_class_id
+              )
+            }
+          >
+            <i className="fa fa-check"></i>
+          </button>
+          {asistente.is_cash && (
             <button
-              className={`btn btn-${
-                !asistente.attend ? "outline-secondary" : "link text-dark"
-              } me-2`}
+              className={`btn btn-outline-${
+                asistente.is_paid ? "danger" : "success"
+              } mx-2`}
               onClick={() =>
-                postAttend(
+                postPayment(
                   asistente.class_reservation_id,
-                  !asistente.attend,
+                  !asistente.is_paid,
                   single_class_id
                 )
               }
             >
-              <i className="fa fa-check"></i>
+              <i className="fa fa-money-bill"></i>
             </button>
-            {asistente.is_cash && (
-              <button
-                className={`btn btn-outline-${
-                  asistente.is_paid ? "danger" : "success"
-                } mx-2`}
-                onClick={() =>
-                  postPayment(
-                    asistente.class_reservation_id,
-                    !asistente.is_paid,
-                    single_class_id
-                  )
-                }
-              >
-                <i className="fa fa-money-bill"></i>
-              </button>
-            )}
-            {!user.instructor_id && !user.isManager && (
-              <button
-                className="btn btn-outline-danger mx-2"
-                onClick={() => confirmCancel(asistente)}
-              >
-                <i className="fa fa-trash"></i>
-              </button>
-            )}
-          </div>
-        )}
+          )}
+          {!user.instructor_id && !user.isManager && (
+            <button
+              className="btn btn-outline-danger mx-2"
+              onClick={() => confirmCancel(asistente)}
+            >
+              <i className="fa fa-trash"></i>
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

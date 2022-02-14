@@ -9,10 +9,10 @@ import { ModalContext } from "../../context/ModalContext";
 import ClaseForm from "../../components/clases/ClaseForm";
 import PanelTitle from "../../components/global/PanelTitle";
 import HeaderRow from "../../components/global/HeaderRow";
+import AgregarAsistente from "../../components/clases/AgregarAsistente";
 
 const AdminAsistentesEspeciales = ({ class_package_id }) => {
-  const { paquete, asistentes, getAsistentesEspecial } =
-    useContext(PackagesContext);
+  const { paquete, getAsistentesEspecial } = useContext(PackagesContext);
 
   const { modalComponent } = useContext(ModalContext);
 
@@ -37,17 +37,26 @@ const AdminAsistentesEspeciales = ({ class_package_id }) => {
     );
   };
 
-  const confirmDeleteClass = (clase) => {
+  const addAsistente = () => {
+    modalComponent(
+      "Agregar Asistente",
+      <AgregarAsistente
+        single_class_id={paquete.single_class.single_class_id}
+      />
+    );
+  };
+
+  const confirmDeleteClass = () => {
     modalComponent(
       "Eliminar Clase",
       <div className="container-fluid px-0">
         <p>
-          ¿Estás segura que deseas eliminar la clase {clase.description}? Esta
-          acción NO puede deshacerse.
+          ¿Estás segura que deseas eliminar la clase{" "}
+          {paquete.single_class.description}? Esta acción NO puede deshacerse.
         </p>
         <button
           className="btn btn-danger"
-          onClick={() => eliminarClase(clase.class_id)}
+          onClick={() => eliminarClase(paquete.single_class.class_id)}
         >
           Eliminar
         </button>
@@ -67,6 +76,7 @@ const AdminAsistentesEspeciales = ({ class_package_id }) => {
             key={asistente.class_reservation_id}
             asistente={asistente}
             is_special_event
+            user={user}
           />
         ));
       }
@@ -122,7 +132,7 @@ const AdminAsistentesEspeciales = ({ class_package_id }) => {
 
   return (
     <div className="contiainer-fluid">
-      <PanelTitle title="Evento Especial" hideButton />
+      <PanelTitle title="Evento Especial" onClick={addAsistente} />
       <div className="card p-3 shadow-sm border no-scale">{renderClase()}</div>
       <HeaderRow
         headers={["Nombre", "Instagram", "Teléfono", "Lugar", "Acciones"]}
