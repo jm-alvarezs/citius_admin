@@ -7,6 +7,7 @@ import {
   HIDE_SPINNER,
   PAQUETES_RECIBIDOS,
   RESERVATIONS_RECIBIDAS,
+  SET_CLASE,
   SET_PAQUETE,
   SET_PROPIEDAD_PAQUETE,
   SHOW_SPINNER,
@@ -43,7 +44,8 @@ export const PaquetesProvider = ({ children }) => {
 
   const getAsistentesEspecial = (package_class_id) => {
     PaquetesService.getAsistentesEspecial(package_class_id).then((res) => {
-      const { class_package, asistentes } = res.data;
+      const { class_package, single_class, asistentes } = res.data;
+      dispatch({ type: SET_CLASE, payload: single_class });
       dispatch({ type: RESERVATIONS_RECIBIDAS, payload: asistentes });
       dispatch({ type: SET_PAQUETE, payload: class_package });
     });
@@ -103,6 +105,10 @@ export const PaquetesProvider = ({ children }) => {
     });
   };
 
+  const clearPaquetes = () => {
+    dispatch({ type: PAQUETES_RECIBIDOS, payload: null });
+  };
+
   return (
     <PackagesContext.Provider
       value={{
@@ -111,6 +117,7 @@ export const PaquetesProvider = ({ children }) => {
         postPaquete,
         deletePaquete,
         createPaquete,
+        clearPaquetes,
         getAllPaquetes,
         getPaqueteAdmin,
         getPaquetesOnline,

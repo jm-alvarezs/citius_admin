@@ -2,6 +2,7 @@ import {
   CREATE_PAQUETE,
   PAQUETES_RECIBIDOS,
   RESERVATIONS_RECIBIDAS,
+  SET_CLASE,
   SET_PAQUETE,
   SET_PROPIEDAD_PAQUETE,
 } from "../types";
@@ -35,6 +36,8 @@ const PaquetesReducer = (state, { type, payload }) => {
       return { ...state, paquete: schema };
     case RESERVATIONS_RECIBIDAS:
       return { ...state, asistentes: payload };
+    case SET_CLASE:
+      return { ...state, single_class: payload };
     default:
       return { ...state };
   }

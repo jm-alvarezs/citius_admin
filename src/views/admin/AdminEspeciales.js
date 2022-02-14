@@ -1,16 +1,19 @@
 import React, { useContext, useEffect } from "react";
-import PaqueteRow from "../../components/paquetes/PaqueteRow";
+import HeaderRow from "../../components/global/HeaderRow";
+import PanelTitle from "../../components/global/PanelTitle";
+import PaqueteEspecialRow from "../../components/paquetes/PaqueteEspecialRow";
 import { ModalContext } from "../../context/ModalContext";
 import { PackagesContext } from "../../context/PackageContext";
 
 const AdminEspeciales = () => {
-  const { paquetes, getPaquetesEspecialesAdmin, deletePaquete } =
+  const { paquetes, getPaquetesEspecialesAdmin, deletePaquete, clearPaquetes } =
     useContext(PackagesContext);
 
   const { modalComponent } = useContext(ModalContext);
 
   useEffect(() => {
     getPaquetesEspecialesAdmin();
+    return clearPaquetes;
   }, []);
 
   const confirmDelete = (paquete) => {
@@ -33,8 +36,11 @@ const AdminEspeciales = () => {
 
   const renderPaquetesEspeciales = () => {
     if (paquetes && paquetes !== null) {
+      if (paquetes.length === 0) {
+        return <p className="p-2">No hay paquetes especiales registrados.</p>;
+      }
       return paquetes.map((paquete) => (
-        <PaqueteRow
+        <PaqueteEspecialRow
           key={paquete.class_package_id}
           paquete={paquete}
           confirmDelete={confirmDelete}
@@ -46,13 +52,8 @@ const AdminEspeciales = () => {
 
   return (
     <div className="container-fluid">
-      <h1 className="border-bottom pb-3 mb-3">Paquetes Especiales</h1>
-      <div className="row bg-light border py-2 mx-0 bold">
-        <div className="col col-md-3">Título</div>
-        <div className="col col-md-3">Descripción Corta</div>
-        <div className="col col-md-3">Precio</div>
-        <div className="col col-md-3">Acciones</div>
-      </div>
+      <PanelTitle title="Paquetes Especiales" />
+      <HeaderRow headers={["Título", "Fecha y Hora", "Capacidad", "Compras"]} />
       {renderPaquetesEspeciales()}
     </div>
   );

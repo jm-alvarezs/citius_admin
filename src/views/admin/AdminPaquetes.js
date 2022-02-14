@@ -6,13 +6,14 @@ import { PackagesContext } from "../../context/PackageContext";
 
 const AdminPaquetes = () => {
   const [query, setQuery] = useState("");
-  const { paquetes, getAllPaquetes, deletePaquete } =
+  const { paquetes, getAllPaquetes, deletePaquete, clearPaquetes } =
     useContext(PackagesContext);
 
   const { modalComponent } = useContext(ModalContext);
 
   useEffect(() => {
     getAllPaquetes();
+    return clearPaquetes;
   }, []);
 
   const renderPaquetes = () => {

@@ -40,7 +40,7 @@ const Admin = () => {
       <AdminHome path="/home" />
       <AdminDescuentos path="/descuentos" />
       <AdminEspeciales path="/especiales" />
-      <AdminAsistentesEspeciales path="/especiales/:package_id" />
+      <AdminAsistentesEspeciales path="/especiales/:class_package_id" />
       <AdminOrdenes path="/orders" />
       <AdminUsuarios path="/users" />
       <AdminCircuitos path="/circuitos" />

@@ -1,6 +1,7 @@
 import { Link } from "@reach/router";
 import React from "react";
 import Switch from "react-switch";
+import DateTimeInput from "../../components/common/DateTimeInput";
 
 const PaqueteForm = ({ spinner, paquete, modifier, postPaquete }) => {
   const handleSubmit = (e) => {
@@ -51,24 +52,32 @@ const PaqueteForm = ({ spinner, paquete, modifier, postPaquete }) => {
           <div className="col-6">
             <Switch
               checked={paquete.is_special_event}
-              onChange={(checked) => modifier("is_special_event", checked)}
-            />
-          </div>
-        </div>
-        <div className="row mb-3">
-          <div className="col-6">
-            <label>¿Es cargo recurrente?</label>
-          </div>
-          <div className="col-6">
-            <Switch
-              checked={paquete.is_subscription}
               onChange={(checked) => {
-                modifier("is_subscription", checked);
-                if (checked) addDefaultPeriod();
+                modifier("is_special_event", checked);
+                if (checked) modifier("is_subscription", false);
               }}
             />
           </div>
         </div>
+        {paquete.is_special_event && (
+          <DateTimeInput class_date={paquete.class_date} modifier={modifier} />
+        )}
+        {!paquete.is_special_event && (
+          <div className="row mb-3">
+            <div className="col-6">
+              <label>¿Es cargo recurrente?</label>
+            </div>
+            <div className="col-6">
+              <Switch
+                checked={paquete.is_subscription}
+                onChange={(checked) => {
+                  modifier("is_subscription", checked);
+                  if (checked) addDefaultPeriod();
+                }}
+              />
+            </div>
+          </div>
+        )}
         <label>Nombre</label>
         <input
           type="text"
@@ -200,7 +209,7 @@ const PaqueteForm = ({ spinner, paquete, modifier, postPaquete }) => {
         />
         <div className="row">
           <div className="col-6">
-            <button type="submit" className="btn btn-dark">
+            <button type="submit" className="btn btn-accent">
               {spinner ? <div className="spinner-border"></div> : "Guardar"}
             </button>
           </div>
