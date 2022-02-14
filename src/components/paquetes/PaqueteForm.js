@@ -1,9 +1,27 @@
 import { Link } from "@reach/router";
-import React from "react";
+import React, { useEffect } from "react";
 import Switch from "react-switch";
 import DateTimeInput from "../../components/common/DateTimeInput";
 
-const PaqueteForm = ({ spinner, paquete, modifier, postPaquete }) => {
+const PaqueteForm = ({
+  spinner,
+  paquete,
+  modifier,
+  postPaquete,
+  locations,
+  class_types,
+}) => {
+  useEffect(() => {
+    if (paquete.is_special_event) {
+      if (!paquete.class_type_id && Array.isArray(class_types)) {
+        modifier("class_type_id", class_types[0].class_type_id);
+      }
+      if (!paquete.location_id && Array.isArray(locations)) {
+        modifier("location_id", locations[0].location_id);
+      }
+    }
+  }, [paquete]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     postPaquete(paquete);
@@ -17,6 +35,22 @@ const PaqueteForm = ({ spinner, paquete, modifier, postPaquete }) => {
         paquete.subscription_period === "")
     ) {
       modifier("subscription_period", "month");
+    }
+  };
+
+  const renderLocations = () => {
+    if (locations && locations !== null) {
+      return locations.map((location) => (
+        <option value={location.location_id}>{location.name}</option>
+      ));
+    }
+  };
+
+  const renderClassTypes = () => {
+    if (class_types && class_types !== null) {
+      return class_types.map((class_type) => (
+        <option value={class_type.class_type_id}>{class_type.name}</option>
+      ));
     }
   };
 
@@ -60,7 +94,22 @@ const PaqueteForm = ({ spinner, paquete, modifier, postPaquete }) => {
           </div>
         </div>
         {paquete.is_special_event && (
-          <DateTimeInput class_date={paquete.class_date} modifier={modifier} />
+          <div>
+            <DateTimeInput
+              class_date={paquete.class_date}
+              modifier={modifier}
+            />
+            <div className="row mb-3">
+              <div className="col-6">
+                <label>Ubicación</label>
+                <select className="form-control">{renderLocations()}</select>
+              </div>
+              <div className="col-6">
+                <label>Tipo de Clase</label>
+                <select className="form-control">{renderClassTypes()}</select>
+              </div>
+            </div>
+          </div>
         )}
         {!paquete.is_special_event && (
           <div className="row mb-3">

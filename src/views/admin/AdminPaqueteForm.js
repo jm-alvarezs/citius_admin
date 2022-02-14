@@ -1,6 +1,8 @@
 import { Link } from "@reach/router";
 import React, { useContext, useEffect } from "react";
 import PaqueteForm from "../../components/paquetes/PaqueteForm";
+import { ClassTypeContext } from "../../context/ClassTypesContext";
+import { LocationsContext } from "../../context/LocationsContext";
 import { PackagesContext } from "../../context/PackageContext";
 
 const AdminPaqueteForm = ({ package_class_id }) => {
@@ -10,15 +12,23 @@ const AdminPaqueteForm = ({ package_class_id }) => {
     getPaqueteAdmin,
     setPropiedadPaquete,
     postPaquete,
+    clearSinglePaquete,
     createPaquete,
   } = useContext(PackagesContext);
 
+  const { class_types, getClassTypes } = useContext(ClassTypeContext);
+
+  const { locations, getLocations } = useContext(LocationsContext);
+
   useEffect(() => {
+    getClassTypes();
+    getLocations();
     if (isNaN(package_class_id)) {
       createPaquete();
     } else {
       getPaqueteAdmin(package_class_id);
     }
+    return clearSinglePaquete;
   }, []);
 
   return (
@@ -38,6 +48,8 @@ const AdminPaqueteForm = ({ package_class_id }) => {
             paquete={paquete}
             modifier={setPropiedadPaquete}
             postPaquete={postPaquete}
+            class_types={class_types}
+            locations={locations}
             spinner={spinner}
           />
         ) : (

@@ -73,13 +73,13 @@ const CustomerInfo = ({ customer }) => {
             <div className="col-1">@</div>
             <div className="col-11">{instagram_account}</div>
           </div>
-          <div className="row">
+          <div className="row mt-3">
             <div className="container-fluid">
               <button
                 className="btn btn-outline-dark"
                 onClick={() => recoverPassword(user.email)}
               >
-                Enviar Correo para Reestablecer Contraseña
+                <i className="fa fa-key me-2"></i> Reestablecer Contraseña
               </button>
             </div>
           </div>

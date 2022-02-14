@@ -109,6 +109,10 @@ export const PaquetesProvider = ({ children }) => {
     dispatch({ type: PAQUETES_RECIBIDOS, payload: null });
   };
 
+  const clearSinglePaquete = () => {
+    dispatch({ type: SET_PAQUETE, payload: null });
+  };
+
   return (
     <PackagesContext.Provider
       value={{
@@ -121,6 +125,7 @@ export const PaquetesProvider = ({ children }) => {
         getAllPaquetes,
         getPaqueteAdmin,
         getPaquetesOnline,
+        clearSinglePaquete,
         setPropiedadPaquete,
         getAsistentesEspecial,
         getPaquetesEspecialesAdmin,

@@ -3,6 +3,8 @@ import moment from "moment";
 import { Link } from "@reach/router";
 
 const PaqueteEspecialRow = ({ paquete }) => {
+  const { class_package_id, title, customer_limit } = paquete;
+
   const renderClassDate = () => {
     console.log(paquete);
     if (paquete.single_class && paquete.single_class !== null) {
@@ -12,7 +14,12 @@ const PaqueteEspecialRow = ({ paquete }) => {
     }
   };
 
-  const { class_package_id, title, customer_limit, purchases } = paquete;
+  const renderPurchases = () => {
+    if (Array.isArray(paquete.purchases)) {
+      return paquete.purchases.length;
+    }
+  };
+
   return (
     <Link
       to={`/myadmin/especiales/${class_package_id}`}
@@ -22,7 +29,7 @@ const PaqueteEspecialRow = ({ paquete }) => {
         <div className="col">{title}</div>
         <div className="col">{renderClassDate()}</div>
         <div className="col">{customer_limit}</div>
-        <div className="col">{purchases.length}</div>
+        <div className="col">{renderPurchases()}</div>
       </div>
     </Link>
   );

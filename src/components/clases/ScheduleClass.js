@@ -73,7 +73,13 @@ const ScheduleClass = ({ singleClass }) => {
   };
 
   return (
-    <div className="schedule-class small p-2 my-2 bg-accent text-dark">
+    <div
+      className={`schedule-class small p-2 my-2 ${
+        singleClass.class_package_id !== null
+          ? "border-warning bg-dark text-warning"
+          : "bg-accent text-dark"
+      }`}
+    >
       <p className="mb-1 bold">
         <i className={singleClass.icon} /> {singleClass.class_type.name}
       </p>

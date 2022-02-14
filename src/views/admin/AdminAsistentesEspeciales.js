@@ -18,7 +18,7 @@ const AdminAsistentesEspeciales = ({ class_package_id }) => {
 
   const { user } = useContext(UserContext);
 
-  const { clase, clearClase, eliminarClase } = useContext(
+  const { clase, clearClase, eliminarClase, setPropiedadClase } = useContext(
     ClassInstructorContext
   );
 
@@ -28,7 +28,13 @@ const AdminAsistentesEspeciales = ({ class_package_id }) => {
   }, [class_package_id]);
 
   const handleEdit = () => {
-    modalComponent("Editar Clase", <ClaseForm />);
+    modalComponent(
+      "Editar Clase",
+      <ClaseForm
+        single_class_id={paquete.single_class.single_class_id}
+        modifier={setPropiedadClase}
+      />
+    );
   };
 
   const confirmDeleteClass = (clase) => {
