@@ -25,7 +25,7 @@ const Admin = () => {
   return (
     <Router>
       <AdminClientes path="/clientes" />
-      <AdminCustomerForm path="/clientes/:customer_id" />
+      <AdminCustomerForm path="/customer/:customer_id/edit" />
       <AdminSingleUsuario path="/customer/:customer_id" />
       <AdminPaquetes path="/paquetes" />
       <AdminPaqueteForm path="/paquetes/:package_class_id" />

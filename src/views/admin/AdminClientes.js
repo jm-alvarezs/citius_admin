@@ -6,9 +6,7 @@ import CustomerRow from "../../components/customers/CustomerRow";
 import HeaderRow from "../../components/global/HeaderRow";
 
 const AdminClientes = () => {
-  const [sort, setSort] = useState("");
   const [page, setPage] = useState(1);
-  const [direction, setDirection] = useState("asc");
   const [query, setQuery] = useState("");
   const { customers, getAllCustomers } = useContext(CustomerContext);
   const { user } = useContext(UserContext);
@@ -53,7 +51,10 @@ const AdminClientes = () => {
               />
             </div>
             <div className="col-12 col-md-4 text-right">
-              <Link to="./nuevo" className="btn btn-accent w-100">
+              <Link
+                to="/myadmin/customer/nuevo/edit"
+                className="btn btn-accent w-100"
+              >
                 + Agregar
               </Link>
             </div>

@@ -31,6 +31,15 @@ const BirthdateInput = ({ value, modifier }) => {
     }
   }, []);
 
+  const renderMonths = () => {
+    const months = new Array(12).fill(1);
+    return months.map((one, index) => (
+      <option value={moment(index + 1, "MM").format("MM")}>
+        {moment(index + 1, "MM").format("MMM")}
+      </option>
+    ));
+  };
+
   return (
     <div className="row mb-3">
       <div className="col-4">
@@ -43,13 +52,9 @@ const BirthdateInput = ({ value, modifier }) => {
         />
       </div>
       <div className="col-4">
-        <input
-          type="number"
-          className="form-control"
-          placeholder="Mes (MM)"
-          value={month}
-          onChange={(e) => setMonth(e.target.value)}
-        />
+        <select value={month} className="form-control mb-3">
+          {renderMonths()}
+        </select>
       </div>
       <div className="col-4">
         <input

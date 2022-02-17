@@ -1,6 +1,8 @@
 import { Link } from "@reach/router";
 import React, { useContext, useEffect } from "react";
 import { CustomerContext } from "../../context/CustomerContext";
+import BirthdateInput from "../common/BirthdateInput";
+import DateTimeInput from "../common/DateTimeInput";
 
 const CustomerForm = ({ customer_id }) => {
   const {
@@ -63,6 +65,10 @@ const CustomerForm = ({ customer_id }) => {
             className="form-control mb-3"
             value={customer.instagram}
             onChange={(e) => setPropiedadCustomer("instagram", e.target.value)}
+          />
+          <BirthdateInput
+            value={customer.birthdate}
+            modifier={(value) => setPropiedadCustomer("birthdate", value)}
           />
           <label>¿Cómo te enteraste de Citius?</label>
           <input

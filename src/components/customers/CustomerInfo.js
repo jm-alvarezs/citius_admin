@@ -84,7 +84,7 @@ const CustomerInfo = ({ customer, handleAddClasses, handleRevokeClasses }) => {
           <div className="row mt-3">
             <div className="container-fluid">
               <button
-                className="btn btn-outline-dark mx-2"
+                className="btn btn-outline-dark me-2"
                 onClick={() =>
                   navigate(`/myadmin/customer/${customer_id}/edit`)
                 }

@@ -103,7 +103,11 @@ export const CustomerProvider = ({ children }) => {
     const handleSuccess = ({ data }) => {
       success("Cliente guardado con éxito.");
       dispatch({ type: HIDE_SPINNER });
-      navigate(`/myadmin/customer/${data.customer.customer_id}`);
+      if (data.customer) {
+        navigate(`/myadmin/customer/${data.customer.customer_id}`);
+      } else {
+        navigate(`/myadmin/customer/${customer.customer_id}`);
+      }
     };
 
     const handleError = (error) => {
