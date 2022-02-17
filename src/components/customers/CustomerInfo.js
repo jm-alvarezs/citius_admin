@@ -1,9 +1,10 @@
+import { navigate } from "@reach/router";
 import moment from "moment";
 import React, { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import { S3_ENDPOINT, formatMonto } from "../../utils";
 
-const CustomerInfo = ({ customer }) => {
+const CustomerInfo = ({ customer, handleAddClasses, handleRevokeClasses }) => {
   const { user, recoverPassword } = useContext(UserContext);
 
   const getTotalCompras = () => {
@@ -36,8 +37,15 @@ const CustomerInfo = ({ customer }) => {
     }
   };
 
-  const { name, last_name, birthdate, email, phone, instagram_account } =
-    customer;
+  const {
+    customer_id,
+    name,
+    last_name,
+    birthdate,
+    email,
+    phone,
+    instagram_account,
+  } = customer;
 
   return (
     <>
@@ -76,6 +84,14 @@ const CustomerInfo = ({ customer }) => {
           <div className="row mt-3">
             <div className="container-fluid">
               <button
+                className="btn btn-outline-dark mx-2"
+                onClick={() =>
+                  navigate(`/myadmin/customer/${customer_id}/edit`)
+                }
+              >
+                <i className="fa fa-edit me-2"></i> Editar Información
+              </button>
+              <button
                 className="btn btn-outline-dark"
                 onClick={() => recoverPassword(user.email)}
               >
@@ -92,20 +108,30 @@ const CustomerInfo = ({ customer }) => {
             )}
           </div>
           <div className="row mb-3">
-            <div className="col-12 col-md-6">
-              <div className="row">
-                <div className="col-6">
-                  <span className="bold">Clases Disponibles: </span>
-                </div>
-                <div className="col-6">{renderCustomerClasses()}</div>
-              </div>
-              <div className="row">
-                <div className="col-6">
-                  <span className="bold">Circuitos Disponibles: </span>
-                </div>
-                <div className="col-6">{renderCircuits()}</div>
-              </div>
+            <div className="col-3 my-2">
+              <span className="bold">Clases Disponibles:</span>{" "}
             </div>
+            <div className="col-3 my-2">{renderCustomerClasses()}</div>
+            <div className="col-6 my-2">
+              <button
+                className="btn btn-outline-success btn-sm me-3"
+                onClick={handleAddClasses}
+              >
+                <i className="fa fa-plus"></i> Agregar Clases
+              </button>
+              <button
+                className="btn btn-outline-danger btn-sm"
+                onClick={handleRevokeClasses}
+              >
+                <i className="fa fa-minus"></i> Restar Clases
+              </button>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-6">
+              <span className="bold">Circuitos Disponibles: </span>
+            </div>
+            <div className="col-6">{renderCircuits()}</div>
           </div>
         </div>
       </div>

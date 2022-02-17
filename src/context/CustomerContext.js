@@ -141,6 +141,24 @@ export const CustomerProvider = ({ children }) => {
     });
   };
 
+  const removeCustomerClasses = (customer_id, amount) => {
+    CustomerService.removeClasses(customer_id, amount).then(() => {
+      success("Clases eliminadas con éxito.");
+      hideModal();
+      getCustomer(customer_id);
+    });
+  };
+
+  const addCustomerClasses = (customer_id, amount, expiration_days) => {
+    CustomerService.giveClasses(customer_id, amount, expiration_days).then(
+      () => {
+        success("Clases agregadas con éxito.");
+        hideModal();
+        getCustomer(customer_id);
+      }
+    );
+  };
+
   return (
     <CustomerContext.Provider
       value={{
@@ -156,6 +174,8 @@ export const CustomerProvider = ({ children }) => {
         postCustomer,
         setPropiedadCustomer,
         redeemCircuit,
+        removeCustomerClasses,
+        addCustomerClasses,
       }}
     >
       {children}

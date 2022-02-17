@@ -14,6 +14,8 @@ import RevokeForm from "../../components/purchases/RevokeForm";
 import { hideModal } from "../../utils";
 import CircuitoRow from "../../components/circuitos/CircuitoRow";
 import BookCircuit from "../../components/circuitos/BookCircuit";
+import RemoveClassesForm from "../../components/purchases/RemoveClassesForm";
+import AddClassesForm from "../../components/purchases/AddClassesForm";
 
 const AdminSingleUsuario = ({ customer_id }) => {
   const {
@@ -22,6 +24,8 @@ const AdminSingleUsuario = ({ customer_id }) => {
     clearCustomer,
     extenderAcceso,
     deleteCustomer,
+    addCustomerClasses,
+    removeCustomerClasses,
   } = useContext(CustomerContext);
   const { paquetes, getPaquetes } = useContext(PackagesContext);
 
@@ -87,6 +91,26 @@ const AdminSingleUsuario = ({ customer_id }) => {
     );
   };
 
+  const confirmRemoveClasses = () => {
+    modalComponent(
+      "Restar Clases",
+      <RemoveClassesForm
+        customer_id={customer_id}
+        removeClasses={removeCustomerClasses}
+      />
+    );
+  };
+
+  const confirmAddClasses = () => {
+    modalComponent(
+      "Agregar Clases",
+      <AddClassesForm
+        customer_id={customer_id}
+        addClasses={addCustomerClasses}
+      />
+    );
+  };
+
   const handleBook = (available_circuit) => {
     modalComponent(
       "Agendar Circuito",
@@ -110,7 +134,13 @@ const AdminSingleUsuario = ({ customer_id }) => {
 
   const renderUsuario = () => {
     if (customer && customer !== null) {
-      return <CustomerInfo customer={customer} />;
+      return (
+        <CustomerInfo
+          customer={customer}
+          handleAddClasses={confirmAddClasses}
+          handleRevokeClasses={confirmRemoveClasses}
+        />
+      );
     }
     return <div className="spinner-border"></div>;
   };

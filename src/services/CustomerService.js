@@ -27,6 +27,12 @@ const CustomerService = {
       total,
       payment_method_id,
     }),
+  giveClasses: (customer_id, amount, expiration_days) =>
+    api.put(`${route}/giveClasses`, {
+      customer_id,
+      amount,
+      expiration_days,
+    }),
   revokeAccess: (purchase_id) =>
     api.put(`${route}/revokeAccess`, { purchase_id }),
   removeClasses: (customer_id, amount) =>
