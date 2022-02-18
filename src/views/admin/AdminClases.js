@@ -5,6 +5,7 @@ import ClaseForm from "../../components/clases/ClaseForm";
 import { ModalContext } from "../../context/ModalContext";
 import PanelTitle from "../../components/global/PanelTitle";
 import { UserContext } from "../../context/UserContext";
+import ScheduleMobile from "../../components/clases/ScheduleMobile";
 
 const AdminClases = () => {
   const { setPropiedadClase } = useContext(ClassInstructorContext);
@@ -28,6 +29,7 @@ const AdminClases = () => {
         hideButton={user.role === "coach"}
       />
       <Schedule />
+      <ScheduleMobile />
     </div>
   );
 };

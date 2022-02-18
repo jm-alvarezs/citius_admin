@@ -970,6 +970,11 @@ body {
   max-width: 500px;
 }
 
+.nav-item {
+  color: #fff !important;
+  font-weight: 800;
+}
+
 #loading {
   height: 100vh;
   z-index: 0;
@@ -1005,6 +1010,10 @@ body {
 }
 
 @media (max-width: 767px) {
+  .main-panel {
+    margin-left: 0px;
+    padding-left: 15px !important;
+  }
   .panel-mobile-menu {
     display: block;
   }

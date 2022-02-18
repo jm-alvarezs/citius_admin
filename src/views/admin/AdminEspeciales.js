@@ -52,7 +52,7 @@ const AdminEspeciales = () => {
 
   return (
     <div className="container-fluid">
-      <PanelTitle title="Paquetes Especiales" />
+      <PanelTitle title="Paquetes Especiales" hideButton />
       <HeaderRow headers={["Título", "Fecha y Hora", "Capacidad", "Compras"]} />
       {renderPaquetesEspeciales()}
     </div>

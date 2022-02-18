@@ -12,7 +12,8 @@ const stripe_dev_key =
 const stripe_live_key =
   "pk_live_51J3W4hGoE9eJxTiKeBw9uf8VZLZuhL2OdOXSgpvCfbfGe1dyM7thsayFZHvuT7c6QebIZqlP8N2V985NPYhp5od6000zymfRfe";
 
-export const STRIPE_KEY = stripe_dev_key;
+export const STRIPE_KEY =
+  process.env.NODE_ENV === "development" ? stripe_dev_key : stripe_live_key;
 
 export const displaySuccess = (dispatch, message) => {
   dispatch({ type: SHOW_SUCCESS, payload: message });
@@ -165,18 +166,77 @@ export const cuenta = [
 
 export const adminitems = [
   {
+    name: "Ventas",
+    handle: "/myadmin/orders",
+  },
+  {
     name: "Clases",
+    handle: "/myadmin/asistentes",
+  },
+  {
+    name: "Asistentes",
     handle: "/myadmin/asistentes",
   },
   {
     name: "Clientes",
     handle: "/myadmin/clientes",
   },
+  {
+    name: "Paquetes",
+    handle: "/myadmin/paquetes",
+  },
+  {
+    name: "Coaches",
+    handle: "/myadmin/coaches",
+  },
+  {
+    name: "Especiales",
+    handle: "/myadmin/especiales",
+  },
+  {
+    name: "Descuentos",
+    handle: "/myadmin/descuentos",
+  },
+  {
+    name: "Usuarios",
+    handle: "/myadmin/usuarios",
+  },
+];
+
+export const analiticasitems = [
+  {
+    name: "Inscritos",
+    handle: "/myadmin/analytics/inscritos",
+  },
+  {
+    name: "Ingresos",
+    handle: "/myadmin/analytics/ingresos",
+  },
+  {
+    name: "Instructores",
+    handle: "/myadmin/analytics/instructores",
+  },
+  {
+    name: "Paquetes",
+    handle: "/myadmin/analytics/paquetes",
+  },
+  {
+    name: "Reservaciones",
+    handle: "/myadmin/analytics/reservaciones",
+  },
+  {
+    name: "Mensuales",
+    handle: "/myadmin/analytics/mensuales",
+  },
 ];
 
 export const coachitems = [
   {
     name: "Clases",
+    handle: "/myadmin/asistentes",
+  },
+  {
+    name: "Asistentes",
     handle: "/myadmin/asistentes",
   },
 ];
