@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from "react";
+import HeaderRow from "../../components/global/HeaderRow";
 import LocationForm from "../../components/locations/LocationForm";
 import { LocationsContext } from "../../context/LocationsContext";
 import { ModalContext } from "../../context/ModalContext";
@@ -63,19 +64,19 @@ const AdminLocations = () => {
   const renderUbicaciones = () => {
     if (locations && locations !== null) {
       return locations.map((location) => (
-        <div className="card p-3 no-scale my-2">
+        <div className="card p-2 no-scale">
           <div className="row">
-            <div className="col col-md-4">{location.description}</div>
-            <div className="col col-md-4">{location.address}</div>
-            <div className="col col-md-4">
+            <div className="col">{location.name}</div>
+            <div className="col">{location.address}</div>
+            <div className="col">
               <button
-                className="btn btn-outline-secondary"
+                className="btn btn-sm btn-outline-secondary"
                 onClick={() => editLocation(location)}
               >
                 <i className="fa fa-edit"></i> Editar
               </button>
               <button
-                className="btn btn-outline-danger mx-3"
+                className="btn btn-sm btn-outline-danger mx-3"
                 onClick={() => confirmDelete(location)}
               >
                 <i className="fa fa-trash"></i>
@@ -100,6 +101,7 @@ const AdminLocations = () => {
           </button>
         </div>
       </div>
+      <HeaderRow headers={["Nombre", "Dirección", "Acciones"]} />
       {renderUbicaciones()}
     </div>
   );

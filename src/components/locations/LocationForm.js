@@ -11,10 +11,17 @@ const LocationForm = ({ modifier, postLocation }) => {
 
   const renderForm = () => {
     if (location && location !== null) {
-      const { description, address } = location;
+      const { name, description, address } = location;
       return (
         <form onSubmit={handleSubmit}>
           <label>Nombre</label>
+          <input
+            type="text"
+            className="form-control mb-3"
+            value={name}
+            onChange={(e) => modifier("name", e.target.value)}
+          />
+          <label>Descripción</label>
           <input
             type="text"
             className="form-control mb-3"
@@ -28,7 +35,7 @@ const LocationForm = ({ modifier, postLocation }) => {
             value={address}
             onChange={(e) => modifier("address", e.target.value)}
           />
-          <input type="submit" className="btn btn-dark" value="Guardar" />
+          <input type="submit" className="btn btn-accent" value="Guardar" />
         </form>
       );
     }

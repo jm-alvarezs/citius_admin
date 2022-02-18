@@ -198,6 +198,10 @@ export const adminitems = [
     handle: "/myadmin/descuentos",
   },
   {
+    name: "Ubicaciones",
+    handle: "/myadmin/ubicaciones",
+  },
+  {
     name: "Usuarios",
     handle: "/myadmin/usuarios",
   },

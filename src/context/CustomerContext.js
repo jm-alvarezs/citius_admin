@@ -26,7 +26,7 @@ export const CustomerProvider = ({ children }) => {
   const { success, alert } = useContext(ModalContext);
 
   const getCustomersByQuery = (query) => {
-    CustomerService.getCustomersByQuery(query).then((res) => {
+    CustomerService.getAllCustomers({ query }).then((res) => {
       const { customers } = res.data;
       dispatch({ type: CUSTOMERS_RECIBIDOS, payload: customers });
     });

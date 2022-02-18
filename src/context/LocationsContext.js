@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 import LocationsReducer from "../reducers/LocationsReducer";
 import LocationsServices from "../services/LocationsServices";
 import {
@@ -7,6 +7,8 @@ import {
   SET_LOCATION,
   SET_PROPIEDAD_LOCATION,
 } from "../types";
+import { hideModal } from "../utils";
+import { ModalContext } from "./ModalContext";
 
 const initialState = {
   locations: null,
@@ -16,6 +18,8 @@ export const LocationsContext = createContext(initialState);
 
 export const LocationsProvider = ({ children }) => {
   const [state, dispatch] = useReducer(LocationsReducer, initialState);
+
+  const { success } = useContext(ModalContext);
 
   const getLocations = () => {
     LocationsServices.getLocations().then((res) => {
@@ -37,14 +41,15 @@ export const LocationsProvider = ({ children }) => {
   };
 
   const postLocation = (location) => {
+    const handleSuccess = () => {
+      success("Ubicacion guardada.");
+      getLocations();
+      hideModal();
+    };
     if (isNaN(location.location_id)) {
-      LocationsServices.postLocation(location).then(() => {
-        getLocations();
-      });
+      LocationsServices.postLocation(location).then(handleSuccess);
     } else {
-      LocationsServices.putLocation(location).then(() => {
-        getLocations();
-      });
+      LocationsServices.putLocation(location).then(handleSuccess);
     }
   };
 

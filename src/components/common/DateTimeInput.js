@@ -62,24 +62,34 @@ const DateTimeInput = ({ class_date, modifier }) => {
         <label className="mb-1">Hora (0h - 23h)</label>
         <div className="row">
           <div className="col-6">
-            <input
-              type="number"
-              className="form-control"
-              value={class_date.split("T")[1].split(":")[0]}
-              onChange={(e) => handleChangeHour(e.target.value)}
-              max={23}
-              min={0}
-            />
+            <div className="row">
+              <div className="col-6">
+                <input
+                  type="number"
+                  className="form-control"
+                  value={class_date.split("T")[1].split(":")[0]}
+                  onChange={(e) => handleChangeHour(e.target.value)}
+                  max={23}
+                  min={0}
+                />
+              </div>
+              <div className="col-6">h</div>
+            </div>
           </div>
           <div className="col-6">
-            <input
-              type="number"
-              className="form-control"
-              value={class_date.split("T")[1].split(":")[1]}
-              max={59}
-              min={0}
-              onChange={(e) => handleChangeMinutes(e.target.value)}
-            />
+            <div className="row">
+              <div className="col-6">
+                <input
+                  type="number"
+                  className="form-control"
+                  value={class_date.split("T")[1].split(":")[1]}
+                  max={59}
+                  min={0}
+                  onChange={(e) => handleChangeMinutes(e.target.value)}
+                />
+              </div>
+              <div className="col-6">min</div>
+            </div>
           </div>
         </div>
       </div>

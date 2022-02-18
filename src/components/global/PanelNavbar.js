@@ -67,6 +67,11 @@ const PanelNavbar = ({ user, signOut }) => {
                   </Link>
                 </li>
                 <li className="nav-item text-item">
+                  <Link to="/myadmin/ubicaciones" className="nav-link">
+                    Ubicaciones
+                  </Link>
+                </li>
+                <li className="nav-item text-item">
                   <Link to="/myadmin/orders" className="nav-link">
                     Órdenes
                   </Link>
