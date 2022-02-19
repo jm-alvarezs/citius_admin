@@ -70,15 +70,41 @@ const CoachForm = ({ idCoach }) => {
   };
 
   const renderCustomers = () => {
-    if (coach.user_id !== null && customer !== null) {
-      return (
-        <div className="container-fluid px-0 mb-3">
-          <p>
-            {customer.name} {customer.last_name}
-          </p>
-          <p>{customer.email}</p>
-        </div>
-      );
+    if (coach.user_id !== null) {
+      if (customer !== null) {
+        return (
+          <div className="container-fluid px-0 mb-3">
+            <p>
+              {customer.name} {customer.last_name}
+            </p>
+            <p>{customer.email}</p>
+          </div>
+        );
+      }
+      if (coach.user !== null) {
+        let { user } = coach;
+        return (
+          <div className="container-fluid px-0">
+            <h5>Usuario conectado</h5>
+            <div className="row align-items-center mb-3">
+              <div className="col-6">
+                <p>
+                  {user.customer.name} {user.customer.last_name}
+                </p>
+                <p>{user.customer.email}</p>
+              </div>
+              <div className="col-6 text-right">
+                <button
+                  className="btn btn-sm btn-outline-danger"
+                  onClick={() => setPropiedadCoach("user_id", null)}
+                >
+                  <i className="fa fa-times me-1"></i> Desconectar
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      }
     }
     if (users && users !== null) {
       return users.map(({ user_id, customer }) => (
@@ -165,7 +191,7 @@ const CoachForm = ({ idCoach }) => {
               {renderCustomers()}
             </div>
           )}
-          <button type="submit" className="btn btn-dark">
+          <button type="submit" className="btn btn-accent mt-2">
             Guardar
           </button>
         </form>
