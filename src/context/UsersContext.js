@@ -17,8 +17,8 @@ export const UsersProvider = ({ children }) => {
 
   const { success } = useContext(ModalContext);
 
-  const getUsers = (page) => {
-    UserService.getAllUsers(page).then((res) => {
+  const getUsers = (filters) => {
+    UserService.getAllUsers(filters).then((res) => {
       const { users } = res.data;
       dispatch({ type: USERS_RECIBIDOS, payload: users });
     });
@@ -48,9 +48,20 @@ export const UsersProvider = ({ children }) => {
     });
   };
 
+  const clearUsers = () => {
+    dispatch({ type: USERS_RECIBIDOS, payload: null });
+  };
+
   return (
     <UsersContext.Provider
-      value={{ ...state, getUsers, createUser, updateUser, deleteUser }}
+      value={{
+        ...state,
+        getUsers,
+        createUser,
+        updateUser,
+        deleteUser,
+        clearUsers,
+      }}
     >
       {children}
     </UsersContext.Provider>

@@ -46,7 +46,6 @@ export const CoachesProvider = ({ children }) => {
   };
 
   const setPropiedadCoach = (key, value) => {
-    console.log(value);
     dispatch({ type: SET_PROPIEDAD_COACH, payload: { key, value } });
   };
 
@@ -105,6 +104,10 @@ export const CoachesProvider = ({ children }) => {
     });
   };
 
+  const clearCoaches = () => {
+    dispatch({ type: COACHES_RECIBIDAS, payload: null });
+  };
+
   return (
     <CoachesContext.Provider
       value={{
@@ -115,6 +118,7 @@ export const CoachesProvider = ({ children }) => {
         getCoaches,
         createCoach,
         deleteCoach,
+        clearCoaches,
         setPropiedadCoach,
       }}
     >

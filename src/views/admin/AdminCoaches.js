@@ -9,11 +9,13 @@ import { ModalContext } from "../../context/ModalContext";
 const AdminCoaches = () => {
   const [query, setQuery] = useState("");
 
-  const { coaches, getCoaches, deleteCoach } = useContext(CoachesContext);
+  const { coaches, getCoaches, deleteCoach, clearCoaches } =
+    useContext(CoachesContext);
   const { modalComponent } = useContext(ModalContext);
 
   useEffect(() => {
     getCoaches();
+    return clearCoaches;
   }, []);
 
   const addCoach = () => {

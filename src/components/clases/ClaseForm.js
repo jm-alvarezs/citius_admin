@@ -96,7 +96,6 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
       };
     }
     let class_date = moment(clase.class_date).format("YYYY-MM-DD HH:mm:ss");
-    console.log(class_date);
     postClase({
       ...clase,
       class_date,

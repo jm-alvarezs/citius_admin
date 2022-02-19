@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import HeaderRow from "../../components/global/HeaderRow";
 import Pagination from "../../components/global/Pagination";
 import PanelTitle from "../../components/global/PanelTitle";
@@ -9,9 +9,16 @@ import { ModalContext } from "../../context/ModalContext";
 import { UsersContext } from "../../context/UsersContext";
 
 const AdminUsuarios = () => {
-  const { users, getUsers, deleteUser } = useContext(UsersContext);
+  const [page, setPage] = useState(0);
+  const [query, setQuery] = useState("");
+  const { users, getUsers, deleteUser, clearUsers } = useContext(UsersContext);
 
   const { modalComponent } = useContext(ModalContext);
+
+  useEffect(() => {
+    getUsers({ page, query });
+    return clearUsers;
+  }, [page, query]);
 
   const handleCreate = () => {
     modalComponent("Agregar Usuario", <UserForm />);
@@ -55,11 +62,18 @@ const AdminUsuarios = () => {
     <div className="container-fluid">
       <PanelTitle title="Usuarios" onClick={handleCreate} />
       <div className="card p-2 no-scale shadow">
+        <input
+          type="text"
+          className="form-control mt-1"
+          placeholder="Buscar por nombre o correo electrónico..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
         <HeaderRow
           headers={["Nombre", "Correo Electrónico", "Rol", "Acciones"]}
         />
         <div className="container-fluid">{renderUsers()}</div>
-        <Pagination modifier={getUsers} />
+        <Pagination modifier={setPage} />
       </div>
     </div>
   );

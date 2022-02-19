@@ -6,7 +6,6 @@ const PaqueteEspecialRow = ({ paquete }) => {
   const { class_package_id, title, customer_limit } = paquete;
 
   const renderClassDate = () => {
-    console.log(paquete);
     if (paquete.single_class && paquete.single_class !== null) {
       return moment(paquete.single_class.class_date).format(
         "DD MMM YYYY HH:mm"

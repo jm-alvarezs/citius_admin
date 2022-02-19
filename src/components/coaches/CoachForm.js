@@ -1,12 +1,11 @@
-import moment from "moment";
 import React, { useEffect, useState, useContext } from "react";
 import { CoachesContext } from "../../context/CoachesContext";
-import { CustomerContext } from "../../context/CustomerContext";
+import { UsersContext } from "../../context/UsersContext";
 import { BASE_URL } from "../../utils";
 import BirthdateInput from "../common/BirthdateInput";
 
 const CoachForm = ({ idCoach }) => {
-  const { customers, getCustomersByQuery } = useContext(CustomerContext);
+  const { users, getUsers } = useContext(UsersContext);
   const { coach, getCoach, createCoach, postCoach, setPropiedadCoach } =
     useContext(CoachesContext);
 
@@ -16,17 +15,17 @@ const CoachForm = ({ idCoach }) => {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
+    fetchCoach(idCoach);
+  }, []);
+
+  useEffect(() => {
     if (query !== "") {
-      getCustomersByQuery(query);
+      getUsers({ query });
     }
   }, [query]);
 
   useEffect(() => {
-    if (isNaN(idCoach)) {
-      createCoach();
-    } else {
-      getCoach(idCoach);
-    }
+    fetchCoach(idCoach);
   }, [idCoach]);
 
   useEffect(() => {
@@ -40,6 +39,14 @@ const CoachForm = ({ idCoach }) => {
       setSrc(null);
     }
   }, [file]);
+
+  const fetchCoach = (idCoach) => {
+    if (isNaN(idCoach)) {
+      createCoach();
+    } else {
+      getCoach(idCoach);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,7 +70,7 @@ const CoachForm = ({ idCoach }) => {
   };
 
   const renderCustomers = () => {
-    if (customer !== null) {
+    if (coach.user_id !== null && customer !== null) {
       return (
         <div className="container-fluid px-0 mb-3">
           <p>
@@ -73,8 +80,8 @@ const CoachForm = ({ idCoach }) => {
         </div>
       );
     }
-    if (customers && customers !== null) {
-      return customers.map((customer) => (
+    if (users && users !== null) {
+      return users.map(({ user_id, customer }) => (
         <div key={customer.customer_id} className="row align-items-center">
           <div className="col col-md-4">
             {customer.name} {customer.last_name}
@@ -83,7 +90,10 @@ const CoachForm = ({ idCoach }) => {
           <div className="col col-md-4 text-end">
             <button
               className="btn btn-outline-dark"
-              onClick={() => setCustomer(customer)}
+              onClick={() => {
+                setPropiedadCoach("user_id", user_id);
+                setCustomer(customer);
+              }}
             >
               + Conectar
             </button>

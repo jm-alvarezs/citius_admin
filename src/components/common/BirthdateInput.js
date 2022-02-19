@@ -34,7 +34,7 @@ const BirthdateInput = ({ value, modifier }) => {
   const renderMonths = () => {
     const months = new Array(12).fill(1);
     return months.map((one, index) => (
-      <option value={moment(index + 1, "MM").format("MM")}>
+      <option key={index + 1} value={moment(index + 1, "MM").format("MM")}>
         {moment(index + 1, "MM").format("MMM")}
       </option>
     ));
