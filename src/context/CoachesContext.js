@@ -65,15 +65,9 @@ export const CoachesProvider = ({ children }) => {
         AdjuntosService.postAdjunto(formData).then((res) => {
           const { idAdjunto } = res.data;
           coach.idAdjunto = idAdjunto;
-          if (coach.customer) {
-            coach.user_id = coach.customer.customer_id;
-          }
           CoachesService.postCoach(coach).then(handleSuccess);
         });
       } else {
-        if (coach.customer) {
-          coach.user_id = coach.customer.customer_id;
-        }
         CoachesService.postCoach(coach).then(handleSuccess);
       }
     } else {
@@ -83,15 +77,9 @@ export const CoachesProvider = ({ children }) => {
         AdjuntosService.postAdjunto(formData).then((res) => {
           const { idAdjunto } = res.data;
           coach.idAdjunto = idAdjunto;
-          if (coach.customer) {
-            coach.user_id = coach.customer.customer_id;
-          }
           CoachesService.putCoach(coach).then(handleSuccess);
         });
       } else {
-        if (coach.customer) {
-          coach.user_id = coach.customer.customer_id;
-        }
         CoachesService.putCoach(coach).then(handleSuccess);
       }
     }

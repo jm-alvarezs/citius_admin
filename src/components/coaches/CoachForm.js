@@ -50,7 +50,7 @@ const CoachForm = ({ idCoach }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    postCoach({ ...coach, file, customer });
+    postCoach({ ...coach, file });
   };
 
   const renderFile = () => {
