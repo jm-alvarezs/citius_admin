@@ -25,17 +25,14 @@ const SingleClassCard = ({ clase }) => {
       <div className="card p-3 shadow-sm no-scale br-0">
         <div className="row">
           <div className="col">
-            {moment(clase.class_date).utc().format("DD MMM YYYY HH:mm")}
+            {moment(clase.class_date).utc().format("ddd DD MMM, HH:mm")}
           </div>
           <div className="col">{renderInstructors()}</div>
           <div className="col">{renderLocation()}</div>
-          <div className="col">
-            <span className="show-mobile bold">Capacidad: </span>
-            {clase.capacity}
-          </div>
-          <div className="col">
-            <span className="show-mobile bold">Reservados: </span>
-            {clase.reservations}
+          <div className="col hide-mobile">{clase.capacity}</div>
+          <div className="col hide-mobile">{clase.reservations}</div>
+          <div className="col show-mobile">
+            {clase.reservations} / {clase.capacity}
           </div>
         </div>
       </div>

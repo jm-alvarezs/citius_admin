@@ -27,9 +27,14 @@ const AdminSesiones = () => {
         callback={getClases}
         initialDate={moment().format("YYYY-MM-DD")}
       />
-      <HeaderRow
-        headers={["Fecha", "Coach", "Ubicación", "Capacidad", "Reservadas"]}
-      />
+      <div className="row border bg-light py-1 mx-0 bold mt-3">
+        <div className="col">Fecha</div>
+        <div className="col">Coach</div>
+        <div className="col">Ubicación</div>
+        <div className="col hide-mobile">Capacidad</div>
+        <div className="col hide-mobile">Reservadas</div>
+        <div className="col show-mobile">Reservadas</div>
+      </div>
       {renderClases()}
     </div>
   );

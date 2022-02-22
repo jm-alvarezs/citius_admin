@@ -144,7 +144,7 @@ const ScheduleMobile = () => {
               </button>
             </div>
           </div>
-          <div className="container-fluid schedule-mobile-container">
+          <div className="container-fluid ps-0 schedule-mobile-container">
             <div className="schedule-mobile-wrapper">
               <div className="row">{renderDays()}</div>
             </div>
