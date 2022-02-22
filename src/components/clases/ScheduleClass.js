@@ -4,6 +4,7 @@ import { ModalContext } from "../../context/ModalContext";
 import ClaseForm from "./ClaseForm";
 import { ClassInstructorContext } from "../../context/ClassInstructorContext";
 import { UserContext } from "../../context/UserContext";
+import { Link } from "@reach/router";
 
 const ScheduleClass = ({ singleClass }) => {
   const { modalComponent } = useContext(ModalContext);
@@ -42,12 +43,21 @@ const ScheduleClass = ({ singleClass }) => {
     );
   };
 
+  const isFull = () => {
+    if (
+      singleClass !== null &&
+      Array.isArray(singleClass.class_reservations) !== null
+    ) {
+      return singleClass.capacity - singleClass.class_reservations.length <= 0;
+    }
+  };
+
   const renderButtons = () => {
     if (user.role !== "coach") {
       return (
         <div>
           <button
-            className="btn btn-dark btn-sm my-1 mx-2"
+            className="btn btn-dark btn-sm my-1 mx-1"
             onClick={handleEdit}
           >
             <i className="fa fa-edit"></i>
@@ -65,30 +75,43 @@ const ScheduleClass = ({ singleClass }) => {
 
   const renderInstructors = () => {
     if (singleClass.class_instructors.length === 1) {
-      return singleClass.class_instructors[0].instructor.name;
+      const instructor = singleClass.class_instructors[0].instructor;
+      return instructor.nick_name !== null
+        ? instructor.nick_name
+        : instructor.name;
     }
-    return singleClass.class_instructors.map((class_instructor) => (
-      <span className="d-block">{class_instructor.instructor.name}</span>
+    return singleClass.class_instructors.map(({ instructor }) => (
+      <span className="d-block">
+        {instructor.nick_name !== null ? instructor.nick_name : instructor.name}
+      </span>
     ));
   };
 
   return (
     <div
-      className={`schedule-class small p-2 my-2 ${
+      className={`schedule-class my-2 ${
         singleClass.class_package_id !== null
-          ? "border-warning bg-dark text-warning"
-          : "bg-accent text-dark"
-      }`}
+          ? "bg-dark text-accent"
+          : "text-white"
+      } ${isFull() ? "bg-secondary" : ""}`}
+      style={{ backgroundColor: singleClass.class_type.color }}
     >
       <p className="mb-1 bold">
         <i className={singleClass.icon} /> {singleClass.class_type.name}
       </p>
       <p className="mb-1 small">{singleClass.description}</p>
-      <p className="font-weight-bold mb-1">
+      <p className="font-weight-bold mb-0">
         <i className="far fa-clock"></i>{" "}
         {moment(singleClass.class_date).utc().format("HH:mm")}
       </p>
-      {renderInstructors()}
+      <p className="mb-1">{renderInstructors()}</p>
+      <Link
+        to={`/myadmin/asistentes/${singleClass.single_class_id}`}
+        className="btn btn-link text-white px-0 py-0 btn-sm mb-1"
+      >
+        <i className="fa fa-user"></i> {singleClass.reservations} /{" "}
+        {singleClass.capacity}
+      </Link>
       {renderButtons()}
     </div>
   );

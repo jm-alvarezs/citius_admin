@@ -123,71 +123,75 @@ const Schedule = ({ locations, isHome }) => {
       className="container-fluid px-0 hide-mobile"
       style={{ overflowX: "hidden" }}
     >
-      <div className="row">
-        <div className="col-12 col-xl-2 my-2">
-          <div className="row align-items-center mb-4">
-            <div className="col-4">
-              <button
-                className="btn btn-light border"
-                disabled={month === 0}
-                onClick={() => {
-                  if (month > 0) {
-                    setMonth(month - 1);
-                  }
-                }}
-              >
-                <i className="fa fa-chevron-left"></i>
-              </button>
-            </div>
-            <div className="col-4">
-              <h2 className="mb-0">{moment(month + 1, "M").format("MMM")}</h2>
-            </div>
-            <div className="col-4 text-right">
-              <button
-                className="btn btn-light border"
-                disabled={month === 11}
-                onClick={() => setMonth(month + 1)}
-              >
-                <i className="fa fa-chevron-right"></i>
-              </button>
-            </div>
-          </div>
-          {renderLocations()}
-        </div>
-        <div className="col-12 col-xl-10 my-2">
-          <div className="row mb-4 align-items-center">
-            <div className="col-4 text-center">
-              <button
-                className="btn btn-light btn-lg shadow-sm border"
-                disabled={selected === currentWeek}
-                onClick={() => {
-                  if (selected > currentWeek) {
-                    setSelected(selected - 1);
-                  }
-                }}
-              >
-                <i className="fa fa-chevron-left"></i>
-              </button>
-            </div>
-            <div className="col-4 text-center">
-              <h4 className="mb-0">Semana {selected + 1}</h4>
-            </div>
-            <div className="col-4 text-center">
-              <button
-                className="btn btn-light btn-lg shadow-sm border"
-                disabled={selected === weeks - 1}
-                onClick={() => {
-                  if (selected < weeks - 1) {
-                    setSelected(selected + 1);
-                  }
-                }}
-              >
-                <i className="fa fa-chevron-right"></i>
-              </button>
+      <div className="container-fluid">
+        <div className="row align-items-center mt-3 mb-4">
+          <div className="col-12 col-md-4">
+            <div className="row align-items-center">
+              <div className="col-4">
+                <button
+                  className="btn btn-light border"
+                  disabled={month === 0}
+                  onClick={() => {
+                    if (month > 0) {
+                      setMonth(month - 1);
+                    }
+                  }}
+                >
+                  <i className="fa fa-chevron-left"></i>
+                </button>
+              </div>
+              <div className="col-4">
+                <h2 className="mb-0">{moment(month + 1, "M").format("MMM")}</h2>
+              </div>
+              <div className="col-4 text-right">
+                <button
+                  className="btn btn-light border"
+                  disabled={month === 11}
+                  onClick={() => setMonth(month + 1)}
+                >
+                  <i className="fa fa-chevron-right"></i>
+                </button>
+              </div>
             </div>
           </div>
-          <div className="container-fluid ps-0">{renderDays()}</div>
+          <div className="col-12 col-md-8">
+            <div className="row align-items-center">
+              <div className="col-4 text-center">
+                <button
+                  className="btn btn-light shadow-sm border"
+                  disabled={selected === currentWeek}
+                  onClick={() => {
+                    if (selected > currentWeek) {
+                      setSelected(selected - 1);
+                    }
+                  }}
+                >
+                  <i className="fa fa-chevron-left"></i>
+                </button>
+              </div>
+              <div className="col-4 text-center">
+                <h4 className="mb-0">Semana {selected + 1}</h4>
+              </div>
+              <div className="col-4 text-center">
+                <button
+                  className="btn btn-light shadow-sm border"
+                  disabled={selected === weeks - 1}
+                  onClick={() => {
+                    if (selected < weeks - 1) {
+                      setSelected(selected + 1);
+                    }
+                  }}
+                >
+                  <i className="fa fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
+        {renderLocations()}
+      </div>
+      <div className="container-fluid">
+        <div className="container-fluid ps-0">{renderDays()}</div>
       </div>
     </div>
   );

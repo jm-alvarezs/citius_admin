@@ -199,6 +199,8 @@ h6 {
 .schedule-class {
   border-radius: 10px;
   text-align: center;
+  font-size: 14px;
+  padding: 12px;
   border: 1px solid rgba(0, 0, 0, 0.25);
 }
 
@@ -225,10 +227,6 @@ h6 {
 
 .package-card {
   height: 300px;
-}
-
-.schedule-class {
-  cursor: pointer;
 }
 
 .schedule-class:hover {
