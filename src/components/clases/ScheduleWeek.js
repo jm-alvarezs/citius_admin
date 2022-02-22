@@ -73,16 +73,12 @@ const ScheduleWeek = ({ week, location, isHome, filtered }) => {
           <div key={currentDay.date} className="schedule-col border">
             <div className="row mx-0 pt-2">
               <div className="container-fluid text-center">
-                {moment().format("MMM") ===
-                  moment(currentDay.date).format("MMM") &&
-                  moment(currentDay.date).utc().format("DD")}
+                {moment(currentDay.date).utc().format("DD")}
               </div>
             </div>
             <div className="row mx-0 my-3 bg-dark text-white">
               <div className="container-fluid text-center">
-                {moment().format("MMM") ===
-                  moment(currentDay.date).format("MMM") &&
-                  moment(currentDay.date).utc().format("dd")}
+                {moment(currentDay.date).utc().format("dd")}
               </div>
             </div>
           </div>
