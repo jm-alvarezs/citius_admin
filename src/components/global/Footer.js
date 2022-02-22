@@ -5,7 +5,7 @@ const Footer = () => {
     <div className="container-fluid bg-dark py-3 text-white">
       <div className="row">
         <div className="col-12 col-md-4 mobile-center my-2">
-          &copy; 2021 Vibe N Ride
+          &copy; 2022 Citius MX
         </div>
         <div className="col-12 col-md-4 text-center my-2">
           Términos y Condiciones
