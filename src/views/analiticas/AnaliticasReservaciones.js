@@ -33,8 +33,8 @@ const AnaliticasReservaciones = () => {
           series={[
             {
               name: "Capacidad por Horario",
-              data: data.map(
-                ({ capacity, single_classes }) => capacity / single_classes
+              data: data.map(({ capacity, single_classes }) =>
+                (capacity / single_classes).toFixed(2)
               ),
             },
             {
@@ -82,9 +82,8 @@ const AnaliticasReservaciones = () => {
           series={[
             {
               name: "Ocupación por Horario",
-              data: data.map(
-                ({ capacity, bookings }) =>
-                  parseFloat(bookings / capacity).toFixed(2) * 100
+              data: data.map(({ capacity, bookings }) =>
+                (parseFloat(bookings / capacity).toFixed(2) * 100).toFixed(2)
               ),
             },
           ]}

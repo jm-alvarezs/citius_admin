@@ -15,7 +15,10 @@ const PurchaseRow = ({ purchase }) => {
 
   return (
     <div className="row mx-0 hover-light border-bottom py-2 small">
-      <div className="col">{purchase.purchase_id}</div>
+      <div className="col">
+        {purchase.purchase_id}{" "}
+        {purchase.admin_enabled && <i className="fas fa-user-shield ms-1"></i>}
+      </div>
       <div className="col">{purchase.class_package.title}</div>
       <div className="col">
         <Link to={`/myadmin/customer/${purchase.customer_id}`}>
@@ -36,10 +39,19 @@ const PurchaseRow = ({ purchase }) => {
         )}
       </div>
       <div className="col">
-        {purchase.status === "active" ? (
+        {purchase.status === "revoked" ? (
+          <span className="badge badge-pill bg-danger">Revocada</span>
+        ) : purchase.status === "cancelled" ? (
+          <span className="badge badge-pill bg-danger">Cancelada</span>
+        ) : purchase.status === "active" &&
+          (purchase.subscription_id === null || purchase.admin_enabled) ? (
+          <span className="badge badge-pill bg-success">Pagada</span>
+        ) : purchase.status === "active" ? (
+          <span className="badge badge-pill bg-success">Activa</span>
+        ) : purchase.status === "completed" ? (
           <span className="badge badge-pill bg-success">Completada</span>
         ) : purchase.status === "pending" ? (
-          <span className="badge badge-pill bg-warning text-dark">
+          <span className="badge badge-pull bg-warning text-dark">
             Pendiente
           </span>
         ) : (

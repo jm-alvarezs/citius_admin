@@ -27,7 +27,7 @@ const AnaliticasInstructores = () => {
         .map((instructores) => (
           <div className="row my-2">
             <div className="col">{instructores.name}</div>
-            <div className="col">{instructores.single_classes}</div>
+
             <div className="col">{instructores.booked}</div>
             <div className="col">{instructores.attended}</div>
           </div>
@@ -80,7 +80,7 @@ const AnaliticasInstructores = () => {
             </div>
             <div className="row bold bg-light border py-2 mb-2">
               <div className="col">Nombre</div>
-              <div className="col">Clases</div>
+
               <div className="col">Reservados</div>
               <div className="col">Asistentes</div>
             </div>

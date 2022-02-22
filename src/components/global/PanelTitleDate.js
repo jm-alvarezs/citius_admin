@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 
-const PanelTitleDate = ({ title, callback }) => {
+const PanelTitleDate = ({ title, callback, initialDate }) => {
+  const defaultStart = moment().startOf("month").format("YYYY-MM-DD");
   const [startDate, setStartDate] = useState(
-    moment().startOf("month").format("YYYY-MM-DD")
+    initialDate ? initialDate : defaultStart
   );
+  const defaultEnd = moment().endOf("month").format("YYYY-MM-DD");
   const [endDate, setEndDate] = useState(
-    moment().endOf("month").format("YYYY-MM-DD")
+    initialDate
+      ? moment(initialDate).add(1, "week").format("YYYY-MM-DD")
+      : defaultEnd
   );
 
   useEffect(() => {

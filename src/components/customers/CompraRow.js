@@ -39,15 +39,25 @@ const CompraRow = ({ paquete, canRevoke, confirmRevoke }) => {
           : moment(paquete.expiration_date).format("DD MMM YYYY")}
       </div>
       <div className="col">
-        {paquete.status === "cancelled" ? (
+        {paquete.status === "revoked" ? (
+          <span className="badge badge-pill bg-danger">Revocada</span>
+        ) : paquete.status === "cancelled" ? (
           <span className="badge badge-pill bg-danger">Cancelada</span>
         ) : paquete.status === "active" &&
           (paquete.subscription_id === null || paquete.admin_enabled) ? (
           <span className="badge badge-pill bg-success">Pagada</span>
         ) : paquete.status === "active" ? (
           <span className="badge badge-pill bg-success">Activa</span>
+        ) : paquete.status === "completed" ? (
+          <span className="badge badge-pill bg-success">Completada</span>
+        ) : paquete.status === "pending" ? (
+          <span className="badge badge-pull bg-warning text-dark">
+            Pendiente
+          </span>
         ) : (
-          <span className="badge badge-pull bg-warning">Pendiente</span>
+          <span className="badge badge-pull bg-secondary text-capitalize">
+            {paquete.status}
+          </span>
         )}
       </div>
       <div className="col">
