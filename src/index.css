@@ -966,6 +966,14 @@ body {
   z-index: 10;
 }
 
+.schedule-mobile-container {
+  overflow-x: scroll;
+}
+
+.schedule-mobile-wrapper {
+  width: 250%;
+}
+
 .loading-logo {
   max-width: 500px;
 }
@@ -1010,6 +1018,9 @@ body {
 }
 
 @media (max-width: 767px) {
+  .schedule-col {
+    width: calc(100% / 7);
+  }
   .main-panel {
     margin-left: 0px;
     padding-left: 15px !important;

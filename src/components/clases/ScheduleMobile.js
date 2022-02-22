@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import moment from "moment";
-import ColorLegend from "../global/ColorLegend";
 import ScheduleDay from "./ScheduleDay";
 import { ClassInstructorContext } from "../../context/ClassInstructorContext";
 
@@ -11,16 +10,20 @@ const ScheduleMobile = () => {
   const [month, setMonth] = useState(moment().month());
   const [weeks, setWeeks] = useState("");
 
-  const { days, getSchedule } = useContext(ClassInstructorContext);
+  const { spinner, days, getSchedule } = useContext(ClassInstructorContext);
 
   useEffect(() => {
-    const start_date = moment(month + 1, "M")
-      .startOf("month")
-      .format("YYYY-MM-DD");
-    const end_date = moment(month + 1, "M")
-      .endOf("month")
-      .format("YYYY-MM-DD");
-    getSchedule(start_date, end_date);
+    if (!spinner) {
+      const start_date = moment(month + 1, "M")
+        .startOf("month")
+        .startOf("isoWeek")
+        .format("YYYY-MM-DD");
+      const end_date = moment(month + 1, "M")
+        .endOf("month")
+        .endOf("isoWeek")
+        .format("YYYY-MM-DD");
+      getSchedule(start_date, end_date);
+    }
   }, [month]);
 
   useEffect(() => {

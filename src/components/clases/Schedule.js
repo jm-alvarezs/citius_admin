@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import ScheduleWeek from "./ScheduleWeek";
 import moment from "moment";
-import ColorLegend from "../global/ColorLegend";
 import { ClassInstructorContext } from "../../context/ClassInstructorContext";
 
 const Schedule = ({ locations, isHome }) => {
   const [selected, setSelected] = useState(0);
   const [ubicacion, setUbicacion] = useState("");
   const [filtered, setFiltered] = useState(true);
+  const [currentDay, setCurrentDay] = useState(0);
   const [currentWeek, setCurrentWeek] = useState(0);
   const [weeks, setWeeks] = useState("");
   const [month, setMonth] = useState(moment().month());
@@ -23,6 +23,7 @@ const Schedule = ({ locations, isHome }) => {
       .endOf("month")
       .endOf("isoWeek")
       .format("YYYY-MM-DD");
+    console.log(start_date, end_date);
     getSchedule(start_date, end_date);
   }, [month]);
 
@@ -30,6 +31,7 @@ const Schedule = ({ locations, isHome }) => {
     if (Array.isArray(days)) {
       const weeksNumber = Math.ceil(days.length / 7);
       setWeeks(weeksNumber);
+      setCurrentDay(moment().day());
       if (month === moment().month()) {
         const startCurrentWeek = moment().startOf("week");
         const currentDays = days.filter((day) =>
@@ -50,7 +52,11 @@ const Schedule = ({ locations, isHome }) => {
 
   const renderDays = () => {
     if (days && days !== null && weeks !== "") {
-      const week = days.slice(selected * 7, selected * 7 + 7);
+      let weekStart = selected * 7;
+      if (currentWeek === selected) {
+        weekStart += currentDay - 1;
+      }
+      const week = days.slice(weekStart, weekStart + 7);
       if (!hasClases(week)) {
         return (
           <div className="row">
@@ -147,7 +153,6 @@ const Schedule = ({ locations, isHome }) => {
             </div>
           </div>
           {renderLocations()}
-          <ColorLegend />
         </div>
         <div className="col-12 col-xl-10 my-2">
           <div className="row mb-4 align-items-center">

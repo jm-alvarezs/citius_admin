@@ -48,10 +48,16 @@ export const ClassInstructorProvider = ({ children }) => {
   };
 
   const getSchedule = (start_date, end_date) => {
-    ClassInstructorService.getWeeks(start_date, end_date).then((res) => {
-      const { classes } = res.data;
-      dispatch({ type: SEMANAS_RECIBIDAS, payload: classes });
-    });
+    dispatch({ type: SHOW_SPINNER });
+    ClassInstructorService.getWeeks(start_date, end_date)
+      .then((res) => {
+        const { classes } = res.data;
+        dispatch({ type: SEMANAS_RECIBIDAS, payload: classes });
+        dispatch({ type: HIDE_SPINNER });
+      })
+      .catch((error) => {
+        dispatch({ type: HIDE_SPINNER });
+      });
   };
 
   const getClase = (class_instructor_id) => {
