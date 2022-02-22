@@ -72,7 +72,7 @@ export const CheckoutProvider = ({ children }) => {
                   "conekta.errors.processing.charge.card_payment.suspicious_behaviour"
                 ) {
                   return alert(
-                    "Lo sentimos, nuestro procesador de tarjetas ha rechazado el pago. Comunícate con nosotros en @vibeandride.mx."
+                    "Lo sentimos, nuestro procesador de tarjetas ha rechazado el pago. Comunícate con nosotros."
                   );
                 } else if (data.details[0].code.includes("formatted")) {
                   return alert(
