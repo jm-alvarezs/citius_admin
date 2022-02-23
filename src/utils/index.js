@@ -3,7 +3,7 @@ import moment from "moment";
 
 moment.locale("es", {
   monthsShort: "Ene_Feb_Mar_Abr_May_Jun_Jul_Ago_Sep_Oct_Nov_Dic".split("_"),
-  weekdaysShort: "Lun_Mar_Mie_Jue_Vie_Sab_Dom".split("_"),
+  weekdaysShort: "Dom_Lun_Mar_Mie_Jue_Vie_Sab".split("_"),
 });
 
 const stripe_dev_key =
