@@ -45,15 +45,16 @@ const CustomerInfo = ({ customer, handleAddClasses, handleRevokeClasses }) => {
     email,
     phone,
     instagram_account,
+    conditions,
   } = customer;
 
   return (
-    <>
+    <div className="container-fluid px-0">
       <div className="row">
-        <div className="col col-md-4">
+        <div className="col-12 col-md-4">
           <img src={getSrc()} className="w-100 profile-image" />
         </div>
-        <div className="col col-md-8">
+        <div className="col-12 col-md-8">
           <h4 className="mb-3 pb-3 border-bottom">
             {name} {last_name}
           </h4>
@@ -81,10 +82,14 @@ const CustomerInfo = ({ customer, handleAddClasses, handleRevokeClasses }) => {
             <div className="col-1">@</div>
             <div className="col-11">{instagram_account}</div>
           </div>
+          <p className="mb-0 mt-2">
+            <b>Condiciones Médicas: </b>
+          </p>
+          <p> {conditions}</p>
           <div className="row mt-3">
             <div className="container-fluid">
               <button
-                className="btn btn-outline-dark me-2"
+                className="btn btn-outline-dark me-2 mb-2"
                 onClick={() =>
                   navigate(`/myadmin/customer/${customer_id}/edit`)
                 }
@@ -92,7 +97,7 @@ const CustomerInfo = ({ customer, handleAddClasses, handleRevokeClasses }) => {
                 <i className="fa fa-edit me-2"></i> Editar Información
               </button>
               <button
-                className="btn btn-outline-dark"
+                className="btn btn-outline-dark mb-2"
                 onClick={() => recoverPassword(user.email)}
               >
                 <i className="fa fa-key me-2"></i> Reestablecer Contraseña
@@ -107,12 +112,12 @@ const CustomerInfo = ({ customer, handleAddClasses, handleRevokeClasses }) => {
               </h4>
             )}
           </div>
-          <div className="row mb-3">
-            <div className="col-3 my-2">
+          <div className="row align-items-center mb-3">
+            <div className="col-6 col-md-3 my-2">
               <span className="bold">Clases Disponibles:</span>{" "}
             </div>
-            <div className="col-3 my-2">{renderCustomerClasses()}</div>
-            <div className="col-6 my-2">
+            <div className="col-6 col-md-3 my-2">{renderCustomerClasses()}</div>
+            <div className="col-12 my-2">
               <button
                 className="btn btn-outline-success btn-sm me-3"
                 onClick={handleAddClasses}
@@ -127,15 +132,15 @@ const CustomerInfo = ({ customer, handleAddClasses, handleRevokeClasses }) => {
               </button>
             </div>
           </div>
-          <div className="row">
-            <div className="col-6">
+          <div className="row align-items-center mb-3">
+            <div className="col-6 col-md-3">
               <span className="bold">Circuitos Disponibles: </span>
             </div>
-            <div className="col-6">{renderCircuits()}</div>
+            <div className="col-6 col-md-3">{renderCircuits()}</div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -86,6 +86,7 @@ const AdminAsistentes = ({ single_class_id }) => {
             confirmCancel={confirmCancel}
             postPayment={postPayment}
             postAttend={postAttend}
+            hideButtons={clase.deletedAt !== null}
             updateGuestName={updateGuestName}
             single_class_id={single_class_id}
           />
@@ -125,20 +126,29 @@ const AdminAsistentes = ({ single_class_id }) => {
             <p>{moment(clase.class_date).utc().format("DD MMM YYYY HH:mm")}</p>
             <p>{clase.class_type.name}</p>
             <p>{clase.location.name}</p>
-            {["admin", "manager"].includes(user.role) && (
+            {["admin", "manager"].includes(user.role) &&
+              clase.deletedAt === null && (
+                <div>
+                  <button
+                    className="btn btn-outline-secondary"
+                    onClick={handleEdit}
+                  >
+                    <i className="fa fa-edit me-2"></i> Editar
+                  </button>
+                  <button
+                    className="btn btn-outline-danger mx-3"
+                    onClick={confirmDeleteClass}
+                  >
+                    <i className="fa fa-trash"></i> Eliminar
+                  </button>
+                </div>
+              )}
+            {clase.deletedAt !== null && (
               <div>
-                <button
-                  className="btn btn-outline-secondary"
-                  onClick={handleEdit}
-                >
-                  <i className="fa fa-edit me-2"></i> Editar
-                </button>
-                <button
-                  className="btn btn-outline-danger mx-3"
-                  onClick={confirmDeleteClass}
-                >
-                  <i className="fa fa-trash"></i> Eliminar
-                </button>
+                <span className="badge bg-danger">Clase Cancelada</span>
+                <p className="mt-2">
+                  Los créditos fueron regresados a los usuarios.
+                </p>
               </div>
             )}
           </div>

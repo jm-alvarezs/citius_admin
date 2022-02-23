@@ -16,6 +16,7 @@ import CircuitoRow from "../../components/circuitos/CircuitoRow";
 import BookCircuit from "../../components/circuitos/BookCircuit";
 import RemoveClassesForm from "../../components/purchases/RemoveClassesForm";
 import AddClassesForm from "../../components/purchases/AddClassesForm";
+import ReservationsTable from "../../components/reservaciones/ReservationsTable";
 
 const AdminSingleUsuario = ({ customer_id }) => {
   const {
@@ -180,19 +181,6 @@ const AdminSingleUsuario = ({ customer_id }) => {
     }
   };
 
-  const renderReservaciones = () => {
-    if (customer && customer !== null) {
-      if (Array.isArray(customer.class_reservations)) {
-        return customer.class_reservations.map((reservation) => (
-          <ReservacionRow
-            key={reservation.class_reservation_id}
-            reservation={reservation}
-          />
-        ));
-      }
-    }
-  };
-
   return (
     <div className="container-fluid">
       <div className="row pb-2 border-bottom mx-0 mb-3 align-items-center">
@@ -207,8 +195,8 @@ const AdminSingleUsuario = ({ customer_id }) => {
           )}
         </div>
       </div>
-      <div className="card no-scale mb-3">{renderUsuario()}</div>
-      <div className="card no-scale my-3">
+      <div className="card shadow-sm no-scale mb-3">{renderUsuario()}</div>
+      <div className="card shadow-sm no-scale my-3">
         <h3 className="mb-1">Paquetes Comprados</h3>
         <HeaderRow
           headers={[
@@ -223,7 +211,7 @@ const AdminSingleUsuario = ({ customer_id }) => {
         />
         {renderPaquetes()}
       </div>
-      <div className="card no-scale my-3">
+      <div className="card shadow-sm no-scale my-3">
         <h3 className="mb-1">Cargos</h3>
         <HeaderRow
           headers={[
@@ -238,7 +226,7 @@ const AdminSingleUsuario = ({ customer_id }) => {
         />
         {renderInvoices()}
       </div>
-      <div className="card no-scale my-3">
+      <div className="card shadow-sm no-scale my-3">
         <div className="row border-bottom pb-2 mb-2">
           <div className="col-12 col-md-6">
             <h3>Circuitos</h3>
@@ -258,18 +246,11 @@ const AdminSingleUsuario = ({ customer_id }) => {
         />
         {renderCircuitos()}
       </div>
-      <div className="card no-scale my-3">
-        <h3>Reservaciones</h3>
-        <div className="row bg-light border py-2 my-2">
-          <div className="col col-md-3 bold">Clase</div>
-          <div className="col col-md-2 bold">Coach</div>
-          <div className="col col-md-2 bold">Fecha</div>
-          <div className="col col-md-3 bold">Reservada en</div>
-          <div className="col col-md-2 bold">Status</div>
-        </div>
-        {renderReservaciones()}
-      </div>
-
+      <ReservationsTable
+        reservations={
+          customer !== null ? customer.class_reservations : undefined
+        }
+      />
       <button className="btn btn-outline-danger mt-5" onClick={confirmDelete}>
         <i className="fa fa-trash"></i> Eliminar Cliente
       </button>

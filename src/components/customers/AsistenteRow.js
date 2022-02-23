@@ -8,6 +8,7 @@ const AsistenteRow = ({
   postPayment,
   postAttend,
   single_class_id,
+  hideButtons,
 }) => {
   const sendWhatsApp = (telefono) => {
     telefono = String(telefono).replace("+52", "");
@@ -15,35 +16,35 @@ const AsistenteRow = ({
   };
 
   return (
-    <div className="card p-2 no-scale">
-      <div className="row align-items-center">
-        <div className="col my-2">
-          {asistente.birthday &&
-            asistente.birthday !== null &&
-            moment(asistente.birthday).format("YYYY-MM-DD") ===
-              moment().format("YYYY-MM-DD") && (
-              <i className="fa fa-birthday-cake"></i>
-            )}
-          {asistente.customer.name} {asistente.customer.last_name}
-        </div>
-        <div className="col my-2">
-          <i className="fab fa-instagram me-2"></i>
-          {"@"}
-          {asistente.instagram}
-        </div>
-        <div className="col my-2">
+    <div className="row small p-2 py-3 align-items-center border-bottom">
+      <div className="col">
+        {asistente.birthday &&
+          asistente.birthday !== null &&
+          moment(asistente.birthday).format("YYYY-MM-DD") ===
+            moment().format("YYYY-MM-DD") && (
+            <i className="fa fa-birthday-cake"></i>
+          )}
+        {asistente.customer.name} {asistente.customer.last_name}
+      </div>
+      <div className="col">
+        <i className="fab fa-instagram me-2"></i>
+        {"@"}
+        {asistente.instagram}
+      </div>
+      <div className="col ">
+        <button
+          className="me-2 btn-sm btn btn-success"
+          onClick={() => sendWhatsApp(asistente.phone)}
+        >
+          <i className="fab fa-whatsapp"></i>
+        </button>
+        {asistente.phone}
+      </div>
+      <div className="col ">{asistente.spot}</div>
+      <div className="col ">
+        {!hideButtons && (
           <button
-            className="me-2  btn btn-success"
-            onClick={() => sendWhatsApp(asistente.phone)}
-          >
-            <i className="fab fa-whatsapp"></i>
-          </button>
-          {asistente.phone}
-        </div>
-        <div className="col my-2">{asistente.spot}</div>
-        <div className="col my-2">
-          <button
-            className={`btn btn-${
+            className={`btn btn-sm btn-${
               !asistente.attend ? "outline-secondary" : "link text-dark"
             } me-2`}
             onClick={() =>
@@ -56,31 +57,31 @@ const AsistenteRow = ({
           >
             <i className="fa fa-check"></i>
           </button>
-          {asistente.is_cash && (
-            <button
-              className={`btn btn-outline-${
-                asistente.is_paid ? "danger" : "success"
-              } mx-2`}
-              onClick={() =>
-                postPayment(
-                  asistente.class_reservation_id,
-                  !asistente.is_paid,
-                  single_class_id
-                )
-              }
-            >
-              <i className="fa fa-money-bill"></i>
-            </button>
-          )}
-          {!user.instructor_id && !user.isManager && (
-            <button
-              className="btn btn-outline-danger mx-2"
-              onClick={() => confirmCancel(asistente)}
-            >
-              <i className="fa fa-trash"></i>
-            </button>
-          )}
-        </div>
+        )}
+        {asistente.is_cash && !hideButtons && (
+          <button
+            className={`btn btn-sm btn-outline-${
+              asistente.is_paid ? "danger" : "success"
+            } mx-2`}
+            onClick={() =>
+              postPayment(
+                asistente.class_reservation_id,
+                !asistente.is_paid,
+                single_class_id
+              )
+            }
+          >
+            <i className="fa fa-money-bill"></i>
+          </button>
+        )}
+        {!user.instructor_id && !user.isManager && !hideButtons && (
+          <button
+            className="btn btn-sm btn-outline-danger mx-2"
+            onClick={() => confirmCancel(asistente)}
+          >
+            <i className="fa fa-trash"></i>
+          </button>
+        )}
       </div>
     </div>
   );
