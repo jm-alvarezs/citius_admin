@@ -70,6 +70,13 @@ const CustomerForm = ({ customer_id }) => {
             value={customer.birthdate}
             modifier={(value) => setPropiedadCustomer("birthdate", value)}
           />
+          <label>Condiciones Médicas</label>
+          <input
+            type="text"
+            className="form-control mb-3"
+            value={customer.conditions}
+            onChange={(e) => setPropiedadCustomer("conditions", e.target.value)}
+          />
           <label>¿Cómo te enteraste de Citius?</label>
           <input
             type="text"

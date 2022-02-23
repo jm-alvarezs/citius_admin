@@ -3,7 +3,7 @@ import moment from "moment";
 
 const BirthdateInput = ({ value, modifier }) => {
   const [day, setDay] = useState("");
-  const [month, setMonth] = useState("");
+  const [month, setMonth] = useState("01");
   const [year, setYear] = useState("");
 
   useEffect(() => {
@@ -52,7 +52,11 @@ const BirthdateInput = ({ value, modifier }) => {
         />
       </div>
       <div className="col-4">
-        <select value={month} className="form-control mb-3">
+        <select
+          value={month}
+          className="form-control mb-3"
+          onChange={(e) => setMonth(e.target.value)}
+        >
           {renderMonths()}
         </select>
       </div>
