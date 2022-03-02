@@ -1,5 +1,6 @@
 import moment from "moment";
 import React, { useContext, useEffect, useState } from "react";
+import PanelTitleDate from "../../components/global/PanelTitleDate";
 import { AnaliticasContext } from "../../context/AnaliticasContext";
 import { BASE_URL } from "../../utils";
 
@@ -11,12 +12,12 @@ const AnaliticasInstructores = () => {
   const { instructores, getInstructores, clearInstructores } =
     useContext(AnaliticasContext);
 
-  useEffect(() => {
-    getInstructores(inicio, fin);
-  }, []);
+  const handleDates = (start, end) => {
+    setInicio(start);
+    setFin(end);
+  };
 
   useEffect(() => {
-    clearInstructores();
     getInstructores(inicio, fin);
   }, [inicio, fin]);
 
@@ -37,7 +38,7 @@ const AnaliticasInstructores = () => {
 
   return (
     <div className="container-fluid px-0 mt-3">
-      <h2 className="border-bottom pb-3 mb-3">Instructores</h2>
+      <PanelTitleDate title="Instructores" callback={handleDates} />
       <div className="row">
         <div className="container-fluid">
           <div className="card p-3 me-3 no-scale shadow-sm">

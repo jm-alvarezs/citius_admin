@@ -8,10 +8,6 @@ import Chart from "react-apexcharts";
 const AnaliticasPaquetes = () => {
   const { paquetes, getPaquetes } = useContext(AnaliticasContext);
 
-  useEffect(() => {
-    getPaquetes();
-  }, []);
-
   const renderChart = () => {
     if (Array.isArray(paquetes)) {
       let globalTotal = 0;
@@ -49,7 +45,7 @@ const AnaliticasPaquetes = () => {
 
   return (
     <div className="container-fluid">
-      <PanelTitleDate title="Paquetes" />
+      <PanelTitleDate title="Paquetes" callback={getPaquetes} />
       <div className="row">
         <div className="col-12 col-md-6">
           <div className="card shadow-sm p-3 me-3 no-scale my-3">

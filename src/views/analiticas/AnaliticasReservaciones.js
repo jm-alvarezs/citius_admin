@@ -2,14 +2,11 @@ import React, { useContext, useEffect } from "react";
 import HeaderRow from "../../components/global/HeaderRow";
 import { AnaliticasContext } from "../../context/AnaliticasContext";
 import Chart from "react-apexcharts";
+import PanelTitleDate from "../../components/global/PanelTitleDate";
 
 const AnaliticasReservaciones = () => {
   const { reservaciones, horas, getReservaciones } =
     useContext(AnaliticasContext);
-
-  useEffect(() => {
-    getReservaciones();
-  }, []);
 
   const renderChart = () => {
     if (horas && horas !== null) {
@@ -105,7 +102,7 @@ const AnaliticasReservaciones = () => {
   };
   return (
     <div className="container-fluid px-0">
-      <h2 className="border-bottom pb-3 mb-3">Reservaciones</h2>
+      <PanelTitleDate title="Reservaciones" callback={getReservaciones} />
       <div className="card no-scale shadow-sm my-3 p-3">
         <h4 className="border-bottom pb-3 mb-2">Estadísticas por Horario</h4>
         {renderChart()}

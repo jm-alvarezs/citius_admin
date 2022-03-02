@@ -21,26 +21,26 @@ export const AnaliticasContext = createContext(initialState);
 export const AnaliticasProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AnaliticasReducer, initialState);
 
-  const getInscritos = () => {
-    AnaliticasService.getInscritos().then((res) => {
+  const getInscritos = (start_date, end_date) => {
+    AnaliticasService.getInscritos(start_date, end_date).then((res) => {
       dispatch({ type: INSCRITOS_RECIBIDOS, payload: res.data });
     });
   };
 
-  const getPaquetes = () => {
-    AnaliticasService.getPaquetes().then((res) => {
+  const getPaquetes = (start_date, end_date) => {
+    AnaliticasService.getPaquetes(start_date, end_date).then((res) => {
       dispatch({ type: PAQUETES_RECIBIDOS, payload: res.data.purchases });
     });
   };
 
-  const getIngresos = () => {
-    AnaliticasService.getIngresos().then((res) => {
+  const getIngresos = (start_date, end_date) => {
+    AnaliticasService.getIngresos(start_date, end_date).then((res) => {
       dispatch({ type: INGRESOS_RECBIDOS, payload: res.data });
     });
   };
 
-  const getReservaciones = () => {
-    AnaliticasService.getReservaciones().then((res) => {
+  const getReservaciones = (start_date, end_date) => {
+    AnaliticasService.getReservaciones(start_date, end_date).then((res) => {
       dispatch({
         type: RESERVATIONS_RECIBIDAS,
         payload: {

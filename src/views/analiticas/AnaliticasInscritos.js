@@ -10,10 +10,6 @@ const AnaliticasInscritos = () => {
   const { nuevos, activos, cancelados, mensuales, getInscritos } =
     useContext(AnaliticasContext);
 
-  useEffect(() => {
-    getInscritos();
-  }, []);
-
   const renderChart = () => {
     if (mensuales && mensuales !== null) {
       const activosMensuales = [];
@@ -107,7 +103,7 @@ const AnaliticasInscritos = () => {
 
   return (
     <div className="container-fluid px-0 mb-3">
-      <PanelTitleDate title="Inscritos" />
+      <PanelTitleDate title="Inscritos" callback={getInscritos} />
       <div className="row mt-4">
         <div className="col-12 col-md-4 my-2">
           <div className="card p-3 no-scale mb-4">

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { AnaliticasContext } from "../../context/AnaliticasContext";
 import PanelTitleDate from "../../components/global/PanelTitleDate";
 import { formatMonto } from "../../utils";
@@ -8,14 +8,6 @@ import Chart from "react-apexcharts";
 const AnaliticasIngresos = () => {
   const { income, payment_methods, getIngresos } =
     useContext(AnaliticasContext);
-
-  useEffect(() => {
-    getIngresos();
-  }, []);
-
-  const datesCallback = (start_date, end_date) => {
-    getIngresos(start_date, end_date);
-  };
 
   const renderChart = () => {
     if (Array.isArray(payment_methods)) {
@@ -80,7 +72,7 @@ const AnaliticasIngresos = () => {
 
   return (
     <div className="container-fluid px-0">
-      <PanelTitleDate title="Ingresos" callback={datesCallback} />
+      <PanelTitleDate title="Ingresos" callback={getIngresos} />
       <div className="row">
         <div className="col-12 col-md-6">
           <div className="row">
