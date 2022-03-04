@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import HeaderRow from "../../components/global/HeaderRow";
 import PanelTitleDate from "../../components/global/PanelTitleDate";
 import { AnaliticasContext } from "../../context/AnaliticasContext";

@@ -9,8 +9,7 @@ const AnaliticasInstructores = () => {
     moment().startOf("month").format("YYYY-MM-DD")
   );
   const [fin, setFin] = useState(moment().endOf("month").format("YYYY-MM-DD"));
-  const { instructores, getInstructores, clearInstructores } =
-    useContext(AnaliticasContext);
+  const { instructores, getInstructores } = useContext(AnaliticasContext);
 
   const handleDates = (start, end) => {
     setInicio(start);

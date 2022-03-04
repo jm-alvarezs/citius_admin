@@ -1,55 +1,13 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { AnaliticasContext } from "../../context/AnaliticasContext";
-import Chart from "react-apexcharts";
 import PanelTitleDate from "../../components/global/PanelTitleDate";
 import CustomerRow from "../../components/customers/CustomerRow";
 import HeaderRow from "../../components/global/HeaderRow";
 
 const AnaliticasInscritos = () => {
   const [viewCustomers, setViewCustomers] = useState(null);
-  const { nuevos, activos, cancelados, mensuales, getInscritos } =
+  const { nuevos, activos, cancelados, getInscritos } =
     useContext(AnaliticasContext);
-
-  const renderChart = () => {
-    if (mensuales && mensuales !== null) {
-      const activosMensuales = [];
-      for (let i = 0; i < 12; i++) {
-        let mes = mensuales.find(({ mes }) => parseInt(mes) === i + 1);
-        if (mes) activosMensuales.push(mes.activos);
-        else activosMensuales.push(0);
-      }
-      return (
-        <Chart
-          type="area"
-          options={{
-            colors: ["#dec1a1"],
-            xaxis: {
-              categories: [
-                "Ene",
-                "Feb",
-                "Mar",
-                "Abr",
-                "May",
-                "Jun",
-                "Jul",
-                "Ago",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dic",
-              ],
-            },
-          }}
-          series={[
-            {
-              name: "Inscritos por Mes",
-              data: activosMensuales,
-            },
-          ]}
-        />
-      );
-    }
-  };
 
   const renderCustomers = () => {
     if (viewCustomers !== null) {

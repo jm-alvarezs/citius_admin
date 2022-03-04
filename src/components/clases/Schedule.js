@@ -23,7 +23,6 @@ const Schedule = ({ locations, isHome }) => {
       .endOf("month")
       .endOf("isoWeek")
       .format("YYYY-MM-DD");
-    console.log(start_date, end_date);
     getSchedule(start_date, end_date);
   }, [month]);
 

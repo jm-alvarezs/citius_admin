@@ -28,14 +28,8 @@ const PaqueteForm = ({
   };
 
   const addDefaultPeriod = () => {
-    if (
-      paquete.is_subscription &&
-      (paquete.subscription_period === null ||
-        !paquete.subscription_period ||
-        paquete.subscription_period === "")
-    ) {
-      modifier("subscription_period", "month");
-    }
+    modifier("subscription_period", "month");
+    modifier("subscription_interval", "1");
   };
 
   const renderLocations = () => {
@@ -183,7 +177,6 @@ const PaqueteForm = ({
           </div>
           <div className="col-6 col-md-10">días</div>
         </div>
-
         {paquete.is_subscription && (
           <>
             <div className="row">

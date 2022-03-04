@@ -96,7 +96,7 @@ export const UserProvider = ({ children }) => {
           });
       },
       (error) => {
-        if (error) {
+        if (error && error !== null) {
           alert(error);
           AuthService.signOut();
           navigate("/entrar");

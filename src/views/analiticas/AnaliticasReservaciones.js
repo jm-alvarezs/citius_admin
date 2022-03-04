@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import HeaderRow from "../../components/global/HeaderRow";
 import { AnaliticasContext } from "../../context/AnaliticasContext";
 import Chart from "react-apexcharts";

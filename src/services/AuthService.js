@@ -31,15 +31,21 @@ const AuthService = {
           return user;
         });
       }),
-  userLoggedIn: (success, error) =>
+  userLoggedIn: (success, onError) =>
     auth.onAuthStateChanged((user) => {
-      if (user) {
-        getToken().then((token) => {
-          api.defaults.headers.common["Authorization"] = token;
-          if (success) success(user);
-        });
+      if (user !== null) {
+        getToken()
+          .then((token) => {
+            api.defaults.headers.common["Authorization"] = token;
+            if (success) success(user);
+          })
+          .catch((error) => {
+            console.log("get token error");
+            console.log(error);
+            onError(error);
+          });
       } else {
-        error();
+        onError();
       }
     }),
   signOut: () => auth.signOut(),
