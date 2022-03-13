@@ -7,7 +7,9 @@ const SingleClassCard = ({ clase }) => {
     if (clase.class_instructors !== null) {
       if (clase.class_instructors.length > 0) {
         return clase.class_instructors
-          .map(({ instructor }) => instructor.name)
+          .map(({ instructor }) =>
+            instructor !== null ? instructor.name : "N/D"
+          )
           .join(",");
       }
     }
