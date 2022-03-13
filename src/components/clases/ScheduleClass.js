@@ -76,15 +76,20 @@ const ScheduleClass = ({ singleClass }) => {
   const renderInstructors = () => {
     if (singleClass.class_instructors.length === 1) {
       const instructor = singleClass.class_instructors[0].instructor;
-      return instructor.nick_name !== null
-        ? instructor.nick_name
-        : instructor.name;
+      if (instructor !== null) {
+        return instructor.nick_name !== null
+          ? instructor.nick_name
+          : instructor.name;
+      }
+    } else {
+      return singleClass.class_instructors.map(({ instructor }) => (
+        <span className="d-block">
+          {instructor.nick_name !== null
+            ? instructor.nick_name
+            : instructor.name}
+        </span>
+      ));
     }
-    return singleClass.class_instructors.map(({ instructor }) => (
-      <span className="d-block">
-        {instructor.nick_name !== null ? instructor.nick_name : instructor.name}
-      </span>
-    ));
   };
 
   return (
