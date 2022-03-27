@@ -10,21 +10,28 @@ const ScheduleMobile = () => {
   const [month, setMonth] = useState(moment().month());
   const [weeks, setWeeks] = useState("");
 
-  const { spinner, days, getSchedule } = useContext(ClassInstructorContext);
+  const { spinner, days, update, clearUpdate, getSchedule } = useContext(
+    ClassInstructorContext
+  );
 
   useEffect(() => {
     if (!spinner) {
-      const start_date = moment(month + 1, "M")
-        .startOf("month")
-        .startOf("isoWeek")
-        .format("YYYY-MM-DD");
-      const end_date = moment(month + 1, "M")
-        .endOf("month")
-        .endOf("isoWeek")
-        .format("YYYY-MM-DD");
-      getSchedule(start_date, end_date);
+      fetchSchedule();
+      clearUpdate();
     }
-  }, [month]);
+  }, [month, update]);
+
+  const fetchSchedule = () => {
+    const start_date = moment(month + 1, "M")
+      .startOf("month")
+      .startOf("isoWeek")
+      .format("YYYY-MM-DD");
+    const end_date = moment(month + 1, "M")
+      .endOf("month")
+      .endOf("isoWeek")
+      .format("YYYY-MM-DD");
+    getSchedule(start_date, end_date);
+  };
 
   useEffect(() => {
     if (Array.isArray(days) && weeks === "") {

@@ -10,6 +10,8 @@ import {
   TOTAL_RECIBIDO,
   SHOW_SPINNER,
   HIDE_SPINNER,
+  CLEAR_SCHEDULE_UPDATE,
+  SET_SCHEDULE_UPDATE,
 } from "../types";
 import { hideModal } from "../utils";
 import { ModalContext } from "./ModalContext";
@@ -83,13 +85,13 @@ export const ClassInstructorProvider = ({ children }) => {
     if (isNaN(clase.single_class_id)) {
       ClassInstructorService.postClase(clase).then((res) => {
         success("¡Clase guardada con éxito!");
-        getSchedule();
+        dispatch({ type: SET_SCHEDULE_UPDATE });
         hideModal();
       });
     } else {
       ClassInstructorService.putClase(clase).then((res) => {
         success("¡Clase guardada con éxito!");
-        getSchedule();
+        dispatch({ type: SET_SCHEDULE_UPDATE });
         hideModal();
       });
     }
@@ -142,6 +144,10 @@ export const ClassInstructorProvider = ({ children }) => {
     );
   };
 
+  const clearUpdate = () => {
+    dispatch({ type: CLEAR_SCHEDULE_UPDATE });
+  };
+
   return (
     <ClassInstructorContext.Provider
       value={{
@@ -156,6 +162,7 @@ export const ClassInstructorProvider = ({ children }) => {
         createClase,
         eliminarClase,
         getAsistentes,
+        clearUpdate,
         postAsistenteClase,
         setPropiedadClase,
       }}

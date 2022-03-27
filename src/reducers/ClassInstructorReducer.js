@@ -10,6 +10,8 @@ import {
   SET_PROPIEDAD_CLASE,
   SHOW_SPINNER,
   TOTAL_RECIBIDO,
+  SET_SCHEDULE_UPDATE,
+  CLEAR_SCHEDULE_UPDATE,
 } from "../types";
 
 const schema = {
@@ -55,6 +57,10 @@ const ClassInstructorReducer = (state, { type, payload }) => {
       return { ...state, spinner: true };
     case HIDE_SPINNER:
       return { ...state, spinner: false };
+    case SET_SCHEDULE_UPDATE:
+      return { ...state, update: true };
+    case CLEAR_SCHEDULE_UPDATE:
+      return { ...state, update: false };
     default:
       return { ...state };
   }

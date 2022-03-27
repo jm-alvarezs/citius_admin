@@ -12,9 +12,16 @@ const Schedule = ({ locations, isHome }) => {
   const [weeks, setWeeks] = useState("");
   const [month, setMonth] = useState(moment().month());
 
-  const { days, getSchedule } = useContext(ClassInstructorContext);
+  const { days, update, clearUpdate, getSchedule } = useContext(
+    ClassInstructorContext
+  );
 
   useEffect(() => {
+    fetchSchedule();
+    clearUpdate();
+  }, [month, update]);
+
+  const fetchSchedule = () => {
     const start_date = moment(month + 1, "M")
       .startOf("month")
       .startOf("isoWeek")
@@ -24,7 +31,7 @@ const Schedule = ({ locations, isHome }) => {
       .endOf("isoWeek")
       .format("YYYY-MM-DD");
     getSchedule(start_date, end_date);
-  }, [month]);
+  };
 
   useEffect(() => {
     if (Array.isArray(days)) {
