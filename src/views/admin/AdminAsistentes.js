@@ -19,6 +19,7 @@ const AdminAsistentes = ({ single_class_id }) => {
     postPayment,
     eliminarClase,
     updateGuestName,
+    setPropiedadClase,
   } = useContext(ClassInstructorContext);
 
   const { postAttend } = useContext(ReservationsContext);
@@ -47,7 +48,7 @@ const AdminAsistentes = ({ single_class_id }) => {
   };
 
   const handleEdit = () => {
-    modalComponent("Editar Clase", <ClaseForm />);
+    modalComponent("Editar Clase", <ClaseForm modifier={setPropiedadClase} />);
   };
 
   const confirmDeleteClass = (clase) => {
