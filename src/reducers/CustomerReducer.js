@@ -1,6 +1,7 @@
 import {
   CREATE_CUSTOMER,
   CUSTOMERS_RECIBIDOS,
+  LINK_RECIBIDO,
   SET_CUSTOMER,
   SET_PROPIEDAD_CUSTOMER,
 } from "../types";
@@ -30,6 +31,9 @@ const CustomerReducer = (state, { type, payload }) => {
       const { key, value } = payload;
       customer[key] = value;
       return { ...state, customer };
+    case LINK_RECIBIDO: {
+      return { ...state, link: payload };
+    }
     default:
       return { ...state };
   }

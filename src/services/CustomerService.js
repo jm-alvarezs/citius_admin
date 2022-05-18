@@ -40,6 +40,8 @@ const CustomerService = {
   addCircuit: (circuit) => api.post(`${route}/circuit`, { ...circuit }),
   redeemCircuit: (circuit) => api.post(`${route}/redeem`, { ...circuit }),
   recoverPassword: (email) => api.post(`${route}/recover`, { email }),
+  getPasswordResetLink: (email) =>
+    api.post(`${route}/resetPasswordLink`, { email }),
 };
 
 export default CustomerService;

@@ -9,6 +9,7 @@ import {
   SET_PROPIEDAD_CUSTOMER,
   SHOW_SPINNER,
   HIDE_SPINNER,
+  LINK_RECIBIDO,
 } from "../types";
 import { hideModal } from "../utils";
 import { ModalContext } from "./ModalContext";
@@ -163,6 +164,17 @@ export const CustomerProvider = ({ children }) => {
     );
   };
 
+  const getPasswordResetLink = (email) => {
+    CustomerService.getPasswordResetLink(email).then((res) => {
+      const { link } = res.data;
+      dispatch({ type: LINK_RECIBIDO, payload: link });
+    });
+  };
+
+  const clearLink = () => {
+    dispatch({ type: LINK_RECIBIDO, payload: null });
+  };
+
   return (
     <CustomerContext.Provider
       value={{
@@ -176,6 +188,8 @@ export const CustomerProvider = ({ children }) => {
         removeClasses,
         createCustomer,
         postCustomer,
+        clearLink,
+        getPasswordResetLink,
         setPropiedadCustomer,
         redeemCircuit,
         removeCustomerClasses,

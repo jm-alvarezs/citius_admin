@@ -1,11 +1,42 @@
 import { navigate } from "@reach/router";
 import moment from "moment";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { CustomerContext } from "../../context/CustomerContext";
+import { ModalContext } from "../../context/ModalContext";
 import { UserContext } from "../../context/UserContext";
 import { S3_ENDPOINT, formatMonto } from "../../utils";
 
 const CustomerInfo = ({ customer, handleAddClasses, handleRevokeClasses }) => {
+  const [copied, setCopied] = useState(false);
+
   const { user, recoverPassword } = useContext(UserContext);
+
+  const { link, getPasswordResetLink } = useContext(CustomerContext);
+
+  const { success } = useContext(ModalContext);
+
+  useEffect(() => {
+    if (link !== null) {
+      let input = document.createElement("input");
+      input.value = link;
+      input.id = "copy-input";
+      document.body.appendChild(input);
+      var copyText = document.getElementById("copy-input");
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+      navigator.clipboard.writeText(copyText.value).then(() => {
+        setCopied(true);
+      });
+      input.remove();
+    }
+  }, [link]);
+
+  useEffect(() => {
+    if (copied) {
+      success("Enlace copiado al portapapeles.");
+    }
+  }, [copied]);
 
   const getTotalCompras = () => {
     let total = 0;
@@ -96,13 +127,25 @@ const CustomerInfo = ({ customer, handleAddClasses, handleRevokeClasses }) => {
               >
                 <i className="fa fa-edit me-2"></i> Editar Información
               </button>
+            </div>
+          </div>
+          <h4 className="mt-3 mb-2">Reestablecer Contraseña</h4>
+          <div className="row">
+            <div className="col-6">
               <button
-                className="btn btn-outline-dark mb-2"
-                onClick={() => recoverPassword(user.email)}
+                className="btn btn-outline-dark me-2 my-1"
+                onClick={() => recoverPassword(customer.email)}
               >
-                <i className="fa fa-key me-2"></i> Reestablecer Contraseña
+                <i className="fa fa-envelope me-2"></i> Enviar Correo Contraseña
+              </button>
+              <button
+                className="btn btn-outline-dark me-2 my-1"
+                onClick={() => getPasswordResetLink(customer.email)}
+              >
+                <i className="fa fa-link me-2"></i> Generar Link
               </button>
             </div>
+            <div className="col-6"></div>
           </div>
           <div className="row mt-4">
             {user.role === "admin" && (
