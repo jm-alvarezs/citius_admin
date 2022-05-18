@@ -17,6 +17,7 @@ import { ModalContext } from "./ModalContext";
 const initialState = {
   customers: null,
   customer: null,
+  link: null,
 };
 
 export const CustomerContext = createContext(initialState);
