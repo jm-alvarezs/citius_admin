@@ -176,6 +176,14 @@ export const CustomerProvider = ({ children }) => {
     dispatch({ type: LINK_RECIBIDO, payload: null });
   };
 
+  const addCircuits = (circuit) => {
+    CustomerService.addCircuit(circuit).then(() => {
+      getCustomer(circuit.customer_id);
+      success("Circuitos agregados.");
+      hideModal();
+    });
+  };
+
   return (
     <CustomerContext.Provider
       value={{
@@ -190,6 +198,7 @@ export const CustomerProvider = ({ children }) => {
         createCustomer,
         postCustomer,
         clearLink,
+        addCircuits,
         getPasswordResetLink,
         setPropiedadCustomer,
         redeemCircuit,

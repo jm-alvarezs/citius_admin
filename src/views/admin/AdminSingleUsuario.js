@@ -4,7 +4,6 @@ import { ModalContext } from "../../context/ModalContext";
 import ExtendAccessForm from "../../components/customers/ExtendAccessForm";
 import { PackagesContext } from "../../context/PackageContext";
 import { UserContext } from "../../context/UserContext";
-import ReservacionRow from "../../components/reservaciones/ReservacionRow";
 import CompraRow from "../../components/customers/CompraRow";
 import CustomerInfo from "../../components/customers/CustomerInfo";
 import HeaderRow from "../../components/global/HeaderRow";
@@ -17,6 +16,7 @@ import BookCircuit from "../../components/circuitos/BookCircuit";
 import RemoveClassesForm from "../../components/purchases/RemoveClassesForm";
 import AddClassesForm from "../../components/purchases/AddClassesForm";
 import ReservationsTable from "../../components/reservaciones/ReservationsTable";
+import AddCircuitForm from "../../components/circuitos/CircuitForm";
 
 const AdminSingleUsuario = ({ customer_id }) => {
   const {
@@ -25,6 +25,7 @@ const AdminSingleUsuario = ({ customer_id }) => {
     clearCustomer,
     extenderAcceso,
     deleteCustomer,
+    addCircuits,
     addCustomerClasses,
     removeCustomerClasses,
   } = useContext(CustomerContext);
@@ -109,6 +110,13 @@ const AdminSingleUsuario = ({ customer_id }) => {
         customer_id={customer_id}
         addClasses={addCustomerClasses}
       />
+    );
+  };
+
+  const handleAddCircuits = () => {
+    modalComponent(
+      "Agregar Circuitos",
+      <AddCircuitForm customer_id={customer_id} addCircuits={addCircuits} />
     );
   };
 
@@ -232,7 +240,9 @@ const AdminSingleUsuario = ({ customer_id }) => {
             <h3>Circuitos</h3>
           </div>
           <div className="col-12 col-md-6 text-right">
-            <button className="btn btn-accent">+ Circuito</button>
+            <button className="btn btn-accent" onClick={handleAddCircuits}>
+              + Circuito
+            </button>
           </div>
         </div>
         <HeaderRow
