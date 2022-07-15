@@ -13,13 +13,19 @@ const PurchaseRow = ({ purchase }) => {
     }
   };
 
+  const renderClassPackage = () => {
+    if (purchase.class_package !== null) {
+      return purchase.class_package.title;
+    }
+  };
+
   return (
     <div className="row mx-0 hover-light border-bottom py-2 small">
       <div className="col">
         {purchase.purchase_id}{" "}
         {purchase.admin_enabled && <i className="fas fa-user-shield ms-1"></i>}
       </div>
-      <div className="col">{purchase.class_package.title}</div>
+      <div className="col">{renderClassPackage()}</div>
       <div className="col">
         <Link to={`/myadmin/customer/${purchase.customer_id}`}>
           {purchase.customer.invoices.length === 1 ? (
