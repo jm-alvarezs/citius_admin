@@ -18,11 +18,17 @@ const InvoiceRow = ({ invoice, customer_id }) => {
     }
   };
 
+  const renderClassPackage = () => {
+    if (invoice.class_package !== null) {
+      return invoice.class_package.title;
+    }
+  };
+
   return (
     <div className="row mx-0 hover-light border-bottom py-2 small">
       <div className="col">{invoice.invoice_id}</div>
       <div className="col">{invoice.purchase_id}</div>
-      <div className="col">{invoice.class_package.title}</div>
+      <div className="col">{renderClassPackage()}</div>
       {!customer_id && (
         <div className="col">
           <Link to={`/myadmin/customer/${invoice.customer_id}`}>
