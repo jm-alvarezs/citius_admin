@@ -6,13 +6,19 @@ import { formatMonto } from "../../utils";
 const CompraRow = ({ paquete, canRevoke, confirmRevoke }) => {
   const { user } = useContext(UserContext);
 
+  const renderPackage = () => {
+    if (paquete.class_package !== null) {
+      return paquete.class_package.title;
+    }
+  };
+
   return (
     <div className="row p-2 small border-bottom align-items-center mx-0">
       <div className="col">
         {paquete.purchase_id}{" "}
         {paquete.admin_enabled && <i className="fas fa-user-shield ms-1"></i>}
       </div>
-      <div className="col">{paquete.class_package.title}</div>
+      <div className="col">{renderPackage()}</div>
       <div className="col">
         {moment(paquete.createdAt).utc().format("DD MMM YYYY HH:mm")}
       </div>
