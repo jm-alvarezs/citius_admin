@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { ClassInstructorContext } from "../../context/ClassInstructorContext";
 import { CoachesContext } from "../../context/CoachesContext";
 import { LocationsContext } from "../../context/LocationsContext";
-import moment from "moment";
 import { PackagesContext } from "../../context/PackageContext";
 import { ClassTypeContext } from "../../context/ClassTypesContext";
+import DateTimePicker from "../common/DateTimePicker";
+import SelectInstructors from "../global/SelectInstructors";
 
 const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
   const [addLocation, setAddLocation] = useState("");
@@ -16,9 +17,15 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
   const [current_id, setCurrent_id] = useState(null);
   const [first, setFirst] = useState(false);
 
-  const { clase, clearClase, getClase, postClase, createClase } = useContext(
-    ClassInstructorContext
-  );
+  const {
+    clase,
+    clearClase,
+    getClase,
+    postClase,
+    createClase,
+    addInstructor,
+    removeInstructor,
+  } = useContext(ClassInstructorContext);
 
   const { class_types, getClassTypes } = useContext(ClassTypeContext);
 
@@ -36,7 +43,6 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
     getCoaches();
     return () => {
       setFirst(false);
-      clearClase();
     };
   }, []);
 
@@ -48,10 +54,6 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
         }
       }
       setFirst(true);
-      modifier(
-        "class_date",
-        moment(clase.class_date).utc().format("YYYY-MM-DDTHH:mm")
-      );
     }
   }, [clase]);
 
@@ -95,68 +97,11 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
         name: location,
       };
     }
-    let class_date = moment(clase.class_date).format("YYYY-MM-DD HH:mm:ss");
-    postClase({
-      ...clase,
-      class_date,
-    });
-  };
-
-  const handleChangeHour = (hour) => {
-    let hourString = String(hour);
-    if (hourString.length === 1) {
-      hourString = `0${hourString}`;
-    } else if (hourString.length > 2) {
-      if (hourString[0] === "0") {
-        hourString = hourString.substr(1);
-      } else {
-        hourString = hourString.substr(0, 2);
-      }
-    }
-    if (parseInt(hourString) > 23) hourString = "23";
-    if (parseInt(hourString) < 0) hourString = "0";
-    const date = clase.class_date.split("T")[0];
-    const minutes = clase.class_date.split("T")[1].split(":")[1];
-    modifier("class_date", `${date}T${hourString}:${minutes}`);
-  };
-
-  //New input
-
-  const handleChangeMinutes = (minutes) => {
-    let minuteString = String(minutes);
-    if (minuteString.length === 1) {
-      minuteString = `0${minuteString}`;
-    } else if (minuteString.length > 2) {
-      if (minuteString[0] === "0") {
-        minuteString = minuteString.substr(1);
-      } else {
-        minuteString = minuteString.substr(0, 2);
-      }
-    }
-    if (parseInt(minuteString) > 59) minuteString = "23";
-    if (parseInt(minuteString) < 0) minuteString = "0";
-    const date = clase.class_date.split("T")[0];
-    const hours = clase.class_date.split("T")[1].split(":")[0];
-    modifier("class_date", `${date}T${hours}:${minuteString}`);
-  };
-
-  const renderCoaches = () => {
-    if (coaches && coaches !== null) {
-      if (coaches.length > 0 && clase.instructor_id === "") {
-        setTimeout(() => {
-          modifier("instructor_id", coaches[0].instructor_id);
-        }, 100);
-      }
-      return coaches.map((coach) => (
-        <option key={coach.instructor_id} value={coach.instructor_id}>
-          {coach.name} {coach.last_name}
-        </option>
-      ));
-    }
+    postClase(clase);
   };
 
   const renderLocations = () => {
-    if (locations && locations !== null) {
+    if (Array.isArray(locations)) {
       if (locations.length > 0 && clase.location_id === "") {
         setTimeout(() => {
           modifier("location_id", locations[0].location_id);
@@ -171,7 +116,7 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
   };
 
   const renderClassTypes = () => {
-    if (class_types && class_types !== null) {
+    if (Array.isArray(class_types)) {
       if (class_types.length > 0 && clase.class_type_id === "") {
         setTimeout(() => {
           modifier("class_type_id", class_types[0].class_type_id);
@@ -186,8 +131,8 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
   };
 
   const renderPaquetes = () => {
-    if (paquetes && paquetes !== null) {
-      return [{ title: "No es evento especial" }]
+    if (Array.isArray(paquetes)) {
+      return [{ title: "No es evento especial", class_package_id: null }]
         .concat(paquetes)
         .map((paquete) => (
           <option value={paquete.class_package_id}>{paquete.title}</option>
@@ -197,14 +142,8 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
 
   const renderForm = () => {
     if (clase && clase !== null) {
-      const {
-        description,
-        class_date,
-        class_type_id,
-        capacity,
-        instructor_id,
-        location_id,
-      } = clase;
+      const { description, class_date, class_type_id, capacity, location_id } =
+        clase;
       return (
         <form onSubmit={handleSubmit}>
           <label>Tipo de Clase</label>
@@ -249,91 +188,16 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
             value={description}
             onChange={(e) => modifier("description", e.target.value)}
           />
-          <div className="row mb-3">
-            <div className="col-6">
-              <label className="mb-1">Fecha</label>
-              <input
-                type="date"
-                className="form-control"
-                value={class_date.split("T")[0]}
-                onChange={(e) =>
-                  modifier(
-                    "class_date",
-                    `${e.target.value}T${class_date.split("T")[1]}`
-                  )
-                }
-              />
-            </div>
-            <div className="col-6">
-              <label className="mb-1">Hora (0h - 23h)</label>
-              <div className="row">
-                <div className="col-6">
-                  <div className="row align-items-center">
-                    <div className="col-6 pe-0">
-                      <input
-                        type="number"
-                        className="form-control pe-0"
-                        value={class_date.split("T")[1].split(":")[0]}
-                        onChange={(e) => handleChangeHour(e.target.value)}
-                        max={23}
-                        min={0}
-                      />
-                    </div>
-                    <div className="col-6 pe-0">h</div>
-                  </div>
-                </div>
-                <div className="col-6">
-                  <div className="row align-items-center">
-                    <div className="col-6 px-0">
-                      <input
-                        type="number"
-                        className="form-control"
-                        value={class_date.split("T")[1].split(":")[1]}
-                        max={59}
-                        min={0}
-                        onChange={(e) => handleChangeMinutes(e.target.value)}
-                      />
-                    </div>
-                    <div className="col-6 pe-0">min</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <label>Coach</label>
-          <div className="row">
-            <div className="col col-md-6">
-              {addCoach ? (
-                <input
-                  type="text"
-                  className="form-control mb-3"
-                  value={coach}
-                  onChange={(e) => setCoach(e.target.value)}
-                />
-              ) : (
-                <select
-                  className="form-control mb-3"
-                  value={instructor_id}
-                  onChange={(e) =>
-                    modifier("instructor_id", parseInt(e.target.value))
-                  }
-                >
-                  {renderCoaches()}
-                </select>
-              )}
-            </div>
-            <div className="col col-md-6">
-              <button
-                className="btn btn-outline-dark"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setAddCoach(!addCoach);
-                }}
-              >
-                {addCoach ? "Seleccionar" : "Agregar"} Coach
-              </button>
-            </div>
-          </div>
+          <DateTimePicker
+            value={class_date}
+            modifier={(value) => modifier("class_date", value)}
+          />
+          <SelectInstructors
+            instructors={coaches}
+            addInstructor={addInstructor}
+            removeInstructor={removeInstructor}
+            selected={clase.class_instructors}
+          />
           <label>Ubicación</label>
           <div className="row">
             <div className="col col-md-6">
@@ -379,14 +243,14 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
           <label>Evento Especial</label>
           <select
             className="form-control mb-3"
-            value={clase.class_package_id}
-            onChange={(e) => modifier("class_package_id", e.target.value)}
+            value={clase.package_id}
+            onChange={(e) => modifier("package_id", e.target.value)}
           >
             {renderPaquetes()}
           </select>
           <div className="row">
             <div className="col col-md-6">
-              <button type="submit" className="btn btn-dark btn-block">
+              <button type="submit" className="btn btn-accent btn-block">
                 Guardar
               </button>
             </div>
@@ -398,7 +262,7 @@ const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
                   confirmDeleteClass(clase);
                 }}
               >
-                Eliminar
+                <i className="fa fa-trash me-1"></i> Eliminar
               </button>
             </div>
           </div>
