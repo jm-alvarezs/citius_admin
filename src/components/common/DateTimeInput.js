@@ -15,8 +15,8 @@ const DateTimeInput = ({ class_date, modifier }) => {
     }
     if (parseInt(hourString) > 23) hourString = "23";
     if (parseInt(hourString) < 0) hourString = "0";
-    const date = class_date.split("T")[0];
-    const minutes = class_date.split("T")[1].split(":")[1];
+    const date = class_date.split(" ")[0];
+    const minutes = class_date.split(" ")[1].split(":")[1];
     modifier("class_date", `${date}T${hourString}:${minutes}`);
   };
 
@@ -35,12 +35,12 @@ const DateTimeInput = ({ class_date, modifier }) => {
     }
     if (parseInt(minuteString) > 59) minuteString = "23";
     if (parseInt(minuteString) < 0) minuteString = "0";
-    const date = class_date.split("T")[0];
-    const hours = class_date.split("T")[1].split(":")[0];
+    const date = class_date.split(" ")[0];
+    const hours = class_date.split(" ")[1].split(":")[0];
     modifier("class_date", `${date}T${hours}:${minuteString}`);
   };
 
-  class_date = class_date ? class_date : moment().format("YYYY-MM-DDTHH:mm");
+  class_date = class_date ? class_date : moment().format("YYYY-MM-DD HH:mm");
 
   return (
     <div className="row mb-3 align-items-center">
@@ -49,11 +49,11 @@ const DateTimeInput = ({ class_date, modifier }) => {
         <input
           type="date"
           className="form-control"
-          value={class_date.split("T")[0]}
+          value={class_date.split(" ")[0]}
           onChange={(e) =>
             modifier(
               "class_date",
-              `${e.target.value}T${class_date.split("T")[1]}`
+              `${e.target.value}T${class_date.split(" ")[1]}`
             )
           }
         />
@@ -67,7 +67,7 @@ const DateTimeInput = ({ class_date, modifier }) => {
                 <input
                   type="number"
                   className="form-control"
-                  value={class_date.split("T")[1].split(":")[0]}
+                  value={class_date.split(" ")[1].split(":")[0]}
                   onChange={(e) => handleChangeHour(e.target.value)}
                   max={23}
                   min={0}
@@ -82,7 +82,7 @@ const DateTimeInput = ({ class_date, modifier }) => {
                 <input
                   type="number"
                   className="form-control"
-                  value={class_date.split("T")[1].split(":")[1]}
+                  value={class_date.split(" ")[1].split(":")[1]}
                   max={59}
                   min={0}
                   onChange={(e) => handleChangeMinutes(e.target.value)}

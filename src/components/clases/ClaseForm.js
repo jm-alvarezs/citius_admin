@@ -4,8 +4,8 @@ import { CoachesContext } from "../../context/CoachesContext";
 import { LocationsContext } from "../../context/LocationsContext";
 import { PackagesContext } from "../../context/PackageContext";
 import { ClassTypeContext } from "../../context/ClassTypesContext";
-import DateTimePicker from "../common/DateTimePicker";
 import SelectInstructors from "../global/SelectInstructors";
+import DateTimePicker from "../common/DateTimePicker";
 
 const ClaseForm = ({ single_class_id, modifier, confirmDeleteClass }) => {
   const [addLocation, setAddLocation] = useState("");

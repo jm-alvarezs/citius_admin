@@ -44,7 +44,7 @@ const ClassInstructorReducer = (state, { type, payload }) => {
         ...state,
         clase: {
           ...schema,
-          class_date: moment().format("YYYY-MM-DDTHH:mm:ss"),
+          class_date: moment().format("YYYY-MM-DD HH:mm:ss"),
         },
       };
     case CLASS_TYPES_RECIBIDOS:
