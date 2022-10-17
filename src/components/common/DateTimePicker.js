@@ -38,7 +38,9 @@ const DateTimePicker = ({ value, modifier }) => {
     modifier(`${date}T${hours}:${minuteString}`);
   };
 
-  value = value ? value : moment().format("YYYY-MM-DDTHH:mm");
+  value = value
+    ? moment(value).format("YYYY-MM-DDTHH:mm")
+    : moment().format("YYYY-MM-DDTHH:mm");
 
   return (
     <div className="row mb-3">
