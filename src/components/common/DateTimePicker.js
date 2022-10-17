@@ -14,8 +14,8 @@ const DateTimePicker = ({ value, modifier }) => {
     }
     if (parseInt(hourString) > 23) hourString = "23";
     if (parseInt(hourString) < 0) hourString = "0";
-    const date = value.split("T")[0];
-    const minutes = value.split("T")[1].split(":")[1];
+    const date = value.split(" ")[0];
+    const minutes = value.split(" ")[1].split(":")[1];
     modifier(`${date}T${hourString}:${minutes}`);
   };
 
@@ -32,10 +32,12 @@ const DateTimePicker = ({ value, modifier }) => {
     }
     if (parseInt(minuteString) > 59) minuteString = "23";
     if (parseInt(minuteString) < 0) minuteString = "0";
-    const date = value.split("T")[0];
-    const hours = value.split("T")[1].split(":")[0];
+    const date = value.split(" ")[0];
+    const hours = value.split(" ")[1].split(":")[0];
     modifier(`${date}T${hours}:${minuteString}`);
   };
+
+  value = value ? value : moment().format("YYYY-MM-DDTHH:mm");
 
   return (
     <div className="row mb-3">
@@ -44,8 +46,8 @@ const DateTimePicker = ({ value, modifier }) => {
         <input
           type="date"
           className="form-control"
-          value={value.split("T")[0]}
-          onChange={(e) => modifier(`${e.target.value} ${value.split("T")[1]}`)}
+          value={value.split(" ")[0]}
+          onChange={(e) => modifier(`${e.target.value} ${value.split(" ")[1]}`)}
         />
       </div>
       <div className="col-6">
@@ -55,7 +57,7 @@ const DateTimePicker = ({ value, modifier }) => {
             <input
               type="number"
               className="form-control"
-              value={value.split("T")[1].split(":")[0]}
+              value={value.split(" ")[1].split(":")[0]}
               onChange={(e) => handleChangeHour(e.target.value)}
               max={23}
               min={0}
@@ -65,7 +67,7 @@ const DateTimePicker = ({ value, modifier }) => {
             <input
               type="number"
               className="form-control"
-              value={value.split("T")[1].split(":")[1]}
+              value={value.split(" ")[1].split(":")[1]}
               max={59}
               min={0}
               onChange={(e) => handleChangeMinutes(e.target.value)}
