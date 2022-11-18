@@ -14,7 +14,9 @@ const PaqueteForm = ({
 }) => {
   useEffect(() => {
     if (paquete.is_special_event) {
-      modifier("class_date", moment().format("YYYY-MM-DD HH:mm"));
+      if (paquete.class_date === null || !paquete.class_date) {
+        modifier("class_date", moment().format("YYYY-MM-DD HH:mm"));
+      }
       if (!paquete.class_type_id && Array.isArray(class_types)) {
         modifier("class_type_id", class_types[0].class_type_id);
       }
