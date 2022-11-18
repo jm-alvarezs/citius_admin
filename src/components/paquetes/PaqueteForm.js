@@ -1,4 +1,5 @@
 import { Link } from "@reach/router";
+import moment from "moment";
 import React, { useEffect } from "react";
 import Switch from "react-switch";
 import DateTimeInput from "../../components/common/DateTimeInput";
@@ -13,6 +14,7 @@ const PaqueteForm = ({
 }) => {
   useEffect(() => {
     if (paquete.is_special_event) {
+      modifier("class_date", moment().format("YYYY-MM-DD HH:mm"));
       if (!paquete.class_type_id && Array.isArray(class_types)) {
         modifier("class_type_id", class_types[0].class_type_id);
       }
